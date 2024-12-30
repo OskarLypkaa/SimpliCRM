@@ -1,20 +1,11 @@
-//
-//  SimpliApp.swift
-//  Simpli
-//
-//  Created by Zuzanna on 22/12/2024.
-//
-
 import SwiftUI
 
 @main
 struct SimpliApp: App {
-    let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            MainView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
     }
 }
