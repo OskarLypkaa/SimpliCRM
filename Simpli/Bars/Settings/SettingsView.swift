@@ -72,22 +72,18 @@ struct SettingsView: View {
             Form {
                 Section(header: Text("Paths").font(.headline)) {
                     VStack {
-                        Text("Storage Path:")
+                        Text("Storage File Path:")
                         TextField("", text: $settings.sharedPath)
                             .padding(.bottom, 10)
-                        Text("Costumers Files Path:")
+                        Text("Files Path:")
                         TextField("", text: $settings.sharedPath)
                             .padding(.bottom, 10)
-                        Text("Generated Reports Path:")
-                        TextField("", text: $settings.sharedPath)
-                            .padding(.bottom, 15)
                     }
                     
                 }
                 Spacer()
                 Section(header: Text("Appearance").font(.headline)) {
                     VStack {
-                        Text("Color mode")
                         Picker("", selection: $settings.themeMode) {
                             ForEach(ThemeMode.allCases, id: \.self) { mode in
                                 Text(mode.rawValue).tag(mode)
@@ -95,15 +91,6 @@ struct SettingsView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .padding(.bottom, 10)
-                        
-                        Text("Animation Style")
-                        Picker("", selection: $settings.animationStyle) {
-                            ForEach(AnimationStyle.allCases, id: \.self) { style in
-                                Text(style.rawValue).tag(style)
-                            }
-                        }
-                        .padding(.bottom, 15)
-                        .pickerStyle(SegmentedPickerStyle())
                     }
                 }
                 Spacer()
@@ -117,7 +104,7 @@ struct SettingsView: View {
                 Spacer()
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(width: 500, alignment: .leading)
     }
 }
 
