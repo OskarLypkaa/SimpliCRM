@@ -1,14 +1,13 @@
 import SwiftUI
 
-
 struct DeleteClientView: View {
     
     @State private var showAlert = false
     @Environment(\.managedObjectContext) private var viewContext
     
+    @ObservedObject var settings = Settings.shared
     var client: Client // Obiekt klienta do usunięcia
     @Binding var refreshList: Bool
-    
     
     var body: some View {
         VStack {
@@ -25,35 +24,38 @@ struct DeleteClientView: View {
                             NSCursor.arrow.set()
                         }
                     }
-            
             }
             .buttonStyle(PlainButtonStyle())
             .sheet(isPresented: $showAlert) {
                 CloseableHeader()
                 VStack {
-                    Text("Are you sure you want to delete this client?")
-                       .font(.headline)
-                    Text(client.name ?? "Unknown")
-                       .font(.title)
-                       .fontWeight(.bold)
-                       .padding(.bottom)
-                   
+                    Text(LocalizedStringKey("delete_client_confirmation"))
+                        .font(.headline)
+                    Text(client.name ?? "")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding(.bottom)
+                    
                     HStack {
-                       Button("Cancel") {
-                           showAlert = false
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                       Spacer()
-                       Button("Yes") {
-                           deleteClient()
-                           showAlert = false
-                           
-                       }
-                       .buttonStyle(PlainButtonStyle())
-                   }
-                   .frame(width: 200)
-               }
-               .frame(width: 320, height: 150)
+                        Button(LocalizedStringKey("cancel_button")) {
+                            showAlert = false
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title)
+                        Spacer()
+                        Button(LocalizedStringKey("confirm_button")) {
+                            deleteClient()
+                            showAlert = false
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title)
+                    }
+                    .frame(width: 200)
+                    Spacer()
+                }
+                
+                .environment(\.locale, .init(identifier: settings.language.code))
+                .frame(width: 320, height: 120)
             }
         }
         .padding(.horizontal)
@@ -61,13 +63,20 @@ struct DeleteClientView: View {
     
     private func deleteClient() {
         withAnimation {
-            // Usuwamy klienta z kontekstu
+            // Usuwamy wszystkie akcje związane z klientem
+            if let actionsToDelete = client.actions?.allObjects as? [NSManagedObject] {
+                for action in actionsToDelete {
+                    viewContext.delete(action)
+                }
+            }
+            
+            // Usuwamy klienta
             viewContext.delete(client)
+            
             do {
                 // Zapisujemy zmiany w bazie danych
                 try viewContext.save()
                 refreshList.toggle()
-    
             } catch {
                 // Obsługa błędu w przypadku problemów z zapisaniem
                 let nsError = error as NSError

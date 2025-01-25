@@ -4,6 +4,7 @@
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="criticality" optional="YES" attributeType="String"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dueTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
@@ -22,5 +23,12 @@
         <attribute name="secondInformation" optional="YES" attributeType="String"/>
         <attribute name="thirdInformation" optional="YES" attributeType="String"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Actions" inverseName="client" inverseEntity="Actions"/>
+        <relationship name="file" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" inverseName="client" inverseEntity="File"/>
+    </entity>
+    <entity name="File" representedClassName="File" syncable="YES" codeGenerationType="class">
+        <attribute name="fileName" optional="YES" attributeType="String"/>
+        <attribute name="fileURL" optional="YES" attributeType="String"/>
+        <attribute name="uploadDate" optional="YES" attributeType="String"/>
+        <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="file" inverseEntity="Client"/>
     </entity>
 </model>

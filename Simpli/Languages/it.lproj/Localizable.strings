@@ -1,1 +1,231 @@
-"Welcome" = "Welcome!!";
+// --------------------------------- Home -----------------------------
+"welcome_message" = "Benvenuti a Simpli";
+"manage_clients_message" = "Gestisci i tuoi clienti in modo efficiente e tieni traccia di tutti i dettagli importanti in un unico posto.";
+"tasks_today_message" = "Compiti che hai per oggi";
+
+// --------------------------------- NavBar -----------------------------
+"home_tab" = "Home";
+"clients_tab" = "Clienti";
+"actions_tab" = "Azioni";
+"calendar_tab" = "Calendario";
+"reports_tab" = "Rapporti";
+
+// --------------------------------- Help -----------------------------
+"help_title" = "Aiuto e Documentazione";
+"overview_title" = "Panoramica";
+"overview_description" = "Simpli CRM è un'applicazione semplice progettata per aiutarti a gestire i clienti e le azioni associate. Offre un'interfaccia intuitiva per gestire il tuo flusso di lavoro aziendale, inclusi clienti, azioni, report e una vista calendario.";
+
+"key_features_title" = "Funzionalità principali";
+"feature_clients_management" = "**Gestione Clienti**: Aggiungi, visualizza e gestisci le informazioni dei clienti, inclusi indirizzo, e-mail, telefono e dettagli aggiuntivi.";
+"feature_actions_management" = "**Gestione Azioni**: Monitora le attività o gli eventi associati a ciascun cliente, incluse le date di scadenza, lo stato e il tipo.";
+"feature_reports" = "**Report**: Genera vari report basati sui dati di clienti e azioni.";
+"feature_calendar" = "**Calendario**: Visualizza tutte le azioni in un formato calendario per tenere traccia delle date di scadenza e delle priorità.";
+
+"clients_title" = "Clienti";
+"clients_description" = "I clienti sono il fulcro di Simpli CRM. Ogni cliente può avere informazioni dettagliate memorizzate e azioni assegnate. Ecco i campi associati ai clienti:";
+"client_field_address" = "**Indirizzo**: L'indirizzo del cliente.";
+"client_field_email" = "**E-mail**: L'indirizzo e-mail del cliente.";
+"client_field_phone" = "**Telefono**: Il numero di telefono del cliente.";
+"client_field_name" = "**Nome**: Il nome completo del cliente.";
+"client_field_gender" = "**Genere**: Il genere del cliente.";
+"client_field_notes" = "**Note**: Note o informazioni aggiuntive sul cliente.";
+"client_field_custom" = "**Campi personalizzati**: Campi personalizzati per dati aggiuntivi del cliente.";
+
+"actions_title" = "Azioni";
+"actions_description" = "Le azioni rappresentano attività o eventi collegati a un cliente. Ogni azione include metadati dettagliati per garantire un monitoraggio e una gestione adeguati. I campi delle azioni includono:";
+"action_field_creation_date" = "**Data di creazione**: La data in cui l'azione è stata creata.";
+"action_field_criticality" = "**Criticità**: Il livello di importanza dell'azione.";
+"action_field_due_date" = "**Data di scadenza**: La scadenza per completare l'azione.";
+"action_field_id" = "**ID**: Un identificatore univoco per l'azione.";
+"action_field_message" = "**Messaggio**: Dettagli o istruzioni aggiuntive per l'azione.";
+"action_field_status" = "**Stato**: Lo stato attuale dell'azione (ad esempio, In sospeso, Completato).";
+"action_field_type" = "**Tipo**: Il tipo di azione (ad esempio, Riunione, Compito, Chiamata).";
+
+"reports_title" = "Report";
+"reports_description" = "La sezione Report consente di generare ed esportare informazioni basate sui dati di clienti e azioni. Puoi utilizzare questi report per analizzare le prestazioni, identificare le tendenze e supportare il processo decisionale.";
+
+"calendar_title" = "Calendario";
+"calendar_description" = "Il calendario fornisce una panoramica visiva di tutte le azioni basate sulle loro date di scadenza. Ti aiuta a gestire le scadenze e a dare priorità ai compiti in modo efficace.";
+
+"getting_started_title" = "Primi passi";
+"getting_started_step_1" = "1. Vai alla **Vista Home** per ottenere una panoramica delle tue attività.";
+"getting_started_step_2" = "2. Aggiungi nuovi clienti nella **Vista Clienti** inserendo i loro dettagli.";
+"getting_started_step_3" = "3. Assegna e gestisci le azioni per ogni cliente nella **Vista Azioni**.";
+"getting_started_step_4" = "4. Usa la **Vista Calendario** per monitorare le scadenze e gli eventi imminenti.";
+"getting_started_step_5" = "5. Genera report nella **Vista Report** per analizzare i tuoi dati.";
+
+"support_title" = "Supporto";
+"support_description" = "Per ulteriore assistenza, contatta il nostro team di supporto o consulta la guida utente dell'applicazione.";
+
+"help_nav_title" = "Aiuto";
+
+// --------------------------------- Settings -----------------------------
+"settings_title" = "Impostazioni dell'app";
+"settings_subtitle" = "Regola le preferenze generali dell'applicazione.";
+"database_path_section" = "Percorso del database";
+"no_database_selected" = "Nessun database selezionato";
+"browse_database_button" = "Sfoglia database";
+"load_database_button" = "Carica database";
+"no_database_path" = "Nessun percorso di database selezionato";
+"database_path_updated" = "Percorso del database aggiornato";
+"appearance_section" = "Aspetto";
+"language_section" = "Lingua";
+"archived_actions_section" = "Mostra azioni archiviate";
+"show_archived_toggle" = "Mostra azioni archiviate";
+"no_file_selected" = "Nessun file selezionato";
+"file_selection_error" = "Errore durante la selezione del file: %@";
+"theme_mode_light" = "Chiaro";
+"theme_mode_dark" = "Scuro";
+
+// --------------------------------- Clients -----------------------------
+"table_header_name" = "Nom";
+"table_header_email" = "E-mail";
+"table_header_phone" = "Téléphone";
+"table_header_first_information" = "Première Information";
+"table_header_second_information" = "Deuxième Information";
+"table_header_third_information" = "Troisième Information";
+"table_header_gender" = "Genre";
+"table_header_address" = "Adresse";
+
+"add_client_title" = "Aggiungi nuovo cliente";
+"add_client_clear_button" = "Cancella";
+"add_client_add_button" = "Aggiungi";
+"add_client_success_message" = "Nuovo cliente aggiunto!";
+"add_client_name_label" = "Nome:";
+"add_client_name_placeholder" = "Inserisci il nome";
+"add_client_email_label" = "Email:";
+"add_client_email_placeholder" = "Inserisci l'email";
+"add_client_phone_label" = "Telefono:";
+"add_client_phone_placeholder" = "Inserisci il numero di telefono";
+"add_client_address_label" = "Indirizzo:";
+"add_client_address_placeholder" = "Inserisci l'indirizzo";
+"add_client_gender_label" = "Genere:";
+"add_client_gender_male" = "Maschio";
+"add_client_gender_female" = "Femmina";
+"add_client_first_info_label" = "Prima informazione aggiuntiva:";
+"add_client_first_info_placeholder" = "Inserisci l'informazione";
+"add_client_second_info_label" = "Seconda informazione aggiuntiva:";
+"add_client_second_info_placeholder" = "Inserisci l'informazione";
+"add_client_third_info_label" = "Terza informazione aggiuntiva:";
+"add_client_third_info_placeholder" = "Inserisci l'informazione";
+
+"no_actions_available" = "Nessuna azione disponibile per questo cliente.";
+"save_note_button" = "Salva nota";
+"note_saved_message" = "Nota salvata!";
+
+"pagination_previous" = "Precedente";
+"pagination_next" = "Successivo";
+"pagination_page" = "Pagina";
+"pagination_of" = "di";
+
+"delete_client_confirmation" = "Sei sicuro di voler eliminare questo cliente e tutte le sue azioni?";
+"unknown_client" = "Cliente sconosciuto";
+"cancel_button" = "Annulla";
+"confirm_button" = "Sì";
+
+// --------------------------------- Callendar -----------------------------
+"tasks_for_selected_day" = "Attività per il giorno selezionato";
+"no_client_name" = "Nessun nome cliente";
+
+"calendar_actions_count" = "Azioni: ";
+
+// --------------------------------- Reports -----------------------------
+"reports_title" = "Report ed esportazione dati";
+"reports_subtitle" = "Genera report, visualizza dati ed esporta/importa informazioni in vari formati.";
+"reports_generate_section" = "Genera report";
+"generate_sales_report_title" = "Genera report di vendite";
+"generate_sales_report_subtitle" = "Report dettagliato di tutte le transazioni di vendita.";
+"customer_analytics_title" = "Analisi clienti";
+"customer_analytics_subtitle" = "Approfondimenti sul comportamento e sulle tendenze dei clienti.";
+"monthly_revenue_report_title" = "Report dei ricavi mensili";
+"monthly_revenue_report_subtitle" = "Traccia i ricavi mensili per reparto.";
+"task_completion_overview_title" = "Panoramica sul completamento delle attività";
+"task_completion_overview_subtitle" = "Panoramica delle attività e dei progressi dei progetti.";
+"statistic_overview_title" = "Panoramica statistica";
+"statistic_overview_subtitle" = "Mostra i dati statistici grezzi.";
+"data_export_section" = "Esporta dati";
+"export_to_excel_title" = "Esporta in Excel";
+"export_to_excel_subtitle" = "Salva i dati in formato Excel.";
+"export_to_pdf_title" = "Esporta in PDF";
+"export_to_pdf_subtitle" = "Salva i dati in formato PDF.";
+"export_to_csv_title" = "Esporta in CSV";
+"export_to_csv_subtitle" = "Salva i dati in formato CSV.";
+"export_to_json_title" = "Esporta in JSON";
+"export_to_json_subtitle" = "Salva i dati in formato JSON.";
+"data_import_section" = "Importa dati";
+"import_from_excel_title" = "Importa da Excel";
+"import_from_excel_subtitle" = "Carica i dati da un file Excel.";
+"import_from_csv_title" = "Importa da CSV";
+"import_from_csv_subtitle" = "Carica i dati da un file CSV.";
+"import_from_json_title" = "Importa da JSON";
+"import_from_json_subtitle" = "Carica i dati da un file JSON.";
+
+// --------------------------------- Actions -----------------------------
+"Low" = "Basso";
+"Medium" = "Medio";
+"High" = "Alto";
+"Very High" = "Molto alto";
+
+"filter_actions_title" = "Filtra azioni";
+"clear_filters_button" = "Cancella";
+"apply_filters_button" = "Applica filtri";
+"search_client_placeholder" = "Cerca cliente per nome";
+"unknown_client" = "Cliente sconosciuto";
+"filter_by_criticality_label" = "Filtra per criticità";
+"criticality_all" = "Tutti";
+"criticality_low" = "Basso";
+"criticality_medium" = "Medio";
+"criticality_high" = "Alto";
+"criticality_very_high" = "Molto alto";
+
+"delete_action_prompt" = "Rilascia l'azione selezionata qui per eliminarla.";
+
+"ToDo" = "Da fare";
+"In Progress" = "In corso";
+"Blocked" = "Bloccato";
+"Done" = "Fatto";
+"Archived" = "Archiviato";
+
+"add_action_title" = "Aggiungi nuova azione";
+"add_action_clear_button" = "Cancella";
+"add_action_add_button" = "Aggiungi";
+"add_action_success_message" = "Nuova azione aggiunta!";
+"add_action_message_label" = "Messaggio:";
+"add_action_type_label" = "Tipo di azione:";
+"add_action_criticality_label" = "Criticità:";
+"add_action_status_label" = "Stato:";
+"action_type_general" = "Generale";
+"action_type_meeting" = "Riunione";
+"action_type_call" = "Chiamata";
+"action_type_email" = "Email";
+"action_type_follow_up" = "Follow-up";
+"action_type_contract" = "Contratto";
+"criticality_low" = "Bassa";
+"criticality_medium" = "Media";
+"criticality_high" = "Alta";
+"criticality_very_high" = "Molto alta";
+"status_to_do" = "Da fare";
+"status_in_progress" = "In corso";
+"status_done" = "Fatto";
+"status_blocked" = "Bloccato";
+
+"delete_action_confirmation" = "Elimina definitivamente questa azione?";
+"archive_action_confirmation" = "Archivia questa azione?";
+"cancel_button" = "Annulla";
+"yes_button" = "Sì";
+
+"edit_action_title" = "Modifica azione";
+"edit_action_success_message" = "Azione aggiornata!";
+"update_button" = "Aggiorna";
+"unknown_client" = "Nessun nome cliente";
+
+"delete_archived_confirmation" = "Sei sicuro di voler eliminare tutte le azioni archiviate?";
+"archive_done_confirmation" = "Sei sicuro di voler archiviare tutte le azioni con stato 'Fatto'?";
+"delete_archived_irreversible_confirmation" = "Questa azione è irreversibile. Vuoi davvero eliminare tutte le azioni archiviate?";
+"cancel_button" = "Annulla";
+"yes_button" = "Sì";
+
+// --------------------------------- Commons -----------------------------
+"due_date_label" = "Data di scadenza:";
+"warning_text_max_characters" = "Il testo può contenere un massimo di 600 caratteri";
+"search_placeholder" = "Cerca";

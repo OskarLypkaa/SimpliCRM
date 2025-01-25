@@ -1,4 +1,3 @@
-// PaginationFooter.swift
 import SwiftUI
 import CoreData
 
@@ -38,14 +37,23 @@ struct ClientsFooter: View {
                     currentPage -= 1
                 }
             }) {
-                Text("Previous")
+                Text("pagination_previous")
             }
             .buttonStyle(PlainButtonStyle())
             
             Spacer()
             
-            Text("Page \(currentPage + 1) of \(totalPages)")
-                .font(.headline)
+            HStack {
+                Text(LocalizedStringKey("pagination_page"))
+                    .font(.headline)
+                Text("\(currentPage + 1)")
+                    .font(.headline)
+                Text(LocalizedStringKey("pagination_of"))
+                    .font(.headline)
+                Text("\(totalPages)")
+                    .font(.headline)
+            }
+
             
             Spacer()
             
@@ -54,7 +62,7 @@ struct ClientsFooter: View {
                     currentPage += 1
                 }
             }) {
-                Text("Next")
+                Text("pagination_next")
             }
             .buttonStyle(PlainButtonStyle())
         }

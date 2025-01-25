@@ -1,65 +1,66 @@
 import SwiftUI
 import CoreData
 
-
 struct ClientView: View {
     @State private var currentPage: Int = 0
-    private let itemsPerPage = 20  // Liczba klientów na stronę
+    private let itemsPerPage = 20
 
     @Environment(\.managedObjectContext) private var viewContext
-
-    @State private var searchText: String = ""  // Wyszukiwana fraza
-    @State private var highlighted: Bool = false
+    @ObservedObject var settings = Settings.shared
+    
+    @State private var searchText: String = ""
     @State private var isAscending: Bool = true
     @State private var sortingKey: String = "name"
     @State private var showSheet = false
     @State private var showingAddClient = false
-    @State private var refreshList: Bool = false // Flaga do odświeżania listy
+    @State private var showingClientFilter = false
+    @State private var refreshList: Bool = false
 
-    // Strona z klientami
-    private var pagedClients: [Client] {
-        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-
-        // Wyszukiwanie według nazwy klienta, jeśli searchText jest wprowadzony
-        if !searchText.isEmpty {
-            fetchRequest.predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR email CONTAINS[cd] %@ OR phone CONTAINS[cd] %@", searchText, searchText, searchText)
-
-        }
-
-        fetchRequest.fetchLimit = itemsPerPage
-        fetchRequest.fetchOffset = currentPage * itemsPerPage
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: isAscending)
-        ]
-
-        do {
-            return try viewContext.fetch(fetchRequest)
-        } catch {
-            return []
-        }
-    }
+    @State private var clients: [Client] = []
+    @State private var displayedFilters: Set<String> = [
+        "name",
+        "phone",
+        "email",
+        "firstInformation",
+        "secondInformation"
+    ]
 
     var body: some View {
         VStack {
             HStack {
-                // Użycie paska wyszukiwania
                 SearchBar(searchText: $searchText, showSheet: $showSheet)
-                    .onChange(of: searchText) { oldValue, newValue in
-                        if newValue.count > oldValue.count {
-                            highlighted = true
-                            currentPage = 0
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                highlighted = false
-                            }
-                        }
+                    .onChange(of: searchText) { _, _ in
+                        currentPage = 0
+                        fetchClients() // Odśwież listę klientów
                     }
+                    .environment(\.locale, .init(identifier: settings.language.code))
 
                 HStack {
                     Button(action: {
                         showingAddClient = true
                     }) {
-                        Image(systemName: "person.fill.badge.plus")
-                            .font(.system(size: 30))
+                        Image(systemName: "person.badge.plus")
+                            .font(.largeTitle)
+                            .padding(.top, 8)
+                            .onHover { hovering in
+                                if hovering {
+                                    NSCursor.pointingHand.set()
+                                } else {
+                                    NSCursor.arrow.set()
+                                }
+                            }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .sheet(isPresented: $showingAddClient) {
+                        AddClient(refreshList: $refreshList)
+                            .environment(\.locale, .init(identifier: settings.language.code))
+                    }
+                    .padding(.trailing, 29)
+                    Button(action: {
+                        showingClientFilter = true
+                    }) {
+                        Image(systemName: "slider.horizontal.3")
+                            .font(.largeTitle)
                             .padding(.leading, 15)
                             .padding(.top, 5)
                             .onHover { hovering in
@@ -70,9 +71,10 @@ struct ClientView: View {
                                 }
                             }
                     }
-                    .buttonStyle(PlainButtonStyle()) // Usuwa domyślny styl przycisku
-                    .sheet(isPresented: $showingAddClient) {
-                        AddClient(refreshList: $refreshList) // Wyświetla AddClient jako arkusz
+                    .buttonStyle(PlainButtonStyle())
+                    .sheet(isPresented: $showingClientFilter) {
+                        ClientFilter(selectedItems: $displayedFilters)
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                 }
                 .onHover { hovering in
@@ -84,50 +86,68 @@ struct ClientView: View {
                 }
                 .padding(.trailing, 37)
             }
-            TableHeaders(isAscending: $isAscending, sortingKey: $sortingKey)
 
+            ClientsHeaders(isAscending: $isAscending, sortingKey: $sortingKey, refreshList: $refreshList, displayedFilters: displayedFilters)
+                .environment(\.locale, .init(identifier: settings.language.code))
             ScrollViewReader { scrollView in
                 ScrollView {
                     LazyVStack(spacing: 0) {
-                        ForEach(pagedClients, id: \.id) { client in
+                        ForEach(clients, id: \.id) { client in
                             HStack {
-                                Clients(client: client, highlighted: $highlighted)
+                                Clients(client: client, displayedFilters: displayedFilters)
+                                    .environment(\.locale, .init(identifier: settings.language.code))
                                 DeleteClientView(client: client, refreshList: $refreshList)
+                                    .environment(\.locale, .init(identifier: settings.language.code))
                             }
-                            .id(client.id) // Ustawiamy unikalne ID dla każdego klienta
+                            .opacityTransition()
                         }
                     }
                     .padding(.horizontal)
+                    .animation(.easeInOut(duration: 0.2), value: clients) // Minimalistyczna animacja
                 }
                 .onChange(of: currentPage) {
-                    if let firstClient = pagedClients.first {
-                        scrollView.scrollTo(firstClient.id, anchor: .top)
-                    }
+                    fetchClients() // Pobierz klientów dla aktualnej strony
                 }
             }
 
-            // Użycie PaginationFooter
             ClientsFooter(currentPage: $currentPage, searchText: searchText)
-                
+                .environment(\.locale, .init(identifier: settings.language.code))
+        }
+        .onAppear {
+            fetchClients() // Pobierz początkowych klientów
         }
         .onChange(of: refreshList) {
-            // Odśwież widok, gdy `refreshList` się zmienia
+            fetchClients() // Odśwież listę klientów
         }
+        .frame(minWidth: 900)
     }
 
+    private func fetchClients() {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+
+        if !searchText.isEmpty {
+            fetchRequest.predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR email CONTAINS[cd] %@ OR phone CONTAINS[cd] %@", searchText, searchText, searchText)
+        }
+
+        fetchRequest.fetchLimit = itemsPerPage
+        fetchRequest.fetchOffset = currentPage * itemsPerPage
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: sortingKey, ascending: isAscending)
+        ]
+
+        do {
+            let fetchedClients = try viewContext.fetch(fetchRequest)
+            withAnimation {
+                clients = fetchedClients
+            }
+        } catch {
+            clients = []
+        }
+    }
 }
 
-
-#Preview {
-    ClientView()
-}
-
-struct ClientView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Utworzenie kontekstu na potrzeby podglądu
-        let context = PersistenceController.preview.container.viewContext
-        
-        return ClientView()
-            .environment(\.managedObjectContext, context)
+extension View {
+    func opacityTransition() -> some View {
+        self.transition(.opacity)
     }
 }

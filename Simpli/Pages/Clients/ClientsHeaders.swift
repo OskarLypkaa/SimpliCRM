@@ -1,98 +1,64 @@
 import SwiftUI
 
-// Widok nagłówków tabeli z opcją sortowania
-struct TableHeaders: View {
-    
+struct ClientsHeaders: View {
     @Binding var isAscending: Bool
-    @Binding var sortingKey: String 
-
+    @Binding var sortingKey: String
+    @Binding var refreshList: Bool
+    
+    var displayedFilters: Set<String>
+    
     var body: some View {
         HStack {
-            HStack {
-                Text("Name")
-                    .font(.headline)
-                Image(systemName: "arrow.up.arrow.down.circle.fill")
-                    .foregroundColor(.gray)
-                    .frame(width: 10, height: 10)
-                    .padding(.leading, 3)
-                    .onHover { hovering in
-                        if hovering {
-                            NSCursor.pointingHand.set()
-                        } else {
-                            NSCursor.arrow.set()
-                        }
-                    }
-                    .onTapGesture {
-                        sortingKey = "name"
-                        isAscending.toggle() // Przełączenie porządku sortowania
-                    }
+            if displayedFilters.contains("name") {
+                headerView(title: "table_header_name", sortingKey: "name")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            HStack {
-                Text("Email")
-                    .font(.headline)
-                Image(systemName: "arrow.up.arrow.down.circle.fill")
-                    .foregroundColor(.gray)
-                    .frame(width: 10, height: 10)
-                    .padding(.leading, 3)
-                    .onHover { hovering in
-                        if hovering {
-                            NSCursor.pointingHand.set()
-                        } else {
-                            NSCursor.arrow.set()
-                        }
-                    }
-                    .onTapGesture {
-                        sortingKey = "email"
-                        isAscending.toggle() // Przełączenie porządku sortowania
-                    }
+            if displayedFilters.contains("email") {
+                headerView(title: "table_header_email", sortingKey: "email")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            HStack {
-                Text("Phone")
-                    .font(.headline)
-                Image(systemName: "arrow.up.arrow.down.circle.fill")
-                    .foregroundColor(.gray)
-                    .frame(width: 10, height: 10)
-                    .padding(.leading, 3)
-                    .onHover { hovering in
-                        if hovering {
-                            NSCursor.pointingHand.set()
-                        } else {
-                            NSCursor.arrow.set()
-                        }
-                    }
-                    .onTapGesture {
-                        sortingKey = "phone"
-                        isAscending.toggle() // Przełączenie porządku sortowania
-                    }
+            if displayedFilters.contains("phone") {
+                headerView(title: "table_header_phone", sortingKey: "phone")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            HStack {
-                Text("Address")
-                    .font(.headline)
-                Image(systemName: "arrow.up.arrow.down.circle.fill")
-                    .foregroundColor(.gray)
-                    .frame(width: 10, height: 10)
-                    .padding(.leading, 3)
-                    .onHover { hovering in
-                        if hovering {
-                            NSCursor.pointingHand.set()
-                        } else {
-                            NSCursor.arrow.set()
-                        }
-                    }
-                    .onTapGesture {
-                        sortingKey = "address"
-                        isAscending.toggle() // Przełączenie porządku sortowania
-                    }
+            if displayedFilters.contains("firstInformation") {
+                headerView(title: "table_header_first_information", sortingKey: "firstInformation")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            if displayedFilters.contains("secondInformation") {
+                headerView(title: "table_header_second_information", sortingKey: "secondInformation")
+            }
+            if displayedFilters.contains("thirdInformation") {
+                headerView(title: "table_header_third_information", sortingKey: "thirdInformation")
+            }
+            if displayedFilters.contains("gender") {
+                headerView(title: "table_header_gender", sortingKey: "gender")
+            }
+            if displayedFilters.contains("address") {
+                headerView(title: "table_header_address", sortingKey: "address")
+            }
         }
-        .padding(.leading, 70)
-        .padding(.trailing, 50)
+        .padding(.leading, 30)
+        .padding(.trailing, 90)
+    }
+    
+    private func headerView(title: String, sortingKey: String) -> some View {
+        HStack {
+            Text(LocalizedStringKey(title))
+                .font(.headline)
+            Image(systemName: "arrow.up.arrow.down.circle.fill")
+                .foregroundColor(.gray)
+                .frame(width: 10, height: 10)
+                .padding(.leading, 3)
+                .onHover { hovering in
+                    if hovering {
+                        NSCursor.pointingHand.set()
+                    } else {
+                        NSCursor.arrow.set()
+                    }
+                }
+                .onTapGesture {
+                    self.sortingKey = sortingKey
+                    isAscending.toggle()
+                    refreshList.toggle()
+                }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

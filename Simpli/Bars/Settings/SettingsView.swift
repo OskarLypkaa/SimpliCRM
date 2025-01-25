@@ -1,113 +1,151 @@
 import SwiftUI
-
-class Settings: ObservableObject {
-    // Singleton dla globalnego dostępu
-    static let shared = Settings()
-
-    // Ścieżka do bazy danych i plików
-    @Published var sharedPath: String
-
-    // Tryb jasny/ciemny
-    @Published var themeMode: ThemeMode
-
-    // Styl animacji
-    @Published var animationStyle: AnimationStyle
-
-    // Wybrany język
-    @Published var language: Language
-
-    // Prywatny inicjalizator
-    private init(
-        sharedPath: String = "",
-        themeMode: ThemeMode = .system,
-        animationStyle: AnimationStyle = .minimalistic,
-        language: Language = .english
-    ) {
-        self.sharedPath = sharedPath
-        self.themeMode = themeMode
-        self.animationStyle = animationStyle
-        self.language = language
-    }
-}
-
-
-// Enum dla trybu jasny/ciemny
-enum ThemeMode: String, CaseIterable {
-    case system = "System"
-    case light = "Light"
-    case dark = "Dark"
-}
-
-enum AnimationStyle: String, CaseIterable {
-    case none = "None"
-    case minimalistic = "Minimalistic"
-    case maximum = "Maximum"
-}
-
-// Enum dla języków
-enum Language: String, CaseIterable {
-    case english = "English"
-    case german = "Deutsch"
-    case polish = "Polski"
-}
+import UniformTypeIdentifiers
+import Foundation
 
 struct SettingsView: View {
-    // Odwołanie do singletona
+    @State private var showMessage: Bool = false
     @ObservedObject private var settings = Settings.shared
+    @State private var showDatabaseSettings: Bool = false
+        @State private var showFilesSettings: Bool = false
+    @State private var feedbackMessage: LocalizedStringKey = ""
 
     var body: some View {
-        Text("App Settings")
+        CloseableHeader()
+        Text("settings_title")
             .font(.largeTitle)
             .fontWeight(.bold)
             .multilineTextAlignment(.center)
-            .padding(.top, 20)
 
-        Text("Adjust general app preferences, including report generation, data visualization, and export/import options.")
+        Text("settings_subtitle")
             .font(.title3)
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
-            .padding(.bottom, 30)
 
         ScrollView {
             Form {
-                Section(header: Text("Paths").font(.headline)) {
-                    VStack {
-                        Text("Storage File Path:")
-                        TextField("", text: $settings.sharedPath)
-                            .padding(.bottom, 10)
-                        Text("Files Path:")
-                        TextField("", text: $settings.sharedPath)
-                            .padding(.bottom, 10)
+                Section(header: Text("Data Base").font(.title2)) {
+                    HStack {
+                        Text("Path:")
+                        if settings.sharedPath != "" {
+                            Text("~ \(settings.sharedPath)")
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        } else {
+                            Text("no_database_selected")
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
                     }
+                    Button(action: {
+                        showDatabaseSettings = true
+                    }) {
+                        Text("Additional Settings")
+                            .padding(4)
+                            .frame(maxWidth: .infinity)
+                            .background(Color(.darkGray))
+                            .cornerRadius(4)
+                            
+                    }
+                    .padding(.bottom, 15)
+                    .sheet(isPresented: $showDatabaseSettings) {
+                        DatabaseSetting()
+                    }
+                    .buttonStyle(PlainButtonStyle())
                     
                 }
-                Spacer()
-                Section(header: Text("Appearance").font(.headline)) {
+                
+                Section(header: Text("Files").font(.title2)) {
+                    HStack {
+                        Text("Path:")
+                        if settings.filesPath != "" {
+                            Text("~ \(settings.filesPath)")
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        } else {
+                            Text("No file folder is selected")
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                    }
+                    Button(action: {
+                        showFilesSettings = true
+                    }) {
+                        Text("Additional Settings")
+                            .padding(4)
+                            .frame(maxWidth: .infinity)
+                            .background(Color(.darkGray))
+                            .cornerRadius(4)
+                            
+                    }
+                    .padding(.bottom, 15)
+                    .sheet(isPresented: $showFilesSettings) {
+                        FilesSetting()
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+           
+                Section(header: Text("appearance_section").font(.title2)) {
                     VStack {
                         Picker("", selection: $settings.themeMode) {
                             ForEach(ThemeMode.allCases, id: \.self) { mode in
-                                Text(mode.rawValue).tag(mode)
+                                Text(mode.localizedKey).tag(mode)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .padding(.bottom, 10)
+                        .onHover { hovering in
+                            if hovering {
+                                NSCursor.pointingHand.set()
+                            } else {
+                                NSCursor.arrow.set()
+                            }
+                        }
+                        
                     }
+                    .padding(.bottom, 15)
                 }
-                Spacer()
-                Section(header: Text("Language").font(.headline)) {
+
+                Section(header: Text("language_section").font(.title2)) {
                     Picker("", selection: $settings.language) {
                         ForEach(Language.allCases, id: \.self) { lang in
                             Text(lang.rawValue).tag(lang)
                         }
                     }
+                    .padding(.bottom, 15)
                 }
-                Spacer()
+                .onHover { hovering in
+                    if hovering {
+                        NSCursor.pointingHand.set()
+                    } else {
+                        NSCursor.arrow.set()
+                    }
+                }
+
+                Section(header: Text("archived_actions_section").font(.title2)) {
+                    Toggle(isOn: $settings.showArchived) {}
+                    .toggleStyle(SwitchToggleStyle())
+                    .onHover { hovering in
+                        if hovering {
+                            NSCursor.pointingHand.set()
+                        } else {
+                            NSCursor.arrow.set()
+                        }
+                    }
+                }
             }
         }
-        .frame(width: 500, alignment: .leading)
+        .padding()
+    
+    
+        .frame(width: 550, height: 450, alignment: .leading)
+        .sheet(isPresented: $showMessage) {
+            AutoDismissSheetView(
+                message: feedbackMessage,
+                displayDuration: 2,
+                isPresented: $showMessage
+            )
+            .environment(\.locale, .init(identifier: settings.language.code))
+        }
+        .onChange(of: showMessage) {}
     }
-}
 
-#Preview {
-    SettingsView()
+    private func handleFileSelection(message: String) {
+        feedbackMessage = LocalizedStringKey(message)
+        showMessage = true
+    }
 }

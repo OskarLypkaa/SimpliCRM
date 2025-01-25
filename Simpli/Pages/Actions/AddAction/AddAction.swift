@@ -1,14 +1,25 @@
 import SwiftUI
 
-struct AddActionWithClient: View {
+struct Action: Identifiable {
+    var id = UUID()
+    var message: String
+    var criticality: String
+    var dueDate: Date
+    var status: String
+    var type: String
+}
+
+struct AddAction: View {
     @State private var showMessage: Bool = false
     @State private var isWarningVisible: Bool = false
     @State private var showCalendar: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Date(), status: "ToDo")
-
+    @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Date(), status: "ToDo", type: "General")
+    
+    @ObservedObject var settings = Settings.shared
     @Binding var refreshList: Bool
+    var client: Client
 
     var body: some View {
         CloseableHeader()
@@ -16,13 +27,13 @@ struct AddActionWithClient: View {
         ZStack {
             VStack {
                 HStack {
-                    Text("Add new action")
+                    Text(LocalizedStringKey("add_action_title"))
                         .font(.title)
                     Spacer()
                     Button(action: {
                         clear()
                     }) {
-                        Text("Clear")
+                        Text(LocalizedStringKey("add_action_clear_button"))
                             .padding(.horizontal)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -30,17 +41,18 @@ struct AddActionWithClient: View {
                         addItem()
                         clear()
                     }) {
-                        Text("Add")
+                        Text(LocalizedStringKey("add_action_add_button"))
                             .padding(.horizontal)
                     }
                     .disabled(textValidation())
                     .buttonStyle(PlainButtonStyle())
                     .sheet(isPresented: $showMessage) {
                         AutoDismissSheetView(
-                            message: "New action added!",
+                            message: LocalizedStringKey("add_action_success_message"),
                             displayDuration: 1.5,
                             isPresented: $showMessage
                         )
+                        .environment(\.locale, .init(identifier: settings.language.code))
                     }
                 }
                 .padding(.horizontal)
@@ -50,39 +62,58 @@ struct AddActionWithClient: View {
                 
                 ZStack {
                     List {
-                        TextEditorWithWarning(actionMessage: $action.message, isWarningVisible: $isWarningVisible)
-                            .padding()
                         VStack(alignment: .leading) {
-                            Text("Criticality:")
+                            Text(LocalizedStringKey("add_action_message_label"))
+                                .font(.headline)
+                            TextEditorWithWarning(actionMessage: $action.message, isWarningVisible: $isWarningVisible)
+                                .environment(\.locale, .init(identifier: settings.language.code))
+                        }
+                        .padding()
+                        VStack(alignment: .leading) {
+                            Text(LocalizedStringKey("add_action_type_label"))
+                                .font(.headline)
+                            Picker("", selection: $action.type) {
+                                Text(LocalizedStringKey("action_type_general")).tag("General")
+                                Text(LocalizedStringKey("action_type_meeting")).tag("Meeting")
+                                Text(LocalizedStringKey("action_type_call")).tag("Call")
+                                Text(LocalizedStringKey("action_type_email")).tag("Email")
+                                Text(LocalizedStringKey("action_type_follow_up")).tag("Follow-Up")
+                                Text(LocalizedStringKey("action_type_contract")).tag("Contract")
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        .padding()
+                        VStack(alignment: .leading) {
+                            Text(LocalizedStringKey("add_action_criticality_label"))
                                 .font(.headline)
                             Picker("", selection: $action.criticality) {
-                                Text("Low").tag("Low")
-                                Text("Medium").tag("Medium")
-                                Text("High").tag("High")
-                                Text("Very High").tag("Very High")
+                                Text(LocalizedStringKey("criticality_low")).tag("Low")
+                                Text(LocalizedStringKey("criticality_medium")).tag("Medium")
+                                Text(LocalizedStringKey("criticality_high")).tag("High")
+                                Text(LocalizedStringKey("criticality_very_high")).tag("Very High")
                             }
                             .pickerStyle(SegmentedPickerStyle())
                         }.padding()
                         
                         VStack(alignment: .leading) {
-                            Text("Status:")
+                            Text(LocalizedStringKey("add_action_status_label"))
                                 .font(.headline)
                             Picker("", selection: $action.status) {
-                                Text("ToDo").tag("ToDo")
-                                Text("In Progress").tag("In Progress")
-                                Text("Done").tag("Done")
-                                Text("Blocked").tag("Blocked")
+                                Text(LocalizedStringKey("status_to_do")).tag("ToDo")
+                                Text(LocalizedStringKey("status_in_progress")).tag("In Progress")
+                                Text(LocalizedStringKey("status_done")).tag("Done")
+                                Text(LocalizedStringKey("status_blocked")).tag("Blocked")
                             }
                             .pickerStyle(SegmentedPickerStyle())
                         }.padding()
                         DatePickerWithCallendar(actionDueDate: $action.dueDate, isDatePickerPresented: $showCalendar)
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                 }
             }
-            .padding(.bottom, 40)
-            .frame(width: 500, height: 500, alignment: .leading)
+            .frame(width: 500, height: 550, alignment: .leading)
         }
     }
     
@@ -100,12 +131,13 @@ struct AddActionWithClient: View {
     private func addItem() {
         withAnimation {
             let newItem = Actions(context: viewContext)
-            newItem.id = UUID()  // Unikalne ID
+            newItem.id = UUID()
             newItem.message = action.message
             newItem.criticality = action.criticality
             newItem.dueDate = action.dueDate
             newItem.status = action.status
-            newItem.creationDate = Date()  // Data utworzenia
+            newItem.type = action.type
+            newItem.creationDate = Date()
             newItem.client = client
             
             do {
@@ -128,5 +160,6 @@ struct AddActionWithClient: View {
         action.criticality = "Low"
         action.dueDate = Date()
         action.status = "ToDo"
+        action.type = "General"
     }
 }

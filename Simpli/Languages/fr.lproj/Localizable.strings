@@ -1,7 +1,231 @@
-/* 
-  Localizable.strings
-  Simpli
+// --------------------------------- Home -----------------------------
+"welcome_message" = "Bienvenue chez Simpli";
+"manage_clients_message" = "Gérez vos clients efficacement et gardez une trace de tous les détails importants en un seul endroit.";
+"tasks_today_message" = "Tâches que vous avez pour aujourd'hui";
 
-  Created by Zuzanna on 11/01/2025.
-  
-*/
+// --------------------------------- NavBar -----------------------------
+"home_tab" = "Accueil";
+"clients_tab" = "Clients";
+"actions_tab" = "Actions";
+"calendar_tab" = "Calendrier";
+"reports_tab" = "Rapports";
+
+// --------------------------------- Help -----------------------------
+"help_title" = "Aide et Documentation";
+"overview_title" = "Aperçu";
+"overview_description" = "Simpli CRM est une application simple conçue pour vous aider à gérer vos clients et leurs actions associées. Elle offre une interface intuitive pour gérer votre flux de travail, y compris les clients, les actions, les rapports et une vue calendrier.";
+
+"key_features_title" = "Fonctionnalités clés";
+"feature_clients_management" = "**Gestion des clients** : Ajoutez, consultez et gérez les informations des clients, y compris leur adresse, e-mail, téléphone et autres détails.";
+"feature_actions_management" = "**Gestion des actions** : Suivez les tâches ou événements liés à chaque client, y compris les dates d'échéance, le statut et le type.";
+"feature_reports" = "**Rapports** : Générez divers rapports basés sur les données des clients et des actions.";
+"feature_calendar" = "**Calendrier** : Affichez toutes les actions dans un format calendrier pour suivre les dates d'échéance et les priorités.";
+
+"clients_title" = "Clients";
+"clients_description" = "Les clients sont au cœur de Simpli CRM. Chaque client peut avoir des informations détaillées enregistrées et des actions attribuées. Voici les champs associés aux clients :";
+"client_field_address" = "**Adresse** : L'adresse du client.";
+"client_field_email" = "**E-mail** : L'adresse e-mail du client.";
+"client_field_phone" = "**Téléphone** : Le numéro de téléphone du client.";
+"client_field_name" = "**Nom** : Le nom complet du client.";
+"client_field_gender" = "**Sexe** : Le sexe du client.";
+"client_field_notes" = "**Notes** : Notes ou informations supplémentaires sur le client.";
+"client_field_custom" = "**Champs personnalisés** : Champs personnalisés pour des données supplémentaires sur le client.";
+
+"actions_title" = "Actions";
+"actions_description" = "Les actions représentent des tâches ou des événements liés à un client. Chaque action comprend des métadonnées détaillées pour garantir un suivi et une gestion appropriés. Les champs des actions incluent :";
+"action_field_creation_date" = "**Date de création** : La date à laquelle l'action a été créée.";
+"action_field_criticality" = "**Criticité** : Le niveau d'importance de l'action.";
+"action_field_due_date" = "**Date d'échéance** : La date limite pour terminer l'action.";
+"action_field_id" = "**ID** : Un identifiant unique pour l'action.";
+"action_field_message" = "**Message** : Détails ou instructions supplémentaires pour l'action.";
+"action_field_status" = "**Statut** : Le statut actuel de l'action (par exemple, En attente, Terminé).";
+"action_field_type" = "**Type** : Le type d'action (par exemple, Réunion, Tâche, Appel).";
+
+"reports_title" = "Rapports";
+"reports_description" = "La section Rapports vous permet de générer et d'exporter des informations basées sur vos clients et actions. Ces rapports peuvent être utilisés pour analyser les performances, identifier les tendances et soutenir la prise de décision.";
+
+"calendar_title" = "Calendrier";
+"calendar_description" = "Le calendrier fournit une vue d'ensemble visuelle de toutes les actions en fonction de leurs dates d'échéance. Il vous aide à gérer les délais et à prioriser les tâches efficacement.";
+
+"getting_started_title" = "Premiers pas";
+"getting_started_step_1" = "1. Accédez à la **vue d'accueil** pour obtenir un aperçu de vos activités.";
+"getting_started_step_2" = "2. Ajoutez de nouveaux clients dans la **vue Clients** en saisissant leurs détails.";
+"getting_started_step_3" = "3. Attribuez et gérez des actions pour chaque client dans la **vue Actions**.";
+"getting_started_step_4" = "4. Utilisez la **vue Calendrier** pour suivre les échéances et événements à venir.";
+"getting_started_step_5" = "5. Générez des rapports dans la **vue Rapports** pour analyser vos données.";
+
+"support_title" = "Assistance";
+"support_description" = "Pour une assistance supplémentaire, veuillez contacter notre équipe d'assistance ou consulter le guide utilisateur de l'application.";
+
+"help_nav_title" = "Aide";
+
+// --------------------------------- Settings -----------------------------
+"settings_title" = "Paramètres de l'application";
+"settings_subtitle" = "Ajustez les préférences générales de l'application.";
+"database_path_section" = "Chemin de la base de données";
+"no_database_selected" = "Aucune base de données sélectionnée";
+"browse_database_button" = "Parcourir la base de données";
+"load_database_button" = "Charger la base de données";
+"no_database_path" = "Aucun chemin de base de données sélectionné";
+"database_path_updated" = "Chemin de la base de données";
+"appearance_section" = "Apparence";
+"language_section" = "Langue";
+"archived_actions_section" = "Afficher les actions archivées";
+"show_archived_toggle" = "Afficher les actions archivées";
+"no_file_selected" = "Aucun fichier sélectionné";
+"file_selection_error" = "Erreur lors de la sélection du fichier : %@";
+"theme_mode_light" = "Clair";
+"theme_mode_dark" = "Sombre";
+
+// --------------------------------- Clients -----------------------------
+"table_header_name" = "Nome";
+"table_header_email" = "Email";
+"table_header_phone" = "Telefono";
+"table_header_first_information" = "Prima Informazione";
+"table_header_second_information" = "Seconda Informazione";
+"table_header_third_information" = "Terza Informazione";
+"table_header_gender" = "Genere";
+"table_header_address" = "Indirizzo";
+
+"add_client_title" = "Ajouter un nouveau client";
+"add_client_clear_button" = "Effacer";
+"add_client_add_button" = "Ajouter";
+"add_client_success_message" = "Nouveau client ajouté !";
+"add_client_name_label" = "Nom:";
+"add_client_name_placeholder" = "Entrer le nom";
+"add_client_email_label" = "E-mail:";
+"add_client_email_placeholder" = "Entrer l'e-mail";
+"add_client_phone_label" = "Téléphone:";
+"add_client_phone_placeholder" = "Entrer le numéro de téléphone";
+"add_client_address_label" = "Adresse:";
+"add_client_address_placeholder" = "Entrer l'adresse";
+"add_client_gender_label" = "Genre:";
+"add_client_gender_male" = "Homme";
+"add_client_gender_female" = "Femme";
+"add_client_first_info_label" = "Première information supplémentaire:";
+"add_client_first_info_placeholder" = "Entrer l'information";
+"add_client_second_info_label" = "Deuxième information supplémentaire:";
+"add_client_second_info_placeholder" = "Entrer l'information";
+"add_client_third_info_label" = "Troisième information supplémentaire:";
+"add_client_third_info_placeholder" = "Entrer l'information";
+
+"no_actions_available" = "Aucune action disponible pour ce client.";
+"save_note_button" = "Enregistrer la note";
+"note_saved_message" = "Note enregistrée !";
+
+"pagination_previous" = "Précédent";
+"pagination_next" = "Suivant";
+"pagination_page" = "Page";
+"pagination_of" = "de";
+
+"delete_client_confirmation" = "Êtes-vous sûr de vouloir supprimer ce client et toutes ses actions ?";
+"unknown_client" = "Client inconnu";
+"cancel_button" = "Annuler";
+"confirm_button" = "Oui";
+
+// --------------------------------- Callendar -----------------------------
+"tasks_for_selected_day" = "Tâches pour le jour sélectionné";
+"no_client_name" = "Pas de nom de client";
+
+"calendar_actions_count" = "Actions : ";
+
+// --------------------------------- Reports -----------------------------
+"reports_title" = "Rapports et exportation de données";
+"reports_subtitle" = "Générez des rapports, visualisez des données et exportez/importez des informations dans divers formats.";
+"reports_generate_section" = "Générer des rapports";
+"generate_sales_report_title" = "Générer un rapport de ventes";
+"generate_sales_report_subtitle" = "Rapport détaillé de toutes les transactions de ventes.";
+"customer_analytics_title" = "Analyse des clients";
+"customer_analytics_subtitle" = "Aperçus sur le comportement et les tendances des clients.";
+"monthly_revenue_report_title" = "Rapport des revenus mensuels";
+"monthly_revenue_report_subtitle" = "Suivez les revenus mensuels par département.";
+"task_completion_overview_title" = "Aperçu des tâches terminées";
+"task_completion_overview_subtitle" = "Aperçu des tâches et de la progression des projets.";
+"statistic_overview_title" = "Aperçu statistique";
+"statistic_overview_subtitle" = "Afficher les données statistiques brutes.";
+"data_export_section" = "Exporter des données";
+"export_to_excel_title" = "Exporter vers Excel";
+"export_to_excel_subtitle" = "Enregistrer les données au format Excel.";
+"export_to_pdf_title" = "Exporter vers PDF";
+"export_to_pdf_subtitle" = "Enregistrer les données au format PDF.";
+"export_to_csv_title" = "Exporter vers CSV";
+"export_to_csv_subtitle" = "Enregistrer les données au format CSV.";
+"export_to_json_title" = "Exporter vers JSON";
+"export_to_json_subtitle" = "Enregistrer les données au format JSON.";
+"data_import_section" = "Importer des données";
+"import_from_excel_title" = "Importer depuis Excel";
+"import_from_excel_subtitle" = "Charger des données depuis un fichier Excel.";
+"import_from_csv_title" = "Importer depuis CSV";
+"import_from_csv_subtitle" = "Charger des données depuis un fichier CSV.";
+"import_from_json_title" = "Importer depuis JSON";
+"import_from_json_subtitle" = "Charger des données depuis un fichier JSON.";
+
+// --------------------------------- Actions -----------------------------
+"Low" = "Bas";
+"Medium" = "Moyen";
+"High" = "Haut";
+"Very High" = "Très haut";
+
+"filter_actions_title" = "Filtrer les actions";
+"clear_filters_button" = "Effacer";
+"apply_filters_button" = "Appliquer les filtres";
+"search_client_placeholder" = "Rechercher un client par nom";
+"unknown_client" = "Client inconnu";
+"filter_by_criticality_label" = "Filtrer par Criticité";
+"criticality_all" = "Tous";
+"criticality_low" = "Faible";
+"criticality_medium" = "Moyen";
+"criticality_high" = "Élevé";
+"criticality_very_high" = "Très élevé";
+
+"delete_action_prompt" = "Déposez l'action sélectionnée ici pour la supprimer.";
+
+"ToDo" = "À faire";
+"In Progress" = "En cours";
+"Blocked" = "Bloqué";
+"Done" = "Terminé";
+"Archived" = "Archivé";
+
+"add_action_title" = "Ajouter une nouvelle action";
+"add_action_clear_button" = "Effacer";
+"add_action_add_button" = "Ajouter";
+"add_action_success_message" = "Nouvelle action ajoutée!";
+"add_action_message_label" = "Message:";
+"add_action_type_label" = "Type d'action:";
+"add_action_criticality_label" = "Criticité:";
+"add_action_status_label" = "Statut:";
+"action_type_general" = "Général";
+"action_type_meeting" = "Réunion";
+"action_type_call" = "Appel";
+"action_type_email" = "E-mail";
+"action_type_follow_up" = "Suivi";
+"action_type_contract" = "Contrat";
+"criticality_low" = "Faible";
+"criticality_medium" = "Moyenne";
+"criticality_high" = "Élevée";
+"criticality_very_high" = "Très élevée";
+"status_to_do" = "À faire";
+"status_in_progress" = "En cours";
+"status_done" = "Terminé";
+"status_blocked" = "Bloqué";
+
+"delete_action_confirmation" = "Supprimer cette action de façon permanente ?";
+"archive_action_confirmation" = "Archiver cette action ?";
+"cancel_button" = "Annuler";
+"yes_button" = "Oui";
+
+"edit_action_title" = "Modifier l'action";
+"edit_action_success_message" = "Action mise à jour !";
+"update_button" = "Mettre à jour";
+"unknown_client" = "Pas de nom de client";
+
+"delete_archived_confirmation" = "Êtes-vous sûr de vouloir supprimer toutes les actions archivées ?";
+"archive_done_confirmation" = "Êtes-vous sûr de vouloir archiver toutes les actions avec le statut 'Terminé' ?";
+"delete_archived_irreversible_confirmation" = "Cette action est irréversible. Une fois encore, voulez-vous vraiment supprimer toutes les actions archivées ?";
+"cancel_button" = "Annuler";
+"yes_button" = "Oui";
+
+// --------------------------------- Commons -----------------------------
+"due_date_label" = "Date d'échéance :";
+"warning_text_max_characters" = "Le texte peut contenir un maximum de 600 caractères";
+"search_placeholder" = "Rechercher";

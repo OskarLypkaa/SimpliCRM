@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AddActionCalendarMonthView: View {
+struct AddActionWithClient: View {
     @State private var showMessage: Bool = false
     @State private var isWarningVisible: Bool = false
     @State private var showCalendar: Bool = false
@@ -8,11 +8,8 @@ struct AddActionCalendarMonthView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)], animation: .default)
     private var clients: FetchedResults<Client>
     
-   
-    var selectedDate: Date
-    @Binding var refreshList: Bool
-    
     @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Calendar.current.startOfDay(for: Date()), status: "ToDo", type: "General")
+    @Binding var refreshList: Bool
     
     @State private var searchedClientName = ""
     @State private var selectedClient: Client? = nil
@@ -27,7 +24,7 @@ struct AddActionCalendarMonthView: View {
         ZStack {
             VStack {
                 HStack {
-                    Text("Add action for day\n\(formattedDate(selectedDate))")
+                    Text(LocalizedStringKey("add_action_title"))
                         .font(.title)
                     Spacer()
                     Button(action: {
@@ -155,12 +152,14 @@ struct AddActionCalendarMonthView: View {
                             }
                             .pickerStyle(SegmentedPickerStyle())
                         }.padding()
+                        DatePickerWithCallendar(actionDueDate: $action.dueDate, isDatePickerPresented: $showCalendar)
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                 }
             }
-            .frame(width: 500, height: 530, alignment: .leading)
+            .frame(width: 500, height: 600, alignment: .leading)
         }
     }
 
@@ -195,7 +194,7 @@ struct AddActionCalendarMonthView: View {
             newItem.id = UUID()  // Unikalne ID
             newItem.message = action.message
             newItem.criticality = action.criticality
-            newItem.dueDate = selectedDate
+            newItem.dueDate = action.dueDate
             newItem.status = action.status
             newItem.type = action.type
             newItem.creationDate = Date()
@@ -234,11 +233,4 @@ struct AddActionCalendarMonthView: View {
             return clients.filter { $0.name?.lowercased().contains(searchedClientName.lowercased()) ?? false }
         }
     }
-    
-    private func formattedDate(_ date: Date) -> String {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium // Format daty, np. "Jan 22, 2025"
-            formatter.timeStyle = .none  // Tylko data
-            return formatter.string(from: date)
-        }
 }
