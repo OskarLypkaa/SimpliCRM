@@ -6,7 +6,7 @@ struct SettingsView: View {
     @State private var showMessage: Bool = false
     @ObservedObject private var settings = Settings.shared
     @State private var showDatabaseSettings: Bool = false
-        @State private var showFilesSettings: Bool = false
+    @State private var showFilesSettings: Bool = false
     @State private var feedbackMessage: LocalizedStringKey = ""
 
     var body: some View {

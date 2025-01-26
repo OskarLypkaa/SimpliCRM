@@ -2,7 +2,14 @@ import SwiftUI
 
 struct ReportView: View {
     @State private var showStatisticView = false // Stan kontrolujący widoczność arkusza
-
+    
+    @State private var showSuccessMessage: Bool = false
+    @State private var succesMessage: LocalizedStringKey = ""
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)], animation: .default)
+    private var clients: FetchedResults<Client>
+    
     var body: some View {
         VStack(spacing: 30) {
             // Nagłówek
@@ -27,20 +34,10 @@ struct ReportView: View {
 
                     VStack(spacing: 15) {
                         ActionButton(
-                            title: LocalizedStringKey("generate_sales_report_title"),
-                            subtitle: LocalizedStringKey("generate_sales_report_subtitle"),
-                            image: "chart.bar.fill",
-                            isUnderDevelopment: false,
-                            action: {
-                                print("Generate Sales Report")
-                                // Wywołanie funkcji generowania raportu sprzedaży
-                            }
-                        )
-                        ActionButton(
                             title: LocalizedStringKey("customer_analytics_title"),
                             subtitle: LocalizedStringKey("customer_analytics_subtitle"),
                             image: "person.2.fill",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
                             action: {
                                 print("Customer Analytics")
                                 // Wywołanie funkcji do analizy klientów
@@ -50,7 +47,17 @@ struct ReportView: View {
                             title: LocalizedStringKey("monthly_revenue_report_title"),
                             subtitle: LocalizedStringKey("monthly_revenue_report_subtitle"),
                             image: "calendar",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
+                            action: {
+                                print("Generate Monthly Revenue Report")
+                                // Wywołanie funkcji generowania raportu miesięcznego przychodu
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("weekly_revenue_report_title"),
+                            subtitle: LocalizedStringKey("weekly_revenue_report_subtitle"),
+                            image: "calendar",
+                            isUnderDevelopment: true,
                             action: {
                                 print("Generate Monthly Revenue Report")
                                 // Wywołanie funkcji generowania raportu miesięcznego przychodu
@@ -60,7 +67,7 @@ struct ReportView: View {
                             title: LocalizedStringKey("task_completion_overview_title"),
                             subtitle: LocalizedStringKey("task_completion_overview_subtitle"),
                             image: "checkmark.circle.fill",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
                             action: {
                                 print("Task Completion Overview")
                                 // Wywołanie funkcji przeglądu ukończonych zadań
@@ -90,17 +97,17 @@ struct ReportView: View {
                             title: LocalizedStringKey("export_to_excel_title"),
                             subtitle: LocalizedStringKey("export_to_excel_subtitle"),
                             image: "doc.fill",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
                             action: {
-                                print("Export to Excel")
-                                // Wywołanie funkcji eksportu do Excel
+                                
+
                             }
                         )
                         ActionButton(
                             title: LocalizedStringKey("export_to_pdf_title"),
                             subtitle: LocalizedStringKey("export_to_pdf_subtitle"),
                             image: "doc.richtext.fill",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
                             action: {
                                 print("Export to PDF")
                                 // Wywołanie funkcji eksportu do PDF
@@ -112,8 +119,10 @@ struct ReportView: View {
                             image: "tablecells.fill",
                             isUnderDevelopment: false,
                             action: {
-                                print("Export to CSV")
-                                // Wywołanie funkcji eksportu do CSV
+                                exportWithLoading(exportType: "csv", data: clients, fileName: "Clients", filePath: Selector.shared.setDestinationFolder()!) {
+                                    succesMessage = LocalizedStringKey("Clients exported succesfully")
+                                    showSuccessMessage = true
+                                }
                             }
                         )
                         ActionButton(
@@ -122,8 +131,10 @@ struct ReportView: View {
                             image: "curlybraces.square.fill",
                             isUnderDevelopment: false,
                             action: {
-                                print("Export to JSON")
-                                // Wywołanie funkcji eksportu do JSON
+                                exportWithLoading(exportType: "json", data: clients, fileName: "Clients", filePath: Selector.shared.setDestinationFolder()!) {
+                                    succesMessage = LocalizedStringKey("Clients exported succesfully")
+                                    showSuccessMessage = true
+                                }
                             }
                         )
                     }
@@ -141,7 +152,7 @@ struct ReportView: View {
                             title: LocalizedStringKey("import_from_excel_title"),
                             subtitle: LocalizedStringKey("import_from_excel_subtitle"),
                             image: "square.and.arrow.down.fill",
-                            isUnderDevelopment: false,
+                            isUnderDevelopment: true,
                             action: {
                                 print("Import from Excel")
                                 // Wywołanie funkcji importu z Excel
@@ -153,8 +164,10 @@ struct ReportView: View {
                             image: "arrow.down.circle.fill",
                             isUnderDevelopment: false,
                             action: {
-                                print("Import from CSV")
-                                // Wywołanie funkcji importu z CSV
+                                importWithLoading(context: viewContext, importType: "csv", filePath: Selector.shared.selectCSVFile()!) {
+                                    succesMessage = LocalizedStringKey("Clients imported succesfully")
+                                    showSuccessMessage = true
+                                }
                             }
                         )
                         ActionButton(
@@ -163,8 +176,10 @@ struct ReportView: View {
                             image: "arrow.down.circle.fill",
                             isUnderDevelopment: false,
                             action: {
-                                print("Import from JSON")
-                                // Wywołanie funkcji importu z JSON
+                                importWithLoading(context: viewContext, importType: "json", filePath: Selector.shared.selectJSONFile()!) {
+                                    succesMessage = LocalizedStringKey("Clients imported succesfully")
+                                    showSuccessMessage = true
+                                }
                             }
                         )
                     }
@@ -177,6 +192,13 @@ struct ReportView: View {
         }
         .sheet(isPresented: $showStatisticView) {
             StatisticView() // Prezentowanie arkusza z widokiem statystyk
+        }
+        .sheet(isPresented: $showSuccessMessage) {
+            AutoDismissSheetView(
+                message: succesMessage,
+                displayDuration: 1.5,
+                isPresented: $showSuccessMessage
+            )
         }
     }
 }

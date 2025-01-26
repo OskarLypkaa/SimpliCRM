@@ -1,6 +1,24 @@
 {
-  "originHash" : "b26c070fd1f0b029780331f3cefa3909a6d58ea6b3ae242bffe49d6011fe06fe",
+  "originHash" : "64249f8ff8264194721e3e183b4327140f84150f1369dfb3f7622c6e8bba60ce",
   "pins" : [
+    {
+      "identity" : "corexlsx",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CoreOffice/CoreXLSX.git",
+      "state" : {
+        "revision" : "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
+        "version" : "0.14.2"
+      }
+    },
+    {
+      "identity" : "xmlcoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maxdesiatov/XMLCoder.git",
+      "state" : {
+        "revision" : "ca932442d7481700f5434a7b138c47dd42d9902b",
+        "version" : "0.14.0"
+      }
+    },
     {
       "identity" : "zipfoundation",
       "kind" : "remoteSourceControl",

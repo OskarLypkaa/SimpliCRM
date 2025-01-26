@@ -394,6 +394,7 @@ class FilesManager {
             return "Database file selection cancelled or failed"
         }
     }
+    
 
     func selectFolder(completion: @escaping (URL?) -> Void) {
         let panel = NSOpenPanel()

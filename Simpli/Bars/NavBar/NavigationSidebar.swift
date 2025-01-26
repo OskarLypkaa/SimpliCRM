@@ -81,8 +81,10 @@ struct NavigationSidebar: View {
                         isCalendarExpanded: $isCalendarExpanded
                     )
                     .environment(\.locale, .init(identifier: settings.language.code))
+                    .padding(.bottom, 3)
                     
                 }
+                .padding(5)
                 .opacity(isCalendarExpanded ? 1 : 0) // Animacja przezroczystości
                 .animation(.easeInOut, value: isCalendarExpanded) // Animacja zmiany wartości opacity
                 .allowsHitTesting(isCalendarExpanded) // Zapobieganie interakcji, gdy ukryte

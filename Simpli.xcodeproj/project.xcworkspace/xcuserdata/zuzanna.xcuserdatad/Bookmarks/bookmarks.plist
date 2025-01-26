@@ -10,15 +10,15 @@
 				<key>location-parameters</key>
 				<dict>
 					<key>EndingColumnNumber</key>
-					<string>32</string>
+					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>465</string>
+					<string>467</string>
 					<key>StartingColumnNumber</key>
-					<string>32</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>465</string>
+					<string>466</string>
 					<key>Timestamp</key>
-					<string>758561823.99657</string>
+					<string>759584076.053252</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,15 +34,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string></string>
+				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+</string>
 				<key>leading</key>
 				<string>        // Tworzenie archiwum ZIP
         do {
-            guard let archive = </string>
+</string>
 				<key>trailing</key>
-				<string>Archive(url: archiveURL, accessMode: .create) else {
-                return "Failed to create ZIP archive."
+				<string>                return "Failed to create ZIP archive."
             }
+
 </string>
 			</dict>
 			<key>title</key>
@@ -56,15 +57,15 @@
 				<key>location-parameters</key>
 				<dict>
 					<key>EndingColumnNumber</key>
-					<string>32</string>
+					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>465</string>
+					<string>467</string>
 					<key>StartingColumnNumber</key>
-					<string>32</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>465</string>
+					<string>466</string>
 					<key>Timestamp</key>
-					<string>758561823.99657</string>
+					<string>759584076.0532759</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -80,15 +81,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string></string>
+				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+</string>
 				<key>leading</key>
 				<string>        // Tworzenie archiwum ZIP
         do {
-            guard let archive = </string>
+</string>
 				<key>trailing</key>
-				<string>Archive(url: archiveURL, accessMode: .create) else {
-                return "Failed to create ZIP archive."
+				<string>                return "Failed to create ZIP archive."
             }
+
 </string>
 			</dict>
 			<key>title</key>
