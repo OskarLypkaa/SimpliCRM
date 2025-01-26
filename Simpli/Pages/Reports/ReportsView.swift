@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ReportView: View {
-    @State private var showDataView = false // Stan kontrolujący widoczność arkusza
+    @State private var showStatisticView = false // Stan kontrolujący widoczność arkusza
 
     var body: some View {
         VStack(spacing: 30) {
@@ -26,19 +26,55 @@ struct ReportView: View {
                         .fontWeight(.semibold)
 
                     VStack(spacing: 15) {
-                        ActionButton(title: LocalizedStringKey("generate_sales_report_title"), subtitle: LocalizedStringKey("generate_sales_report_subtitle"), image: "chart.bar.fill")
-                        ActionButton(title: LocalizedStringKey("customer_analytics_title"), subtitle: LocalizedStringKey("customer_analytics_subtitle"), image: "person.2.fill")
-                        ActionButton(title: LocalizedStringKey("monthly_revenue_report_title"), subtitle: LocalizedStringKey("monthly_revenue_report_subtitle"), image: "calendar")
-                        ActionButton(title: LocalizedStringKey("task_completion_overview_title"), subtitle: LocalizedStringKey("task_completion_overview_subtitle"), image: "checkmark.circle.fill")
-
-                        // ActionButton wywołujący DataView
-                        ActionButton(title: LocalizedStringKey("statistic_overview_title"), subtitle: LocalizedStringKey("statistic_overview_subtitle"), image: "chart.line.uptrend.xyaxis.circle.fill")
-                            .onTapGesture {
-                                showDataView = true // Pokazuje arkusz po kliknięciu
+                        ActionButton(
+                            title: LocalizedStringKey("generate_sales_report_title"),
+                            subtitle: LocalizedStringKey("generate_sales_report_subtitle"),
+                            image: "chart.bar.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Generate Sales Report")
+                                // Wywołanie funkcji generowania raportu sprzedaży
                             }
-                            .sheet(isPresented: $showDataView) {
-                                DataView() // Wywołanie istniejącego DataView
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("customer_analytics_title"),
+                            subtitle: LocalizedStringKey("customer_analytics_subtitle"),
+                            image: "person.2.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Customer Analytics")
+                                // Wywołanie funkcji do analizy klientów
                             }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("monthly_revenue_report_title"),
+                            subtitle: LocalizedStringKey("monthly_revenue_report_subtitle"),
+                            image: "calendar",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Generate Monthly Revenue Report")
+                                // Wywołanie funkcji generowania raportu miesięcznego przychodu
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("task_completion_overview_title"),
+                            subtitle: LocalizedStringKey("task_completion_overview_subtitle"),
+                            image: "checkmark.circle.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Task Completion Overview")
+                                // Wywołanie funkcji przeglądu ukończonych zadań
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("statistic_overview_title"),
+                            subtitle: LocalizedStringKey("statistic_overview_subtitle"),
+                            image: "chart.line.uptrend.xyaxis.circle.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                showStatisticView = true // Otwieranie arkusza statystyk
+                            }
+                        )
                     }
                 }
                 .padding(.horizontal)
@@ -50,10 +86,46 @@ struct ReportView: View {
                         .fontWeight(.semibold)
 
                     VStack(spacing: 15) {
-                        ActionButton(title: LocalizedStringKey("export_to_excel_title"), subtitle: LocalizedStringKey("export_to_excel_subtitle"), image: "doc.fill")
-                        ActionButton(title: LocalizedStringKey("export_to_pdf_title"), subtitle: LocalizedStringKey("export_to_pdf_subtitle"), image: "doc.richtext.fill")
-                        ActionButton(title: LocalizedStringKey("export_to_csv_title"), subtitle: LocalizedStringKey("export_to_csv_subtitle"), image: "tablecells.fill")
-                        ActionButton(title: LocalizedStringKey("export_to_json_title"), subtitle: LocalizedStringKey("export_to_json_subtitle"), image: "curlybraces.square.fill")
+                        ActionButton(
+                            title: LocalizedStringKey("export_to_excel_title"),
+                            subtitle: LocalizedStringKey("export_to_excel_subtitle"),
+                            image: "doc.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Export to Excel")
+                                // Wywołanie funkcji eksportu do Excel
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("export_to_pdf_title"),
+                            subtitle: LocalizedStringKey("export_to_pdf_subtitle"),
+                            image: "doc.richtext.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Export to PDF")
+                                // Wywołanie funkcji eksportu do PDF
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("export_to_csv_title"),
+                            subtitle: LocalizedStringKey("export_to_csv_subtitle"),
+                            image: "tablecells.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Export to CSV")
+                                // Wywołanie funkcji eksportu do CSV
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("export_to_json_title"),
+                            subtitle: LocalizedStringKey("export_to_json_subtitle"),
+                            image: "curlybraces.square.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Export to JSON")
+                                // Wywołanie funkcji eksportu do JSON
+                            }
+                        )
                     }
                 }
                 .padding(.horizontal)
@@ -65,9 +137,36 @@ struct ReportView: View {
                         .fontWeight(.semibold)
 
                     VStack(spacing: 15) {
-                        ActionButton(title: LocalizedStringKey("import_from_excel_title"), subtitle: LocalizedStringKey("import_from_excel_subtitle"), image: "square.and.arrow.down.fill")
-                        ActionButton(title: LocalizedStringKey("import_from_csv_title"), subtitle: LocalizedStringKey("import_from_csv_subtitle"), image: "arrow.down.circle.fill")
-                        ActionButton(title: LocalizedStringKey("import_from_json_title"), subtitle: LocalizedStringKey("import_from_json_subtitle"), image: "arrow.down.circle.fill")
+                        ActionButton(
+                            title: LocalizedStringKey("import_from_excel_title"),
+                            subtitle: LocalizedStringKey("import_from_excel_subtitle"),
+                            image: "square.and.arrow.down.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Import from Excel")
+                                // Wywołanie funkcji importu z Excel
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("import_from_csv_title"),
+                            subtitle: LocalizedStringKey("import_from_csv_subtitle"),
+                            image: "arrow.down.circle.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Import from CSV")
+                                // Wywołanie funkcji importu z CSV
+                            }
+                        )
+                        ActionButton(
+                            title: LocalizedStringKey("import_from_json_title"),
+                            subtitle: LocalizedStringKey("import_from_json_subtitle"),
+                            image: "arrow.down.circle.fill",
+                            isUnderDevelopment: false,
+                            action: {
+                                print("Import from JSON")
+                                // Wywołanie funkcji importu z JSON
+                            }
+                        )
                     }
                 }
                 .padding(.horizontal)
@@ -76,12 +175,8 @@ struct ReportView: View {
             }
             .padding(.bottom, 20)
         }
-    }
-}
-
-// Podgląd dla widoku
-struct ReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReportView()
+        .sheet(isPresented: $showStatisticView) {
+            StatisticView() // Prezentowanie arkusza z widokiem statystyk
+        }
     }
 }
