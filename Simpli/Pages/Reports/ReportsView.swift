@@ -4,7 +4,7 @@ struct ReportView: View {
     @State private var showStatisticView = false // Stan kontrolujący widoczność arkusza
     
     @State private var showSuccessMessage: Bool = false
-    @State private var succesMessage: LocalizedStringKey = ""
+    @AppStorage("succesMessage") var succesMessage: String = ""
     
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)], animation: .default)
@@ -119,9 +119,11 @@ struct ReportView: View {
                             image: "tablecells.fill",
                             isUnderDevelopment: false,
                             action: {
-                                exportWithLoading(exportType: "csv", data: clients, fileName: "Clients", filePath: Selector.shared.setDestinationFolder()!) {
-                                    succesMessage = LocalizedStringKey("Clients exported succesfully")
-                                    showSuccessMessage = true
+                                if let destinationFolder = Selector.shared.setDestinationFolder() {
+                                    exportWithLoading(exportType: "csv", data: clients, fileName: "Clients", filePath: destinationFolder) {
+                                        succesMessage = "Clients exported succesfully"
+                                        showSuccessMessage = true
+                                    }
                                 }
                             }
                         )
@@ -131,9 +133,11 @@ struct ReportView: View {
                             image: "curlybraces.square.fill",
                             isUnderDevelopment: false,
                             action: {
-                                exportWithLoading(exportType: "json", data: clients, fileName: "Clients", filePath: Selector.shared.setDestinationFolder()!) {
-                                    succesMessage = LocalizedStringKey("Clients exported succesfully")
-                                    showSuccessMessage = true
+                                if let destinationFolder = Selector.shared.setDestinationFolder() {
+                                    exportWithLoading(exportType: "json", data: clients, fileName: "Clients", filePath: destinationFolder) {
+                                        succesMessage = "Clients exported succesfully"
+                                        showSuccessMessage = true
+                                    }
                                 }
                             }
                         )
@@ -164,9 +168,11 @@ struct ReportView: View {
                             image: "arrow.down.circle.fill",
                             isUnderDevelopment: false,
                             action: {
-                                importWithLoading(context: viewContext, importType: "csv", filePath: Selector.shared.selectCSVFile()!) {
-                                    succesMessage = LocalizedStringKey("Clients imported succesfully")
-                                    showSuccessMessage = true
+                                if let CSVFilePath = Selector.shared.selectCSVFile() {
+                                    importWithLoading(context: viewContext, importType: "csv", filePath: CSVFilePath) {
+                                        succesMessage = "Clients imported succesfully"
+                                        showSuccessMessage = true
+                                    }
                                 }
                             }
                         )
@@ -176,10 +182,11 @@ struct ReportView: View {
                             image: "arrow.down.circle.fill",
                             isUnderDevelopment: false,
                             action: {
-                                importWithLoading(context: viewContext, importType: "json", filePath: Selector.shared.selectJSONFile()!) {
-                                    succesMessage = LocalizedStringKey("Clients imported succesfully")
-                                    showSuccessMessage = true
-                                }
+                                if let JSONFilePath = Selector.shared.selectJSONFile() {
+                                    importWithLoading(context: viewContext, importType: "json", filePath: JSONFilePath) {
+                                        succesMessage = "Clients imported succesfully"
+                                        showSuccessMessage = true
+                                    }}
                             }
                         )
                     }
@@ -195,7 +202,7 @@ struct ReportView: View {
         }
         .sheet(isPresented: $showSuccessMessage) {
             AutoDismissSheetView(
-                message: succesMessage,
+                message: LocalizedStringKey(succesMessage),
                 displayDuration: 1.5,
                 isPresented: $showSuccessMessage
             )

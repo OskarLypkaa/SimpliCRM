@@ -166,9 +166,9 @@ struct AutoDismissSheetView: View {
                 isPresented = false
             }
         }
-        
     }
 }
+
 
 struct DayCellView: View {
     let day: Int
