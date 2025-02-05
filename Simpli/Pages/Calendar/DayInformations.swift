@@ -40,8 +40,6 @@ struct DayInformations: View {
     var body: some View {
         CloseableHeader()
         VStack {
-            
-
             if actions.isEmpty {
                 HStack{
                     // Informacja, że brak klientów na dany dzień
@@ -62,7 +60,7 @@ struct DayInformations: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList)
+                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList, isMonthView: true)
                             .environment(\.locale, .init(identifier: settings.language.code))
                     }
                 }
@@ -94,7 +92,7 @@ struct DayInformations: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList)
+                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList, isMonthView: true)
                             .environment(\.locale, .init(identifier: settings.language.code))
                     }
                 }
@@ -132,6 +130,7 @@ struct DayInformations: View {
                 }
                 
             }
+           
             
         }
         .onChange(of: refreshList) {

@@ -88,6 +88,19 @@ struct ActionListFilter: View {
                 .pickerStyle(SegmentedPickerStyle())
             }
             .padding()
+            
+            VStack(alignment: .leading) {
+                Text(LocalizedStringKey("Max actions displayed per page"))
+                Picker("", selection: $filterData.actionsLimit) {
+                    Text("5").tag(5)
+                    Text("10").tag(10)
+                    Text("20").tag(20)
+                    Text("30").tag(30)
+                    Text("50").tag(50)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+            }
+            .padding()
             Spacer()
         }
         .frame(width: 500, height: 200)

@@ -30,6 +30,7 @@ struct CloseableHeader: View {
             }) {
                 Image(systemName: "xmark.circle")
                     .font(.title)
+                    .fontWeight(.bold)
             }
             
             .buttonStyle(PlainButtonStyle())
@@ -121,22 +122,31 @@ struct DatePickerWithCallendar: View {
         }
         .padding()
     }
-    
-    // Formatowanie daty do wyświetlenia na przycisku (jeśli potrzebne)
-    private var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.locale = Locale(identifier: settings.language.code) // Lokalizacja języka
-        return formatter.string(from: actionDueDate)
-    }
-    
-    private func formattedTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
-    }
 }
 
+struct TimePickerView: View {
+    @Binding var actionDueDate: Date
+    @EnvironmentObject var settings: Settings // Lokalizacja języka
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(LocalizedStringKey("time_picker_label"))
+                .font(.headline)
+
+            HStack {
+                Text("Time: ")
+                DatePicker(
+                    "Time: ",
+                    selection: $actionDueDate,
+                    displayedComponents: .hourAndMinute
+                )
+                .labelsHidden()
+                .padding(.leading, 10)
+            }
+        }
+        .padding()
+    }
+}
 
 
 
@@ -163,7 +173,7 @@ struct AutoDismissSheetView: View {
 struct DayCellView: View {
     let day: Int
     let fullDate: Date
-    let actionCount: Int?
+    let actionTypes: [String]?
     let isCurrentDay: Bool
     let onDateSelected: (Date) -> Void
     let showDayInformations: () -> Void
@@ -173,14 +183,27 @@ struct DayCellView: View {
     var body: some View {
         ZStack {
             Text("\(day)")
-            if let actionCount = actionCount, actionCount > 0 {
-                Text("\(actionCount) actions")
-                    .opacity(0.4)
-                    .font(.caption2)
-                    .padding(.top, 35)
+                .font(.title2)
+            HStack() {
+                HStack(spacing: 0) { // Ustaw odstęp między ikonami na 4 punkty (lub inna wartość)
+                    ForEach(0..<min(actionTypes!.count, 2), id: \.self) { index in
+                        Image(systemName: iconName(for: actionTypes![index]))
+                    }
+                }
+                .opacity(0.2)
+
+                
+                // Wyświetlanie "+x", jeśli jest więcej niż 4 akcje
+                if actionTypes!.count > 2 {
+                    Text("+\(actionTypes!.count - 2)")
+                        .opacity(0.4)
+
+                }
             }
+            .font(.system(size: 10))
+            .padding(.top, 40)
         }
-        .frame(width: 80, height: 50)
+        .frame(width: 80, height: 60)
         .contentShape(Rectangle())
         .background(isCurrentDay ? Color.yellow.opacity(0.3) : Color.clear)
         .cornerRadius(5)
@@ -197,6 +220,22 @@ struct DayCellView: View {
             }
         }
     }
+    private func iconName(for type: String) -> String {
+            switch type {
+            case "Meeting":
+                return "person.3.fill"
+            case "Call":
+                return "phone.fill"
+            case "Email":
+                return "envelope.fill"
+            case "Follow-Up":
+                return "arrow.triangle.branch"
+            case "Contract":
+                return "doc.text.fill"
+            default:
+                return "person.fill"
+            }
+        }
 }
 
 struct ChevronButton: View {

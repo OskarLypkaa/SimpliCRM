@@ -10,6 +10,8 @@ struct EditAction: View {
     @ObservedObject var settings = Settings.shared
     @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Date(), status: "ToDo", type: "Other")
 
+    @State private var showClientInfo: Bool = false
+    
     @Binding var refreshList: Bool
 
     var body: some View {
@@ -21,12 +23,25 @@ struct EditAction: View {
                     VStack {
                         Text(LocalizedStringKey("edit_action_title"))
                             .font(.title)
-                        HStack {
-                            Image(systemName: "person.fill")
-                            Text(actionObject.client?.name ?? "")
-                                .foregroundColor(.primary)
+                            .fontWeight(.bold)
+                        Button(action: {
+                            showClientInfo = true
+                        }) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                Text(actionObject.client?.name ?? "")
+                                    .foregroundColor(.primary)
+                                    .fontWeight(.bold)
+                            }
+                            .font(.headline)
                         }
-                        .font(.headline)
+                        .disabled(textValidation())
+                        .buttonStyle(PlainButtonStyle())
+                        .sheet(isPresented: $showClientInfo) {
+                            ClientInfo(client: actionObject.client!)
+                                .environment(\.locale, .init(identifier: settings.language.code))
+                        }
+                        
                     }
                     Spacer()
                     Button(action: {
@@ -34,6 +49,7 @@ struct EditAction: View {
                     }) {
                         Text(LocalizedStringKey("add_action_clear_button"))
                             .padding(.horizontal)
+                            .fontWeight(.bold)
                     }
                     .buttonStyle(PlainButtonStyle())
                     Button(action: {
@@ -41,6 +57,7 @@ struct EditAction: View {
                     }) {
                         Text(LocalizedStringKey("update_button"))
                             .padding(.horizontal)
+                            .fontWeight(.bold)
                     }
                     .disabled(textValidation())
                     .buttonStyle(PlainButtonStyle())
@@ -55,7 +72,6 @@ struct EditAction: View {
                 }
                 .padding(.horizontal)
                 .font(.title3)
-                .fontWeight(.bold)
                 .frame(width: 500, alignment: .leading)
                 
                 ZStack {

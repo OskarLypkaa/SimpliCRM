@@ -24,10 +24,13 @@ func formattedDateNoTime(_ date: Date) -> String {
     dateFormatter.locale = Locale(identifier: Settings.shared.language.code)
     return dateFormatter.string(from: date)
 }
+
+
 final class FilterData: ObservableObject {
     @Published var clientName = ""
     @Published var selectedClient: Client? = nil
     @Published var criticality: String = "All"
+    @Published var actionsLimit: Int = 10
     @Published var isListExpanded: Bool = false
 
     // Czyszczenie filtrów
@@ -35,6 +38,7 @@ final class FilterData: ObservableObject {
         clientName = ""
         selectedClient = nil
         criticality = "All"
+        actionsLimit = 10
         isListExpanded = false
     }
 
@@ -60,6 +64,7 @@ final class FilterData: ObservableObject {
             return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         }
     }
+
 }
 
 

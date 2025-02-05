@@ -15,7 +15,7 @@ struct AddAction: View {
     @State private var showCalendar: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Date(), status: "ToDo", type: "General")
+    @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Calendar.current.startOfDay(for: Date()), status: "ToDo", type: "General")
     
     @ObservedObject var settings = Settings.shared
     @Binding var refreshList: Bool
@@ -25,6 +25,7 @@ struct AddAction: View {
         CloseableHeader()
         
         ZStack {
+            
             VStack {
                 HStack {
                     Text(LocalizedStringKey("add_action_title"))

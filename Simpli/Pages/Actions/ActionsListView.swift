@@ -74,7 +74,7 @@ struct ActionsListView: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding(.trailing, 30)
-                            ForEach(filteredActions(for: status), id: \.id) { action in
+                            ForEach(filteredActions(for: status).prefix(filterData.actionsLimit), id: \.id) { action in
                                 ActionBlock(action: action)
                                     .onDrag {
                                         draggedAction = action

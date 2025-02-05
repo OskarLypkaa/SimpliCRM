@@ -2,6 +2,8 @@ import SwiftUI
 import CoreData
 
 struct HourInformations: View {
+    var isAdvancedView: Bool
+    
     @State private var showAddAction: Bool = false
     @State private var refreshList: Bool = false
     @State private var isHovered: Bool = false
@@ -14,13 +16,13 @@ struct HourInformations: View {
         actionsFetchRequest.wrappedValue
     }
 
-    init(selectedDate: Binding<Date>) {
+    init(selectedDate: Binding<Date>, isAdvancedView: Bool = true) {
         self._selectedDate = selectedDate
-
+        self.isAdvancedView = isAdvancedView 
         // Uzyskaj początek i koniec dnia dla podanej daty
         let calendar = Calendar.current
         let startOfDay = selectedDate.wrappedValue
-        let endOfDay = calendar.date(byAdding: .minute, value: 15, to: selectedDate.wrappedValue)!
+        let endOfDay = calendar.date(byAdding: .minute, value: isAdvancedView ? 15 : 60, to: selectedDate.wrappedValue)!
         
 
         // Używamy przedziału czasu w predykacie

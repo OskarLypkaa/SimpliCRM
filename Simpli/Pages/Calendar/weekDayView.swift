@@ -1,95 +1,89 @@
 import SwiftUI
 import Foundation
 
-struct weekDayView: View {
-    let column: Int
-    let row: Int
+struct WeekDayView: View {
     let isAdvancedView: Bool
-    @Binding var hoveredColumn: Int?
-    @Binding var hoveredRow: Int?
-    @State private var isHovered = false
-    var firstRowDate: Date
-
+    let selectedDay: Date
+    let actionForSelectedDay: [Actions]
+    let weekColumn: Int
+    
     @State private var showDayInformations = false
-
+    @State private var isHovered = false
+    
     @StateObject private var model = CalendarModel()
-
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        entity: Actions.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Actions.dueDate, ascending: true)]
-    ) var allActions: FetchedResults<Actions>
-
+    
     var body: some View {
-        ZStack {
+        ZStack{
             Rectangle()
                 .frame(height: isAdvancedView ? 30 : 15)
-                .foregroundColor(isHovered ? Color.gray.opacity(0.1) : (shouldHighlight ? Color.gray.opacity(0.05) : .clear))
-                .border(column >= 5 ? .gray.opacity(0.08) : .gray.opacity(0.17), width: 1.5)
+                .foregroundColor(isHovered ? Color.gray.opacity(0.1) : .clear)
+                .border(.gray.opacity(0.17), width: 1.5)
+                .background(weekColumn < 5 ? Color.gray.opacity(0.03) : Color.clear)
                 .onHover { hovering in
-                    withAnimation {
-                        isHovered = hovering
-                        if hovering {
-                            hoveredColumn = column
-                            hoveredRow = row
-                        } else if hoveredColumn == column && hoveredRow == row {
-                            hoveredColumn = nil
-                            hoveredRow = nil
+                    isHovered = hovering
+                }
+            
+            if !actionForSelectedDay.isEmpty {
+                let actionTypes = getActionTypes()
+                HStack() {
+                    if actionTypes.count == 1 {
+                        if let clientName = actionForSelectedDay.first?.client?.name {
+                            Text(clientName)
+                                .opacity(0.8)
+                                .frame(maxWidth: 70, alignment: .leading)
                         }
                     }
-                    if hovering { NSCursor.pointingHand.set() }
-                    else { NSCursor.arrow.set() }
+                    HStack(spacing: 0) { // Ustaw odstęp między ikonami na 4 punkty (lub inna wartość)
+                        ForEach(0..<min(actionTypes.count, 4), id: \.self) { index in
+                            Image(systemName: iconName(for: actionTypes[index]))
+                                .font(.system(size: isAdvancedView ? 15 : 10))
+                        }
+                    }
+                    .opacity(0.2)
+                    if actionTypes.count > 4 {
+                        Text("+\(actionTypes.count - 4)")
+                            .opacity(0.4)
+                    }
                 }
-                
-                let actionCount:Int = countActionsInInterval()
-                if actionCount > 0{
-                    Text("\(actionCount) actions")
-                        .opacity(0.4)
-                        .font(.caption2)
-                }
+                .font(.system(size: isAdvancedView ? 10 : 7))
+            }
+            
         }
         .onTapGesture {
             showDayInformations = true
         }
         .sheet(isPresented: $showDayInformations) {
-            HourInformations(selectedDate: .constant(calculateDate()))
+            HourInformations(selectedDate: .constant(selectedDay))
         }
     }
-
-    private var shouldHighlight: Bool {
-        if let hoveredColumn = hoveredColumn, let hoveredRow = hoveredRow {
-            return row == hoveredRow && column <= hoveredColumn
+    private func iconName(for type: String) -> String {
+            switch type {
+            case "Meeting":
+                return "person.3.fill"
+            case "Call":
+                return "phone.fill"
+            case "Email":
+                return "envelope.fill"
+            case "Follow-Up":
+                return "arrow.triangle.branch"
+            case "Contract":
+                return "doc.text.fill"
+            default:
+                return "person.fill"
+            }
         }
-        return false
-    }
-
-    private func calculateDate() -> Date {
-        let calendar = Calendar.current
-        let minutesPerRow = isAdvancedView ? 15 : 30
-        let minuteOffset = row * minutesPerRow
-
-        // Dodaj dni na podstawie kolumny do firstRowDate
-        let baseDate = calendar.date(byAdding: .day, value: column, to: firstRowDate)!
-
-        // Dodaj minuty na podstawie wiersza
-        let calculatedDate = calendar.date(byAdding: .minute, value: minuteOffset, to: baseDate)!
-
-        return calculatedDate
-    }
     
-    private func countActionsInInterval() -> Int {
-        let calendar = Calendar.current
-        let intervalStart = calculateDate()
-        let intervalEnd = calendar.date(byAdding: .minute, value: isAdvancedView ? 15 : 30, to: intervalStart)!
+    private func getActionTypes() -> [String] {
+        let startOfDay = model.calendar.startOfDay(for: selectedDay)
+        let allowedStatuses: Set<String> = ["ToDo", "In Progress", "Blocked"]
 
-        // Filtrowanie akcji z już załadowanej listy allActions
-        let matchingActions = allActions.filter { action in
-            guard let dueDate = action.dueDate else { return false }
-            return dueDate >= intervalStart && dueDate < intervalEnd
+        return actionForSelectedDay.compactMap { action in
+            guard let dueDate = action.dueDate,
+                  let status = action.status,
+                  let type = action.type else {
+                return nil
+            }
+            return model.calendar.isDate(dueDate, inSameDayAs: startOfDay) && allowedStatuses.contains(status) ? type : nil
         }
-
-        return matchingActions.count
     }
-
-
 }

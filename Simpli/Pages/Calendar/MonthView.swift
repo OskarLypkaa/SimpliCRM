@@ -93,7 +93,7 @@ struct MonthView: View {
                     DayCellView(
                         day: day,
                         fullDate: fullDate,
-                        actionCount: countActions(for: fullDate),
+                        actionTypes: getActionTypes(for: fullDate),
                         isCurrentDay: false, // Dni z poprzedniego miesiąca nie są aktualnym dniem
                         onDateSelected: { date in
                             selectedDate = date
@@ -111,7 +111,7 @@ struct MonthView: View {
                     DayCellView(
                         day: day,
                         fullDate: fullDate,
-                        actionCount: countActions(for: fullDate),
+                        actionTypes: getActionTypes(for: fullDate),
                         isCurrentDay: model.isCurrentDay(day),
                         onDateSelected: { date in
                             selectedDate = date
@@ -129,7 +129,7 @@ struct MonthView: View {
                     DayCellView(
                         day: day,
                         fullDate: fullDate,
-                        actionCount: countActions(for: fullDate),
+                        actionTypes: getActionTypes(for: fullDate),
                         isCurrentDay: false,
                         onDateSelected: { date in
                             selectedDate = date
@@ -152,11 +152,17 @@ struct MonthView: View {
     }
 
     /// Zlicza akcje dla konkretnej daty
-    private func countActions(for date: Date) -> Int? {
+    private func getActionTypes(for date: Date) -> [String] {
         let startOfDay = model.calendar.startOfDay(for: date)
-        return allActions.filter { action in
-            guard let dueDate = action.dueDate else { return false }
-            return model.calendar.isDate(dueDate, inSameDayAs: startOfDay)
-        }.count
+        let allowedStatuses: Set<String> = ["ToDo", "In Progress", "Blocked"]
+
+        return allActions.compactMap { action in
+            guard let dueDate = action.dueDate,
+                  let status = action.status,
+                  let type = action.type else {
+                return nil
+            }
+            return model.calendar.isDate(dueDate, inSameDayAs: startOfDay) && allowedStatuses.contains(status) ? type : nil
+        }
     }
 }

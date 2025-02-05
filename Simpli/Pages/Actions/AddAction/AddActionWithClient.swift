@@ -22,6 +22,32 @@ struct AddActionWithClient: View {
         CloseableHeader()
         
         ZStack {
+            if isListExpanded {
+                VStack {
+                    List(filteredClients, id: \.self) { client in
+                        
+                        Text(client.name ?? "")
+                            .onTapGesture {
+                                withAnimation {
+                                    isListExpanded = false
+                                    selectedClient = client
+                                    searchedClientName = client.name ?? ""
+                                }
+                            }
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white)
+                            .shadow(radius: 5)
+                    )
+                    .frame(maxHeight: 150) // Maksymalna wysokość listy
+                    .padding(.horizontal) // Odstęp od krawędzi
+                }
+                .zIndex(1) // Wyższy indeks
+                .transition(.opacity.combined(with: .move(edge: .top))) // Animacja
+                .padding(.bottom, 300)
+                
+            }
             VStack {
                 HStack {
                     Text(LocalizedStringKey("add_action_title"))
@@ -89,21 +115,6 @@ struct AddActionWithClient: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.bottom, 5)
-                    
-                    if isListExpanded {
-                        // Lista klientów, rozwinięta po kliknięciu
-                        List(filteredClients, id: \.self) { client in
-                            Text(client.name ?? "")
-                                .onTapGesture {
-                                    withAnimation {
-                                        isListExpanded = false
-                                        selectedClient = client
-                                        searchedClientName = client.name ?? ""
-                                    }
-                                }
-                        }
-                        .frame(maxHeight: 75)
-                    }
                 }.padding(.horizontal, 35)
                 
                 ZStack {

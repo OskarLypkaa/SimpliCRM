@@ -108,10 +108,11 @@ struct WeekView: View {
                     }
                 }
                 .transition(.move(edge: transitionDirection < 0 ? .leading : .trailing))
+                
             }
-            .frame(minWidth: 950, maxWidth: .infinity)
-            .padding(.leading, 95)
-            .padding(.trailing, 60)
+            .padding(.leading, 70)
+            .padding(.trailing, 70)
+            .frame(width: 1100)
             
 
             if isBacisViewDisplayed {

@@ -8,12 +8,6 @@ struct AddActionCalendarMonthView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)], animation: .default)
     private var clients: FetchedResults<Client>
     
-   
-    var selectedDate: Date
-    @Binding var refreshList: Bool
-    
-    @State private var action: Action = Action(message: "", criticality: "Low", dueDate: Calendar.current.startOfDay(for: Date()), status: "ToDo", type: "General")
-    
     @State private var searchedClientName = ""
     @State private var selectedClient: Client? = nil
     @EnvironmentObject var settings: Settings
@@ -21,10 +15,49 @@ struct AddActionCalendarMonthView: View {
     @State private var sheetMessage: String = ""
     @State private var isListExpanded: Bool = false  // Zmienna kontrolująca rozwinięcie listy
 
+    var selectedDate: Date
+    var isMonthView: Bool
+    
+    @Binding var refreshList: Bool
+    @State private var action: Action
+
+    init(selectedDate: Date, refreshList: Binding<Bool>, isMonthView: Bool = false) {
+        self.selectedDate = selectedDate
+        self._refreshList = refreshList // Binding wymaga _ przed nazwą
+        self.isMonthView = isMonthView
+        self._action = State(initialValue: Action(message: "", criticality: "Low", dueDate: selectedDate, status: "ToDo", type: "General"))
+    }
+
+    
     var body: some View {
         CloseableHeader()
         
         ZStack {
+            if isListExpanded {
+                VStack {
+                    List(filteredClients, id: \.self) { client in
+                        Text(client.name ?? "")
+                            .onTapGesture {
+                                withAnimation {
+                                    isListExpanded = false
+                                    selectedClient = client
+                                    searchedClientName = client.name ?? ""
+                                }
+                            }
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white)
+                            .shadow(radius: 5)
+                    )
+                    .frame(maxHeight: 140) // Maksymalna wysokość listy
+                    .padding(.horizontal) // Odstęp od krawędzi
+                }
+                .zIndex(1) // Wyższy indeks
+                .transition(.opacity.combined(with: .move(edge: .top))) // Animacja
+                .padding(.bottom, 200)
+                
+            }
             VStack {
                 HStack {
                     Text("Add action for day\n\(formattedDate(selectedDate))")
@@ -72,40 +105,30 @@ struct AddActionCalendarMonthView: View {
                 .frame(width: 500, alignment: .leading)
                 
                 VStack(alignment: .leading) {
-                    HStack {
-                        TextField(LocalizedStringKey("search_client_placeholder"), text: $searchedClientName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        
-                        // Przycisk do rozwinięcia/zwiń listę
-                        Button(action: {
-                            withAnimation {
-                                isListExpanded.toggle()
-                            }
-                        }) {
-                            Image(systemName: isListExpanded ? "chevron.down" : "chevron.right")
-                                .font(.title)
-                                .padding(.leading, 15)
-                                .onHover { hovering in
-                                    hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
-                                }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    .padding(.bottom, 5)
-                    
-                    if isListExpanded {
-                        // Lista klientów, rozwinięta po kliknięciu
-                        List(filteredClients, id: \.self) { client in
-                            Text(client.name ?? "")
-                                .onTapGesture {
+                    ZStack {
+                        VStack(alignment: .leading) {
+                            // Wyszukiwanie klienta i przycisk rozwijania
+                            HStack {
+                                TextField(LocalizedStringKey("search_client_placeholder"), text: $searchedClientName)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                                // Przycisk do rozwinięcia/zwiń listę
+                                Button(action: {
                                     withAnimation {
-                                        isListExpanded = false
-                                        selectedClient = client
-                                        searchedClientName = client.name ?? ""
+                                        isListExpanded.toggle()
                                     }
+                                }) {
+                                    Image(systemName: isListExpanded ? "chevron.down" : "chevron.right")
+                                        .font(.title)
+                                        .padding(.leading, 15)
+                                        .onHover { hovering in
+                                            hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
+                                        }
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            .padding(.bottom, 5)
                         }
-                        .frame(maxHeight: 75)
                     }
                 }.padding(.horizontal, 35)
                 
@@ -155,12 +178,14 @@ struct AddActionCalendarMonthView: View {
                             }
                             .pickerStyle(SegmentedPickerStyle())
                         }.padding()
+                        TimePickerView(actionDueDate: $action.dueDate)
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                 }
             }
-            .frame(width: 500, height: 530, alignment: .leading)
+            .frame(width: 500, height: 600, alignment: .leading)
         }
     }
 
@@ -191,11 +216,19 @@ struct AddActionCalendarMonthView: View {
     
     private func addItem() {
         withAnimation {
+            let calendar = Calendar.current
+
             let newItem = Actions(context: viewContext)
             newItem.id = UUID()  // Unikalne ID
             newItem.message = action.message
             newItem.criticality = action.criticality
-            newItem.dueDate = selectedDate
+            let actionComponents = calendar.dateComponents([.hour, .minute], from: action.dueDate)
+            if let newDate = calendar.date(bySettingHour: actionComponents.hour ?? 0,
+                                           minute: actionComponents.minute ?? 0,
+                                           second: 0,
+                                           of: selectedDate) {
+            newItem.dueDate = newDate
+            }
             newItem.status = action.status
             newItem.type = action.type
             newItem.creationDate = Date()
@@ -222,7 +255,7 @@ struct AddActionCalendarMonthView: View {
         selectedClient = nil
         action.message = ""
         action.criticality = "Low"
-        action.dueDate = Date()
+        action.dueDate = selectedDate
         action.status = "ToDo"
         action.type = "General"
     }
@@ -238,7 +271,7 @@ struct AddActionCalendarMonthView: View {
     private func formattedDate(_ date: Date) -> String {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium // Format daty, np. "Jan 22, 2025"
-            formatter.timeStyle = .none  // Tylko data
+            formatter.timeStyle = isMonthView ? .none : .medium
             return formatter.string(from: date)
         }
 }
