@@ -120,6 +120,7 @@ struct MonthView: View {
                             showDayInformations = true
                         }
                     )
+                    .fontWeight(.bold)
                 }
 
                 // Dni z następnego miesiąca

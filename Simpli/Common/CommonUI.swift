@@ -193,7 +193,6 @@ struct DayCellView: View {
                 .opacity(0.2)
 
                 
-                // Wyświetlanie "+x", jeśli jest więcej niż 4 akcje
                 if actionTypes!.count > 2 {
                     Text("+\(actionTypes!.count - 2)")
                         .opacity(0.4)

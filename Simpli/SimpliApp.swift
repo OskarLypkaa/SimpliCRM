@@ -25,3 +25,5 @@ extension ThemeMode {
         }
     }
 }
+
+// W kalendarzu dymek todo gdzie w liście będzie wyświetlać się ikona typu i lista klinetów 

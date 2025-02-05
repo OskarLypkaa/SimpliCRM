@@ -45,17 +45,11 @@ struct AddActionCalendarMonthView: View {
                                 }
                             }
                     }
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.white)
-                            .shadow(radius: 5)
-                    )
-                    .frame(maxHeight: 140) // Maksymalna wysokość listy
+                    .frame(maxHeight: 160) // Maksymalna wysokość listy
                     .padding(.horizontal) // Odstęp od krawędzi
                 }
                 .zIndex(1) // Wyższy indeks
-                .transition(.opacity.combined(with: .move(edge: .top))) // Animacja
-                .padding(.bottom, 200)
+                .padding(.bottom, 250)
                 
             }
             VStack {

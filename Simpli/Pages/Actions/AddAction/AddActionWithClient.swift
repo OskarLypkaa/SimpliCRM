@@ -16,7 +16,7 @@ struct AddActionWithClient: View {
     @EnvironmentObject var settings: Settings
 
     @State private var sheetMessage: String = ""
-    @State private var isListExpanded: Bool = false  // Zmienna kontrolująca rozwinięcie listy
+    @State private var isListExpanded: Bool = false
 
     var body: some View {
         CloseableHeader()
@@ -25,7 +25,6 @@ struct AddActionWithClient: View {
             if isListExpanded {
                 VStack {
                     List(filteredClients, id: \.self) { client in
-                        
                         Text(client.name ?? "")
                             .onTapGesture {
                                 withAnimation {
@@ -35,16 +34,10 @@ struct AddActionWithClient: View {
                                 }
                             }
                     }
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.white)
-                            .shadow(radius: 5)
-                    )
-                    .frame(maxHeight: 150) // Maksymalna wysokość listy
+                    .frame(maxHeight: 160) // Maksymalna wysokość listy
                     .padding(.horizontal) // Odstęp od krawędzi
                 }
                 .zIndex(1) // Wyższy indeks
-                .transition(.opacity.combined(with: .move(edge: .top))) // Animacja
                 .padding(.bottom, 300)
                 
             }

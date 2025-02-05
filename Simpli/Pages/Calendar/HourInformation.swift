@@ -130,9 +130,9 @@ struct HourInformations: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+                    Spacer()
                 }
-                
+                .frame(height: 400)
             }
             
         }

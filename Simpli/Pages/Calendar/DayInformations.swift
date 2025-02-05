@@ -125,16 +125,15 @@ struct DayInformations: View {
                             .padding(.bottom, 10)
                         }
                     }
-                    .padding(.horizontal)
                     
+                    .padding(.horizontal)
+                    Spacer()
                 }
-                
+                .frame(height: 400)
             }
-           
-            
         }
         .onChange(of: refreshList) {
-            // Odśwież widok, gdy `refreshList` się zmienia
+        
         }
     }
 

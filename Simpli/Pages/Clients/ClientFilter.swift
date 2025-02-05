@@ -30,7 +30,7 @@ struct ClientFilter: View {
             
             // Lista z selekcją
             VStack {
-                ForEach(options, id: \ .self) { item in
+                ForEach(options, id: \.self) { item in
                     HStack {
                         Text(item.capitalized)
                             .font(.body)
@@ -72,17 +72,21 @@ struct ClientFilter: View {
                 .padding(.top, 10)
         }
         .padding()
-        
+        .onAppear {
+            // Zapewniamy, że na starcie zawsze jest przynajmniej jeden filtr
+            if selectedItems.isEmpty {
+                selectedItems.insert(options.first!)
+            }
+        }
     }
    
-    
     private func toggleSelection(of item: String) {
-        if selectedItems.contains(item) {
-            withAnimation(.easeInOut(duration: 0.15)) {
-                selectedItems.remove(item)
-            }
-        } else {
-            withAnimation(.easeInOut(duration: 0.15)) {
+        withAnimation(.easeInOut(duration: 0.15)) {
+            if selectedItems.contains(item) {
+                if selectedItems.count > 1 { // Nie pozwalamy na usunięcie ostatniego filtra
+                    selectedItems.remove(item)
+                }
+            } else {
                 selectedItems.insert(item)
             }
         }
