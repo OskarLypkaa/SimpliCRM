@@ -30,7 +30,7 @@ final class FilterData: ObservableObject {
     @Published var clientName = ""
     @Published var selectedClient: Client? = nil
     @Published var criticality: String = "All"
-    @Published var actionsLimit: Int = 10
+    @Published var actionsLimit: Int = 5
     @Published var isListExpanded: Bool = false
 
     // Czyszczenie filtrów
@@ -38,7 +38,7 @@ final class FilterData: ObservableObject {
         clientName = ""
         selectedClient = nil
         criticality = "All"
-        actionsLimit = 10
+        actionsLimit = 5
         isListExpanded = false
     }
 

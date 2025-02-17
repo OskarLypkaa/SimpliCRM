@@ -53,6 +53,7 @@ struct FilesSetting: View {
                 title: "Archive Files Folder",
                 subtitle: "Archive all files to a selected folder."
             )
+            
 
             Spacer()
         }
