@@ -13,7 +13,7 @@ struct BackupDatabaseSetting: View {
         HStack {
             Text("Backup Path:")
                 .font(.headline)
-            Text(settings.sharedPath.isEmpty ? "No database folder selected" : "~ \(settings.sharedPath)")
+            Text(settings.automaticDatabaseBackupPath.isEmpty ? "No database folder selected" : "~ \(settings.automaticDatabaseBackupPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -21,7 +21,12 @@ struct BackupDatabaseSetting: View {
         VStack {
             SettingsButton(
                 action: {
-                    DatabaseManager.shared.selectDatabaseFile(settings: settings)
+                    DatabaseManager.shared.setAutomaticDatabaseBackupPath { newPath in
+                        if let path = newPath {
+                            print("New Path: \(path)")
+                        
+                        }
+                    }
                 },
                 icon: "folder.fill.badge.questionmark",
                 title: "Select Backup Folder",
@@ -36,8 +41,9 @@ struct BackupDatabaseSetting: View {
                 VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
                     Text("Create Database Automatically:")
                         .font(.headline)
-                    Toggle(isOn: $settings.automaticBackup) {}
+                    Toggle(isOn: $settings.automaticDatabaseBackup) {}
                         .toggleStyle(SwitchToggleStyle())
+                        .disabled(settings.automaticDatabaseBackupPath.isEmpty)
                         .onHover { hovering in
                             if hovering {
                                 NSCursor.pointingHand.set()
@@ -61,7 +67,7 @@ struct BackupDatabaseSetting: View {
                     Text("Automatic Backup Of Database Interval:")
                         .font(.headline)
 
-                    Picker("", selection: $settings.automaticBackupInterval) {
+                    Picker("", selection: $settings.automaticDatabaseBackupInterval) {
                         Text("3 minutes").tag(3)
                         Text("5 minutes").tag(5)
                         Text("10 minutes").tag(10)

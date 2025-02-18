@@ -13,7 +13,7 @@ struct BackupFilesSetting: View {
         HStack {
             Text("Backup Path:")
                 .font(.headline)
-            Text(settings.sharedPath.isEmpty ? "No files folder selected" : "~ \(settings.sharedPath)")
+            Text(settings.automaticFilesBackupPath.isEmpty ? "No files folder selected" : "~ \(settings.automaticFilesBackupPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -21,7 +21,11 @@ struct BackupFilesSetting: View {
         VStack {
             SettingsButton(
                 action: {
-                    DatabaseManager.shared.selectDatabaseFile(settings: settings)
+                    DatabaseManager.shared.setAutomaticFilesBackupPath { newPath in
+                        if let path = newPath {
+                            print("New Path: \(path)")
+                        }
+                    }
                 },
                 icon: "folder.fill.badge.questionmark",
                 title: "Select Backup Folder",
@@ -36,8 +40,9 @@ struct BackupFilesSetting: View {
                 VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
                     Text("Create Database Automatically:")
                         .font(.headline)
-                    Toggle(isOn: $settings.automaticBackup) {}
+                    Toggle(isOn: $settings.automaticFilesBackup) {}
                         .toggleStyle(SwitchToggleStyle())
+                        .disabled(settings.automaticFilesBackupPath.isEmpty)
                         .onHover { hovering in
                             if hovering {
                                 NSCursor.pointingHand.set()
@@ -61,7 +66,7 @@ struct BackupFilesSetting: View {
                     Text("Automatic Backup Of Files Interval:")
                         .font(.headline)
 
-                    Picker("", selection: $settings.automaticBackupInterval) {
+                    Picker("", selection: $settings.automaticFilesBackupInterval) {
                         Text("3 minutes").tag(3)
                         Text("5 minutes").tag(5)
                         Text("10 minutes").tag(10)

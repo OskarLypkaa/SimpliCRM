@@ -232,7 +232,7 @@ struct DayCellView: View {
             case "Contract":
                 return "doc.text.fill"
             default:
-                return "person.fill"
+                return "checkmark.circle.fill"
             }
         }
 }

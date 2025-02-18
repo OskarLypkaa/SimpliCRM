@@ -3,6 +3,8 @@ import SwiftUI
 struct DatabaseSetting: View {
     @ObservedObject private var settings = Settings.shared
 
+    @State private var showMessage: Bool = false
+    @State private var sheetMessage: String = "Operation finished!"
     var body: some View {
         CloseableHeader()
         Text("Database Settings")
@@ -19,7 +21,15 @@ struct DatabaseSetting: View {
         VStack {
             SettingsButton(
                 action: {
-                    DatabaseManager.shared.selectDatabaseFile(settings: settings)
+                    let message = DatabaseManager.shared.selectDatabaseFile(settings: settings)
+                    if(!message.isEmpty) {
+                        showMessage = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            withAnimation {
+                                showMessage = false
+                            }
+                        }
+                    }
                 },
                 icon: "externaldrive.fill.badge.questionmark",
                 title: "Browse Database",
@@ -30,9 +40,18 @@ struct DatabaseSetting: View {
                 action: {
                     DatabaseManager.shared.selectFolder { folderURL in
                         if let folderURL = folderURL {
-                            DatabaseManager.shared.generateEmptyDatabase(at: folderURL)
+                            let message = DatabaseManager.shared.generateEmptyDatabase(at: folderURL)
+                            if(!message.isEmpty) {
+                                showMessage = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                                    withAnimation {
+                                        showMessage = false
+                                    }
+                                }
+                            }
                         }
                     }
+                    
                 },
                 icon: "externaldrive.connected.to.line.below.fill",
                 title: "Create Database File",
@@ -43,9 +62,18 @@ struct DatabaseSetting: View {
                 action: {
                     DatabaseManager.shared.selectFolder { folderURL in
                         if let folderURL = folderURL {
-                            DatabaseManager.shared.backupDatabase(using: settings.sharedPath, to: folderURL)
+                            let message = DatabaseManager.shared.backupDatabase(using: settings.sharedPath, to: folderURL)
+                            if(!message.isEmpty) {
+                                showMessage = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                                    withAnimation {
+                                        showMessage = false
+                                    }
+                                }
+                            }
                         }
                     }
+               
                 },
                 icon: "tray.full.fill",
                 title: "Create Database Backup",
@@ -58,5 +86,13 @@ struct DatabaseSetting: View {
             Spacer()
         }
         .padding()
+        .sheet(isPresented: $showMessage) {
+            AutoDismissSheetView(
+                message: LocalizedStringKey(sheetMessage),
+                displayDuration: 1.5,
+                isPresented: $showMessage
+            )
+            .environment(\.locale, .init(identifier: settings.language.code))
+        }
     }
 }

@@ -2,7 +2,9 @@ import SwiftUI
 
 struct FilesSetting: View {
     @ObservedObject private var settings = Settings.shared
-
+    
+    @State private var showMessage: Bool = false
+    @State private var sheetMessage: String = "Operation finished!"
     var body: some View {
         CloseableHeader()
         Text("Files Settings")
@@ -19,7 +21,15 @@ struct FilesSetting: View {
         VStack {
             SettingsButton(
                 action: {
-                    FilesManager.shared.setFilesFolder(settings: settings)
+                    let message = FilesManager.shared.setFilesFolder(settings: settings)
+                    if(!message.isEmpty) {
+                        showMessage = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            withAnimation {
+                                showMessage = false
+                            }
+                        }
+                    }
                 },
                 icon: "folder.fill.badge.questionmark",
                 title: "Select Files Folder",
@@ -28,10 +38,19 @@ struct FilesSetting: View {
 
             SettingsButton(
                 action: {
+                    var message = ""
                     do {
-                        try FilesManager.shared.generateFoldersForUsers()
+                        try message = FilesManager.shared.generateFoldersForUsers()
                     } catch {
                         print("Error generating folders!")
+                    }
+                    if(!message.isEmpty) {
+                        showMessage = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            withAnimation {
+                                showMessage = false
+                            }
+                        }
                     }
                 },
                 icon: "folder.fill.badge.plus",
@@ -43,10 +62,20 @@ struct FilesSetting: View {
                 action: {
                     DatabaseManager.shared.selectFolder { folderURL in
                         if let folderURL = folderURL {
-                            FilesManager.shared.backupFilesPath(using: settings.filesPath, to: folderURL) { progress in
+                            let message = FilesManager.shared.backupFilesPath(using: settings.filesPath, to: folderURL) { progress in
                                 print("Progress: \(progress * 100)%")
                             }
+                            if(!message.isEmpty) {
+                                showMessage = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                                    withAnimation {
+                                        showMessage = false
+                                    }
+                                }
+                            }
+                            
                         }
+
                     }
                 },
                 icon: "tray.full.fill",
@@ -58,5 +87,14 @@ struct FilesSetting: View {
             Spacer()
         }
         .padding()
+        .sheet(isPresented: $showMessage) {
+            AutoDismissSheetView(
+                message: LocalizedStringKey(sheetMessage),
+                displayDuration: 1.5,
+                isPresented: $showMessage
+            )
+            .environment(\.locale, .init(identifier: settings.language.code))
+        }
     }
+    
 }

@@ -43,7 +43,7 @@ struct DayInformations: View {
 
                 HStack {
                     
-                    Text(LocalizedStringKey("Acrions for: \(formattedDate(selectedDate))"))
+                    Text(LocalizedStringKey("Actions for: \(formattedDate(selectedDate))"))
                         .font(.title2)
                         .multilineTextAlignment(.center)
                     

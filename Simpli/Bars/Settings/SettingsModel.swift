@@ -5,6 +5,8 @@ import AppKit
 import ZIPFoundation
 import CoreData
 import SQLite3
+import Combine
+
 
 class Settings: ObservableObject {
     static let shared = Settings()
@@ -42,13 +44,37 @@ class Settings: ObservableObject {
         }
     }
 
-    @Published var automaticBackup: Bool = false { // Nowa zmienna
+    @Published var automaticDatabaseBackup: Bool = false {
         didSet {
             saveSettings()
         }
     }
 
-    @Published var automaticBackupInterval: Int = 20 {
+    @Published var automaticDatabaseBackupInterval: Int = 20 {
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticDatabaseBackupPath: String = "" { // Nowa zmienna
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticFilesBackup: Bool = false { // Nowa zmienna
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticFilesBackupInterval: Int = 24 { // Nowa zmienna (np. co 24 godziny)
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticFilesBackupPath: String = "" { // Nowa zmienna
         didSet {
             saveSettings()
         }
@@ -82,8 +108,12 @@ class Settings: ObservableObject {
             themeMode: themeMode.rawValue,
             language: language.rawValue,
             showArchived: showArchived,
-            automaticBackup: automaticBackup, // Nowa zmienna
-            automaticBackupInterval: automaticBackupInterval // Nowa zmienna
+            automaticDatabaseBackup: automaticDatabaseBackup,
+            automaticDatabaseBackupInterval: automaticDatabaseBackupInterval,
+            automaticDatabaseBackupPath: automaticDatabaseBackupPath,
+            automaticFilesBackup: automaticFilesBackup,
+            automaticFilesBackupInterval: automaticFilesBackupInterval,
+            automaticFilesBackupPath: automaticFilesBackupPath
         )
 
         do {
@@ -107,8 +137,12 @@ class Settings: ObservableObject {
             themeMode = .dark
             language = .english
             showArchived = false
-            automaticBackup = false
-            automaticBackupInterval = 20
+            automaticDatabaseBackup = false
+            automaticDatabaseBackupInterval = 20
+            automaticDatabaseBackupPath = ""
+            automaticFilesBackup = false
+            automaticFilesBackupInterval = 24
+            automaticFilesBackupPath = ""
             return
         }
 
@@ -117,8 +151,12 @@ class Settings: ObservableObject {
         themeMode = ThemeMode(rawValue: loadedSettings.themeMode) ?? .dark
         language = Language(rawValue: loadedSettings.language) ?? .english
         showArchived = loadedSettings.showArchived
-        automaticBackup = loadedSettings.automaticBackup
-        automaticBackupInterval = loadedSettings.automaticBackupInterval
+        automaticDatabaseBackup = loadedSettings.automaticDatabaseBackup
+        automaticDatabaseBackupInterval = loadedSettings.automaticDatabaseBackupInterval
+        automaticDatabaseBackupPath = loadedSettings.automaticDatabaseBackupPath
+        automaticFilesBackup = loadedSettings.automaticFilesBackup
+        automaticFilesBackupInterval = loadedSettings.automaticFilesBackupInterval
+        automaticFilesBackupPath = loadedSettings.automaticFilesBackupPath
         print("Settings loaded successfully from \(url.path)")
     }
 }
@@ -129,9 +167,14 @@ struct SettingsData: Codable {
     let themeMode: String
     let language: String
     let showArchived: Bool
-    let automaticBackup: Bool
-    let automaticBackupInterval: Int
+    let automaticDatabaseBackup: Bool
+    let automaticDatabaseBackupInterval: Int
+    let automaticDatabaseBackupPath: String
+    let automaticFilesBackup: Bool
+    let automaticFilesBackupInterval: Int
+    let automaticFilesBackupPath: String
 }
+
 
 
 enum ThemeMode: String, CaseIterable {
@@ -282,7 +325,7 @@ class DatabaseManager {
             PersistenceController.shared.changeDatabasePath(to: settings.sharedPath)
             return "Database file selected successfully"
         } else {
-            return "Database file selection cancelled or failed"
+            return ""
         }
     }
     
@@ -316,6 +359,38 @@ class DatabaseManager {
             sqlite3_close(db)
         } else {
             print("Failed to open Core Data SQLite database.")
+        }
+    }
+    func setAutomaticDatabaseBackupPath(completion: @escaping (String?) -> Void) {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Select Backup Folder"
+
+        if panel.runModal() == .OK, let selectedURL = panel.url {
+            Settings.shared.automaticDatabaseBackupPath = selectedURL.path
+            completion(selectedURL.path)
+            print("Backup path set to: \(selectedURL.path)")
+        } else {
+            completion(nil)
+            print("Backup path selection cancelled.")
+        }
+    }
+    func setAutomaticFilesBackupPath(completion: @escaping (String?) -> Void) {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Select Backup Folder"
+
+        if panel.runModal() == .OK, let selectedURL = panel.url {
+            Settings.shared.automaticFilesBackupPath = selectedURL.path
+            completion(selectedURL.path)
+            print("Backup path set to: \(selectedURL.path)")
+        } else {
+            completion(nil)
+            print("Backup path selection cancelled.")
         }
     }
 }
@@ -359,7 +434,7 @@ class FilesManager {
             PersistenceController.shared.changeFilePath(to: settings.filesPath)
             return "Files storage folder selected successfully"
         } else {
-            return "Files storage folder selection cancelled or failed"
+            return ""
         }
     }
 
@@ -530,40 +605,158 @@ enum FilesManagerError: Error {
     }
 }
 
-
-
-class BackupManager {
+class BackupManager: ObservableObject {
     static let shared = BackupManager()
-    private var backupTimer: Timer?
+    private var backupTimerDatabase: Timer?
+    private var backupTimerFiles: Timer?
+    
+    private var cancellables = Set<AnyCancellable>()
 
-    private init() {}
+    private init() {
+        // Obserwowanie zmiany `automaticDatabaseBackup`
+        Settings.shared.$automaticDatabaseBackup
+            .sink { newValue in
+                if newValue {
+                    self.startAutomaticDatabaseBackup()
+                } else {
+                    self.stopAutomaticDatabaseBackup()
+                }
+            }
+            .store(in: &cancellables)
+        
+        // Obserwowanie zmiany `automaticFilesBackup`
+        Settings.shared.$automaticFilesBackup
+            .sink { newValue in
+                if newValue {
+                    self.startAutomaticFilesBackup()
+                } else {
+                    self.stopAutomaticFilesBackup()
+                }
+            }
+            .store(in: &cancellables)
+    }
 
-    func startAutomaticBackup() {
-        // Sprawdzenie, czy automatyczny backup jest włączony
-        guard Settings.shared.automaticBackup else {
-            print("Automatic backup is disabled.")
+    // MARK: - Backup Bazy Danych
+    func startAutomaticDatabaseBackup() {
+        guard Settings.shared.automaticDatabaseBackup else {
+            print("Automatic database backup is disabled.")
             return
         }
 
-        // Pobranie interwału w minutach i przeliczenie na sekundy
-        let intervalInSeconds = TimeInterval(Settings.shared.automaticBackupInterval * 1)
-        
-        // Zapewnienie, że poprzedni timer został anulowany
-        backupTimer?.invalidate()
+        let intervalInSeconds = TimeInterval(Settings.shared.automaticDatabaseBackupInterval * 60)
+        backupTimerDatabase?.invalidate()
 
-        // Uruchomienie nowego timera
-        backupTimer = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
-            self.performBackup()
+        backupTimerDatabase = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
+            self.performDatabaseBackup()
         }
 
-        print("Automatic backup scheduled every \(Settings.shared.automaticBackupInterval) hours.")
+        print("Database backup scheduled every \(Settings.shared.automaticDatabaseBackupInterval) minutes.")
     }
 
-    func performBackup() {
+    func stopAutomaticDatabaseBackup() {
+        backupTimerDatabase?.invalidate()
+        backupTimerDatabase = nil
+        print("Database backup stopped.")
+    }
+
+    func performDatabaseBackup() {
         let settingsPath = Settings.shared.sharedPath
-        let destinationURL = URL(fileURLWithPath: Settings.shared.filesPath)
+        let destinationURL = URL(fileURLWithPath: Settings.shared.automaticDatabaseBackupPath)
 
         let result = DatabaseManager.shared.backupDatabase(using: settingsPath, to: destinationURL)
-        print("Backup Result: \(result)")
+        print("Database Backup Result: \(result)")
+    }
+
+    // MARK: - Backup Plików
+    func startAutomaticFilesBackup() {
+        guard Settings.shared.automaticFilesBackup else {
+            print("Automatic files backup is disabled.")
+            return
+        }
+
+        let intervalInSeconds = TimeInterval(Settings.shared.automaticFilesBackupInterval * 60)
+        backupTimerFiles?.invalidate()
+
+        backupTimerFiles = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
+            self.performFilesBackup()
+        }
+
+        print("Files backup scheduled every \(Settings.shared.automaticFilesBackupInterval) minutes.")
+    }
+
+    func stopAutomaticFilesBackup() {
+        backupTimerFiles?.invalidate()
+        backupTimerFiles = nil
+        print("Files backup stopped.")
+    }
+
+    func performFilesBackup() {
+        let sourcePath = Settings.shared.filesPath
+        let destinationPath = Settings.shared.automaticFilesBackupPath
+
+        let fileManager = FileManager.default
+        let sourceURL = URL(fileURLWithPath: sourcePath)
+        let destinationURL = URL(fileURLWithPath: destinationPath)
+
+        guard fileManager.fileExists(atPath: sourcePath) else {
+            print("Files backup failed: source path does not exist.")
+            return
+        }
+
+        do {
+            let fileName = "files_backup_\(formattedTimestamp()).zip"
+            let backupURL = destinationURL.appendingPathComponent(fileName)
+            
+            // Sprawdzenie, czy folder docelowy istnieje, jeśli nie – utworzenie go
+            if !fileManager.fileExists(atPath: destinationPath) {
+                try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true)
+                print("Created backup folder at: \(destinationPath)")
+            }
+
+            // Tworzenie archiwum ZIP z całą zawartością katalogu źródłowego
+            let tempZipURL = destinationURL.appendingPathComponent("temp_backup.zip")
+            try zipFolderContents(sourceURL: sourceURL, zipURL: tempZipURL)
+
+            // Przeniesienie gotowego ZIP-a na docelową ścieżkę
+            try fileManager.moveItem(at: tempZipURL, to: backupURL)
+            print("Files successfully backed up to: \(backupURL.path)")
+
+        } catch {
+            print("Files backup failed: \(error.localizedDescription)")
+        }
+    }
+
+    // MARK: - Pomocnicza metoda do zipowania całej zawartości folderu
+    private func zipFolderContents(sourceURL: URL, zipURL: URL) throws {
+        let fileManager = FileManager.default
+        let tempDir = fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+
+        try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        let zipFileURL = tempDir.appendingPathComponent("backup.zip")
+
+        let archive = try Archive(url: zipFileURL, accessMode: .create)
+
+        let resourceKeys: [URLResourceKey] = [.isDirectoryKey, .nameKey]
+        let enumerator = fileManager.enumerator(at: sourceURL, includingPropertiesForKeys: resourceKeys)
+
+        while let fileURL = enumerator?.nextObject() as? URL {
+            let resourceValues = try fileURL.resourceValues(forKeys: Set(resourceKeys))
+
+            if resourceValues.isDirectory == false { // Dodajemy tylko pliki, pomijamy puste foldery
+                let relativePath = fileURL.path.replacingOccurrences(of: sourceURL.path, with: "")
+                try archive.addEntry(with: relativePath, relativeTo: sourceURL)
+            }
+        }
+
+        try fileManager.moveItem(at: zipFileURL, to: zipURL)
+    }
+
+
+    // Pomocnicza funkcja do generowania znacznika czasu
+    private func formattedTimestamp() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        return dateFormatter.string(from: Date())
     }
 }

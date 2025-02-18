@@ -12,11 +12,28 @@ struct SimpliApp: App {
                 .environment(\.locale, .init(identifier: settings.language.code))
                 .preferredColorScheme(settings.themeMode.colorScheme)
                 .onAppear {
-                    BackupManager.shared.startAutomaticBackup()
+                    BackupManager.shared.startAutomaticDatabaseBackup()
+                    BackupManager.shared.startAutomaticFilesBackup()
+                }
+                .onChange(of: settings.automaticDatabaseBackup) { newValue in
+                    if newValue {
+                        BackupManager.shared.startAutomaticDatabaseBackup()
+                    } else {
+                        BackupManager.shared.stopAutomaticDatabaseBackup()
+                    }
+                }
+                .onChange(of: settings.automaticFilesBackup) { newValue in
+                    if newValue {
+                        BackupManager.shared.startAutomaticFilesBackup()
+                    } else {
+                        BackupManager.shared.stopAutomaticFilesBackup()
+                    }
                 }
         }
     }
 }
+
+
 
 extension ThemeMode {
     var colorScheme: ColorScheme? {
