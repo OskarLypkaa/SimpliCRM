@@ -35,7 +35,6 @@ struct EditAction: View {
                             }
                             .font(.headline)
                         }
-                        .disabled(textValidation())
                         .buttonStyle(PlainButtonStyle())
                         .sheet(isPresented: $showClientInfo) {
                             ClientInfo(client: actionObject.client!)

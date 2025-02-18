@@ -11,7 +11,8 @@ struct ClientsFooter: View {
     // Obliczanie liczby stron
     private var totalPages: Int {
         let totalClients = fetchClientsCount()
-        return (totalClients + itemsPerPage - 1) / itemsPerPage
+        let totalNumberOfPages = (totalClients + itemsPerPage - 1) / itemsPerPage
+        return totalNumberOfPages == 0 ? 1 : totalNumberOfPages
     }
     
     // Funkcja do pobierania liczby klientów na podstawie wyszukiwania

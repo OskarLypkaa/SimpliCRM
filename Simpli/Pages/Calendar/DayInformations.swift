@@ -40,44 +40,13 @@ struct DayInformations: View {
     var body: some View {
         CloseableHeader()
         VStack {
-            if actions.isEmpty {
-                HStack{
-                    // Informacja, że brak klientów na dany dzień
-                    Text(LocalizedStringKey("no_actions_for_day"))
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                    Button(action: {
-                        showAddAction = true
-                    }) {
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                            .font(.largeTitle)
-                            .padding(.leading, 15)
-                            .padding(.bottom, 6)
-                            .onHover { hovering in
-                                hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
-                            }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList, isMonthView: true)
-                            .environment(\.locale, .init(identifier: settings.language.code))
-                    }
-                }
-                .padding(.bottom, 40)
-                .frame(width: 300)
-                .onHover { hovering in
-                    withAnimation {
-                        isHovered = hovering
-                    }
-                    if hovering { NSCursor.pointingHand.set() }
-                    else { NSCursor.arrow.set() }
-                }
-            } else {
+
                 HStack {
-                    Text(LocalizedStringKey("tasks_for_selected_day"))
+                    
+                    Text(LocalizedStringKey("Acrions for: \(formattedDate(selectedDate))"))
                         .font(.title2)
                         .multilineTextAlignment(.center)
+                    
                     Spacer()
                     Button(action: {
                         showAddAction = true
@@ -92,12 +61,19 @@ struct DayInformations: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList, isMonthView: true)
+                        AddActionCalendarMonthView(selectedDate: selectedDate, isMonthView: true)
                             .environment(\.locale, .init(identifier: settings.language.code))
                     }
                 }
                 .frame(width: 500)
+                
                 ScrollView {
+                    if actions.isEmpty {
+                        Text(LocalizedStringKey("no_actions_for_day"))
+                            .font(.title)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 100)
+                    }
                     LazyVStack(alignment: .leading, spacing: 10) {
                         ForEach(groupedActionsByClient(), id: \.clientName) { clientGroup in
                             VStack(alignment: .leading) {
@@ -130,7 +106,8 @@ struct DayInformations: View {
                     Spacer()
                 }
                 .frame(height: 400)
-            }
+                
+            
         }
         .onChange(of: refreshList) {
         
@@ -160,4 +137,11 @@ struct DayInformations: View {
         // Sortowanie klientów alfabetycznie
         return groups.sorted { $0.clientName < $1.clientName }
     }
+    
+    private func formattedDate(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            return formatter.string(from: date)
+        }
 }

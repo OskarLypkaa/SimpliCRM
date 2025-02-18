@@ -45,7 +45,6 @@ struct AddAction: View {
                         Text(LocalizedStringKey("add_action_add_button"))
                             .padding(.horizontal)
                     }
-                    .disabled(textValidation())
                     .buttonStyle(PlainButtonStyle())
                     .sheet(isPresented: $showMessage) {
                         AutoDismissSheetView(

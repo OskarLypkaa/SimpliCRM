@@ -16,94 +16,103 @@ struct ActionListFilter: View {
     
     var body: some View {
         CloseableHeader()
-        HStack {
-            Text(LocalizedStringKey("filter_actions_title"))
-                .padding(.horizontal)
-            
-            Spacer()
-
-            // Przycisk "Clear" - czyści filtry w FilterData
-            Button(LocalizedStringKey("clear_filters_button")) {
-                withAnimation {
-                    filterData.clear()
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.horizontal)
-
-            // Przycisk "Apply Filters" - wywołuje callback
-            Button(LocalizedStringKey("apply_filters_button")) {
-                onApplyFilters?()
-            }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.horizontal)
-        }
-        .padding(.horizontal)
-        .padding(.bottom)
-        .font(.title3)
-        .fontWeight(.bold)
-        
-        VStack {
-            HStack {
-                TextField(LocalizedStringKey("search_client_placeholder"), text: $filterData.clientName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                // Przycisk rozwijania listy klientów
-                Button(action: {
-                    withAnimation {
-                        filterData.isListExpanded.toggle()
+        ZStack{
+            if filterData.isListExpanded {
+                VStack {
+                    List(filteredClients, id: \.self) { client in
+                        Text(client.name ?? "")
+                            .onTapGesture {
+                                withAnimation {
+                                    filterData.isListExpanded = false
+                                    filterData.selectedClient = client
+                                    filterData.clientName = client.name ?? ""
+                                }
+                            }
                     }
-                }) {
-                    Image(systemName: filterData.isListExpanded ? "chevron.down" : "chevron.right")
-                        .font(.title)
+                    .frame(maxHeight: 90) // Maksymalna wysokość listy
+                    .padding(.horizontal) // Odstęp od krawędzi
+                }
+                .zIndex(1) // Wyższy indeks
+                .padding(.bottom, 15)
+                
+            }
+            VStack{
+            HStack {
+                Text(LocalizedStringKey("filter_actions_title"))
+                    .padding(.horizontal)
+                
+                Spacer()
+                
+                // Przycisk "Clear" - czyści filtry w FilterData
+                Button(LocalizedStringKey("clear_filters_button")) {
+                    withAnimation {
+                        filterData.clear()
+                    }
                 }
                 .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal)
+                
+                // Przycisk "Apply Filters" - wywołuje callback
+                Button(LocalizedStringKey("apply_filters_button")) {
+                    onApplyFilters?()
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal)
             }
-            .frame(width: 400)
-
-            // Rozwijana lista klientów
-            if filterData.isListExpanded {
-                List(filteredClients, id: \.self) { client in
-                    Text(client.name ?? "")
-                        .onTapGesture {
+            .padding(.horizontal)
+            .padding(.bottom)
+            .font(.title3)
+            .fontWeight(.bold)
+            
+                VStack {
+                    HStack {
+                        TextField(LocalizedStringKey("search_client_placeholder"), text: $filterData.clientName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        // Przycisk rozwijania listy klientów
+                        Button(action: {
                             withAnimation {
-                                filterData.isListExpanded = false
-                                filterData.selectedClient = client
-                                filterData.clientName = client.name ?? ""
+                                filterData.isListExpanded.toggle()
                             }
+                        }) {
+                            Image(systemName: filterData.isListExpanded ? "chevron.down" : "chevron.right")
+                                .font(.title)
                         }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    .frame(width: 400, height: 20)
+                    
+  
+                    VStack(alignment: .leading) {
+                        Text(LocalizedStringKey("filter_by_criticality_label"))
+                        Picker("", selection: $filterData.criticality) {
+                            Text(LocalizedStringKey("criticality_all")).tag("All")
+                            Text(LocalizedStringKey("criticality_low")).tag("Low")
+                            Text(LocalizedStringKey("criticality_medium")).tag("Medium")
+                            Text(LocalizedStringKey("criticality_high")).tag("High")
+                            Text(LocalizedStringKey("criticality_very_high")).tag("Very High")
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    .padding()
+                    
+                    VStack(alignment: .leading) {
+                        Text(LocalizedStringKey("Max actions displayed per page"))
+                        Picker("", selection: $filterData.actionsLimit) {
+                            Text("5").tag(5)
+                            Text("10").tag(10)
+                            Text("20").tag(20)
+                            Text("30").tag(30)
+                            Text("50").tag(50)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    .padding()
+                    Spacer()
                 }
-                .frame(maxWidth: 400, maxHeight: 100)
             }
-            
-            VStack(alignment: .leading) {
-                Text(LocalizedStringKey("filter_by_criticality_label"))
-                Picker("", selection: $filterData.criticality) {
-                    Text(LocalizedStringKey("criticality_all")).tag("All")
-                    Text(LocalizedStringKey("criticality_low")).tag("Low")
-                    Text(LocalizedStringKey("criticality_medium")).tag("Medium")
-                    Text(LocalizedStringKey("criticality_high")).tag("High")
-                    Text(LocalizedStringKey("criticality_very_high")).tag("Very High")
-                }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-            .padding()
-            
-            VStack(alignment: .leading) {
-                Text(LocalizedStringKey("Max actions displayed per page"))
-                Picker("", selection: $filterData.actionsLimit) {
-                    Text("5").tag(5)
-                    Text("10").tag(10)
-                    Text("20").tag(20)
-                    Text("30").tag(30)
-                    Text("50").tag(50)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-            .padding()
-            Spacer()
+            .frame(width: 500, height: 250)
         }
-        .frame(width: 500, height: 200)
     }
     
     private var filteredClients: [Client] {

@@ -42,98 +42,68 @@ struct HourInformations: View {
     var body: some View {
         CloseableHeader()
         VStack {
-            
 
-            if actions.isEmpty {
-                HStack{
-                    // Informacja, że brak klientów na dany dzień
+            HStack {
+                Text(LocalizedStringKey("Actions for: \(formattedDate(selectedDate))"))
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                Button(action: {
+                    showAddAction = true
+                }) {
+                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                        .font(.largeTitle)
+                        .padding(.leading, 15)
+                        .padding(.bottom, 6)
+                        .onHover { hovering in
+                            hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
+                        }
+                }
+                .buttonStyle(PlainButtonStyle())
+                .sheet(isPresented: $showAddAction) {
+                    AddActionCalendarMonthView(selectedDate: selectedDate)
+                        .environment(\.locale, .init(identifier: settings.language.code))
+                }
+            }
+            .frame(width: 500)
+            ScrollView {
+                if actions.isEmpty {
                     Text(LocalizedStringKey("No actions for selected time"))
-                        .font(.title2)
+                        .font(.title)
                         .multilineTextAlignment(.center)
-                    Spacer()
-                    Button(action: {
-                        showAddAction = true
-                    }) {
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                            .font(.largeTitle)
-                            .padding(.leading, 15)
-                            .padding(.bottom, 6)
-                            .onHover { hovering in
-                                hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
+                        .padding(.top, 100)
+                }
+                LazyVStack(alignment: .leading, spacing: 10) {
+                    ForEach(groupedActionsByClient(), id: \.clientName) { clientGroup in
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                    .font(.headline)
+                                Text(clientGroup.clientName.isEmpty
+                                     ? ""
+                                     : clientGroup.clientName)
+                                    .font(.headline)
                             }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList)
-                            .environment(\.locale, .init(identifier: settings.language.code))
-                    }
-                }
-                .padding(.bottom, 40)
-                .frame(width: 300)
-                .onHover { hovering in
-                    withAnimation {
-                        isHovered = hovering
-                    }
-                    if hovering { NSCursor.pointingHand.set() }
-                    else { NSCursor.arrow.set() }
-                }
-            } else {
-                HStack {
-                    Text(LocalizedStringKey("Actions for selected time: "))
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                    Button(action: {
-                        showAddAction = true
-                    }) {
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                            .font(.largeTitle)
-                            .padding(.leading, 15)
-                            .padding(.bottom, 6)
-                            .onHover { hovering in
-                                hovering ? NSCursor.pointingHand.set() : NSCursor.arrow.set()
-                            }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .sheet(isPresented: $showAddAction) {
-                        AddActionCalendarMonthView(selectedDate: selectedDate, refreshList: $refreshList)
-                            .environment(\.locale, .init(identifier: settings.language.code))
-                    }
-                }
-                .frame(width: 500)
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 10) {
-                        ForEach(groupedActionsByClient(), id: \.clientName) { clientGroup in
-                            VStack(alignment: .leading) {
+                            .padding(.horizontal)
+                            Divider()
+                            ForEach(clientGroup.actions, id: \.id) { action in
                                 HStack {
-                                    Image(systemName: "person.fill")
-                                        .font(.headline)
-                                    Text(clientGroup.clientName.isEmpty
-                                         ? ""
-                                         : clientGroup.clientName)
-                                        .font(.headline)
+                                    ActionInClientListView(action: action)
+                                        .environment(\.locale, .init(identifier: settings.language.code))
+                                    DeleteActionView(action: action, refreshList: $refreshList)
+                                        .padding(.bottom, 4)
+                                        .environment(\.locale, .init(identifier: settings.language.code))
                                 }
                                 .padding(.horizontal)
-                                Divider()
-                                ForEach(clientGroup.actions, id: \.id) { action in
-                                    HStack {
-                                        ActionInClientListView(action: action)
-                                            .environment(\.locale, .init(identifier: settings.language.code))
-                                        DeleteActionView(action: action, refreshList: $refreshList)
-                                            .padding(.bottom, 4)
-                                            .environment(\.locale, .init(identifier: settings.language.code))
-                                    }
-                                    .padding(.horizontal)
-                                }
                             }
-                            .padding(.bottom, 10)
                         }
+                        .padding(.bottom, 10)
                     }
-                    .padding(.horizontal)
-                    Spacer()
                 }
-                .frame(height: 400)
+                .padding(.horizontal)
+                Spacer()
             }
+            .frame(height: 400)
             
         }
         .onChange(of: refreshList) {
@@ -164,4 +134,10 @@ struct HourInformations: View {
         // Sortowanie klientów alfabetycznie
         return groups.sorted { $0.clientName < $1.clientName }
     }
+    private func formattedDate(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .medium
+            return formatter.string(from: date)
+        }
 }

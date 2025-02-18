@@ -27,7 +27,7 @@ struct AddActionWithClient: View {
                     List(filteredClients, id: \.self) { client in
                         Text(client.name ?? "")
                             .onTapGesture {
-                                withAnimation {
+                                withAnimation(.easeInOut(duration: 0.05))  {
                                     isListExpanded = false
                                     selectedClient = client
                                     searchedClientName = client.name ?? ""
@@ -94,7 +94,7 @@ struct AddActionWithClient: View {
                         
                         // Przycisk do rozwinięcia/zwiń listę
                         Button(action: {
-                            withAnimation {
+                            withAnimation(.easeInOut(duration: 0.15))  {
                                 isListExpanded.toggle()
                             }
                         }) {

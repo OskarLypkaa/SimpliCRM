@@ -34,7 +34,7 @@ struct ClientsHeaders: View {
                 headerView(title: "table_header_address", sortingKey: "address")
             }
         }
-        .padding(.leading, 30)
+        .padding(.leading, 40)
         .padding(.trailing, 90)
     }
     

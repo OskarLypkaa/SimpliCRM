@@ -199,30 +199,14 @@ struct ClientInfo: View {
                 TextEditorWithWarning(actionMessage: $clientNote, isWarningVisible: $isWarningVisible)
                     .padding(.horizontal)
                     .frame(height: 100)
-                HStack {
-                    Spacer()
-                    Button(action: {
+                    .onChange(of: clientNote) {
                         updateNote()
-                    }) {
-                        Text(LocalizedStringKey("save_note_button"))
-                            .padding(.horizontal)
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.bottom)
-                    .sheet(isPresented: $showMessage) {
-                        AutoDismissSheetView(
-                            message: LocalizedStringKey("note_saved_message"),
-                            displayDuration: 1.5,
-                            isPresented: $showMessage
-                        )
-                        .environment(\.locale, .init(identifier: settings.language.code))
-                    }
-                }
             }
             ScrollViewReader { scrollView in
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        if actions.isEmpty {
+                        if filteredActions.isEmpty {
                             Text(LocalizedStringKey("no_actions_available"))
                                 .font(.title)
                                 .padding()

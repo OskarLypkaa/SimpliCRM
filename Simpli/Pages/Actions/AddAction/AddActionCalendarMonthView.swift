@@ -15,17 +15,28 @@ struct AddActionCalendarMonthView: View {
     @State private var sheetMessage: String = ""
     @State private var isListExpanded: Bool = false  // Zmienna kontrolująca rozwinięcie listy
 
+
     var selectedDate: Date
     var isMonthView: Bool
-    
-    @Binding var refreshList: Bool
+
     @State private var action: Action
 
-    init(selectedDate: Date, refreshList: Binding<Bool>, isMonthView: Bool = false) {
-        self.selectedDate = selectedDate
-        self._refreshList = refreshList // Binding wymaga _ przed nazwą
+    init(selectedDate: Date, isMonthView: Bool = false) {
+        self.selectedDate = isMonthView ? Self.setNoon(for: selectedDate) : selectedDate
         self.isMonthView = isMonthView
-        self._action = State(initialValue: Action(message: "", criticality: "Low", dueDate: selectedDate, status: "ToDo", type: "General"))
+        self._action = State(initialValue: Action(
+            message: "",
+            criticality: "Low",
+            dueDate: self.selectedDate,
+            status: "ToDo",
+            type: "General"
+        ))
+    }
+
+    // Metoda pomocnicza do ustawienia godziny na 12:00 PM
+    private static func setNoon(for date: Date) -> Date {
+        let calendar = Calendar.current
+        return calendar.date(bySettingHour: 12, minute: 0, second: 0, of: date) ?? date
     }
 
     
@@ -38,7 +49,7 @@ struct AddActionCalendarMonthView: View {
                     List(filteredClients, id: \.self) { client in
                         Text(client.name ?? "")
                             .onTapGesture {
-                                withAnimation {
+                                withAnimation(.easeInOut(duration: 0.05)) {
                                     isListExpanded = false
                                     selectedClient = client
                                     searchedClientName = client.name ?? ""
@@ -49,7 +60,7 @@ struct AddActionCalendarMonthView: View {
                     .padding(.horizontal) // Odstęp od krawędzi
                 }
                 .zIndex(1) // Wyższy indeks
-                .padding(.bottom, 250)
+                .padding(.bottom, isMonthView ? 250 : 200)
                 
             }
             VStack {
@@ -108,7 +119,7 @@ struct AddActionCalendarMonthView: View {
 
                                 // Przycisk do rozwinięcia/zwiń listę
                                 Button(action: {
-                                    withAnimation {
+                                    withAnimation(.easeInOut(duration: 0.15)) {
                                         isListExpanded.toggle()
                                     }
                                 }) {
@@ -172,14 +183,16 @@ struct AddActionCalendarMonthView: View {
                             }
                             .pickerStyle(SegmentedPickerStyle())
                         }.padding()
-                        TimePickerView(actionDueDate: $action.dueDate)
-                            .environment(\.locale, .init(identifier: settings.language.code))
+                        if (isMonthView){
+                            TimePickerView(actionDueDate: $action.dueDate)
+                                .environment(\.locale, .init(identifier: settings.language.code))
+                        }
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                 }
             }
-            .frame(width: 500, height: 600, alignment: .leading)
+            .frame(width: 500, height: isMonthView ? 600 : 550, alignment: .leading)
         }
     }
 
@@ -216,20 +229,23 @@ struct AddActionCalendarMonthView: View {
             newItem.id = UUID()  // Unikalne ID
             newItem.message = action.message
             newItem.criticality = action.criticality
-            let actionComponents = calendar.dateComponents([.hour, .minute], from: action.dueDate)
-            if let newDate = calendar.date(bySettingHour: actionComponents.hour ?? 0,
-                                           minute: actionComponents.minute ?? 0,
-                                           second: 0,
-                                           of: selectedDate) {
-            newItem.dueDate = newDate
+            if(isMonthView) {
+                let actionComponents = calendar.dateComponents([.hour, .minute], from: action.dueDate)
+                let newDate = calendar.date(bySettingHour: actionComponents.hour ?? 0,
+                                            minute: actionComponents.minute ?? 0,
+                                            second: 0,
+                                            of: selectedDate)
+                newItem.dueDate = newDate
+            } else {
+                newItem.dueDate = action.dueDate
             }
+
             newItem.status = action.status
             newItem.type = action.type
             newItem.creationDate = Date()
             newItem.client = selectedClient
             do {
                 try viewContext.save()
-                refreshList.toggle()
                 sheetMessage = "add_action_success_message"
                 showMessage = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
