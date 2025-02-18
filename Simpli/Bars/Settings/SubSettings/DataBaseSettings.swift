@@ -52,6 +52,8 @@ struct DatabaseSetting: View {
                 subtitle: "Create a backup of the currently used database in the selected folder."
             )
             
+            
+            
 
             Spacer()
         }

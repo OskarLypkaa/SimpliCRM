@@ -7,6 +7,8 @@ struct SettingsView: View {
     @ObservedObject private var settings = Settings.shared
     @State private var showDatabaseSettings: Bool = false
     @State private var showFilesSettings: Bool = false
+    @State private var showBackupDatabaseSettings: Bool = false
+    @State private var showBackupFilesSettings: Bool = false
     @State private var feedbackMessage: LocalizedStringKey = ""
 
     var body: some View {
@@ -23,64 +25,75 @@ struct SettingsView: View {
 
         ScrollView {
             Form {
-                Section(header: Text("Data Base").font(.title2)) {
-                    HStack {
-                        Text("Path:")
-                        if settings.sharedPath != "" {
-                            Text("~ \(settings.sharedPath)")
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        } else {
-                            Text("no_database_selected")
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-                    }
+                Section(header: Text("Data & Files").font(.title)) {
                     Button(action: {
                         showDatabaseSettings = true
                     }) {
-                        Text("Additional Settings")
-                            .padding(4)
-                            .frame(maxWidth: .infinity)
-                            .background(Color(.darkGray))
-                            .cornerRadius(4)
+                        Text("Database Settings")
+                            .frame(minWidth:0 ,maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                            .padding(8)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(5)
+                            
                             
                     }
-                    .padding(.bottom, 15)
                     .sheet(isPresented: $showDatabaseSettings) {
                         DatabaseSetting()
                     }
                     .buttonStyle(PlainButtonStyle())
-                    
-                }
-                
-                Section(header: Text("Files").font(.title2)) {
-                    HStack {
-                        Text("Path:")
-                        if settings.filesPath != "" {
-                            Text("~ \(settings.filesPath)")
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        } else {
-                            Text("No file folder is selected")
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
+
+                    Button(action: {
+                        showBackupDatabaseSettings = true
+                    }) {
+                        Text("Automatic Database Backup Settings")
+                            .frame(minWidth:0 ,maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                            .padding(8)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(5)
+                            
                     }
+                    .sheet(isPresented: $showBackupDatabaseSettings) {
+                        BackupDatabaseSetting()
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.bottom, 10)
+                    
                     Button(action: {
                         showFilesSettings = true
                     }) {
-                        Text("Additional Settings")
-                            .padding(4)
-                            .frame(maxWidth: .infinity)
-                            .background(Color(.darkGray))
-                            .cornerRadius(4)
+                        Text("Client's Files Settings")
+                            .frame(minWidth:0 ,maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                            .padding(8)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(5)
                             
                     }
-                    .padding(.bottom, 15)
                     .sheet(isPresented: $showFilesSettings) {
                         FilesSetting()
                     }
                     .buttonStyle(PlainButtonStyle())
+                    
+                    Button(action: {
+                        showBackupFilesSettings = true
+                    }) {
+                        Text("Automatic Files Backup Settings")
+                            .frame(minWidth:0 ,maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                            .padding(8)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(5)
+                            
+                    }
+                    .sheet(isPresented: $showBackupFilesSettings) {
+                        BackupFilesSetting()
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.bottom, 20)
                 }
-           
-                Section(header: Text("appearance_section").font(.title2)) {
+                Section(header: Text("appearance_section").font(.title)) {
                     VStack {
                         Picker("", selection: $settings.themeMode) {
                             ForEach(ThemeMode.allCases, id: \.self) { mode in
@@ -97,16 +110,16 @@ struct SettingsView: View {
                         }
                         
                     }
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 20)
                 }
 
-                Section(header: Text("language_section").font(.title2)) {
+                Section(header: Text("language_section").font(.title)) {
                     Picker("", selection: $settings.language) {
                         ForEach(Language.allCases, id: \.self) { lang in
                             Text(lang.rawValue).tag(lang)
                         }
                     }
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 20)
                 }
                 .onHover { hovering in
                     if hovering {
@@ -116,7 +129,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(header: Text("archived_actions_section").font(.title2)) {
+                Section(header: Text("archived_actions_section").font(.title)) {
                     Toggle(isOn: $settings.showArchived) {}
                     .toggleStyle(SwitchToggleStyle())
                     .onHover { hovering in
@@ -132,7 +145,7 @@ struct SettingsView: View {
         .padding()
     
     
-        .frame(width: 550, height: 450, alignment: .leading)
+        .frame(width: 550, height: 500, alignment: .leading)
         .sheet(isPresented: $showMessage) {
             AutoDismissSheetView(
                 message: feedbackMessage,

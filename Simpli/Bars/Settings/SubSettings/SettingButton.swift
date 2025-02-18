@@ -34,6 +34,7 @@ struct SettingsButton: View {
                 NSCursor.arrow.set()
             }
         }
+        .padding(.bottom, 8)
         Divider()
     }
 }

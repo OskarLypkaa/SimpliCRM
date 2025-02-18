@@ -16,7 +16,7 @@ class Settings: ObservableObject {
         }
     }
 
-    @Published var filesPath: String = "" { // Dodana ścieżka do plików
+    @Published var filesPath: String = "" {
         didSet {
             saveSettings()
         }
@@ -29,12 +29,26 @@ class Settings: ObservableObject {
             saveSettings()
         }
     }
+
     @Published var language: Language = .english {
         didSet {
             saveSettings()
         }
     }
-    @Published var showArchived: Bool = false { // Dodana zmienna
+
+    @Published var showArchived: Bool = false {
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticBackup: Bool = false { // Nowa zmienna
+        didSet {
+            saveSettings()
+        }
+    }
+
+    @Published var automaticBackupInterval: Int = 20 {
         didSet {
             saveSettings()
         }
@@ -46,7 +60,7 @@ class Settings: ObservableObject {
 
     func triggerViewRefresh() {
         DispatchQueue.main.async {
-            self.refreshViews = UUID() // Wymuszenie zmiany
+            self.refreshViews = UUID()
         }
     }
 
@@ -64,10 +78,12 @@ class Settings: ObservableObject {
 
         let settings = SettingsData(
             sharedPath: sharedPath,
-            filesPath: filesPath, // Zapis nowej ścieżki
+            filesPath: filesPath,
             themeMode: themeMode.rawValue,
             language: language.rawValue,
-            showArchived: showArchived // Dodano do struktury danych
+            showArchived: showArchived,
+            automaticBackup: automaticBackup, // Nowa zmienna
+            automaticBackupInterval: automaticBackupInterval // Nowa zmienna
         )
 
         do {
@@ -87,29 +103,36 @@ class Settings: ObservableObject {
         guard let data = try? Data(contentsOf: url),
               let loadedSettings = try? decoder.decode(SettingsData.self, from: data) else {
             sharedPath = ""
-            filesPath = "" // Domyślna wartość dla nowej ścieżki
+            filesPath = ""
             themeMode = .dark
             language = .english
-            showArchived = false // Domyślna wartość
+            showArchived = false
+            automaticBackup = false
+            automaticBackupInterval = 20
             return
         }
 
         sharedPath = loadedSettings.sharedPath
-        filesPath = loadedSettings.filesPath // Wczytanie nowej ścieżki
+        filesPath = loadedSettings.filesPath
         themeMode = ThemeMode(rawValue: loadedSettings.themeMode) ?? .dark
         language = Language(rawValue: loadedSettings.language) ?? .english
         showArchived = loadedSettings.showArchived
+        automaticBackup = loadedSettings.automaticBackup
+        automaticBackupInterval = loadedSettings.automaticBackupInterval
         print("Settings loaded successfully from \(url.path)")
     }
 }
 
 struct SettingsData: Codable {
     let sharedPath: String
-    let filesPath: String 
+    let filesPath: String
     let themeMode: String
     let language: String
     let showArchived: Bool
+    let automaticBackup: Bool
+    let automaticBackupInterval: Int
 }
+
 
 enum ThemeMode: String, CaseIterable {
     case light = "Light"
@@ -504,5 +527,43 @@ enum FilesManagerError: Error {
         case .filesPathNotSet:
             return "Files path not set. Please set a folder path for storing files."
         }
+    }
+}
+
+
+
+class BackupManager {
+    static let shared = BackupManager()
+    private var backupTimer: Timer?
+
+    private init() {}
+
+    func startAutomaticBackup() {
+        // Sprawdzenie, czy automatyczny backup jest włączony
+        guard Settings.shared.automaticBackup else {
+            print("Automatic backup is disabled.")
+            return
+        }
+
+        // Pobranie interwału w minutach i przeliczenie na sekundy
+        let intervalInSeconds = TimeInterval(Settings.shared.automaticBackupInterval * 1)
+        
+        // Zapewnienie, że poprzedni timer został anulowany
+        backupTimer?.invalidate()
+
+        // Uruchomienie nowego timera
+        backupTimer = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
+            self.performBackup()
+        }
+
+        print("Automatic backup scheduled every \(Settings.shared.automaticBackupInterval) hours.")
+    }
+
+    func performBackup() {
+        let settingsPath = Settings.shared.sharedPath
+        let destinationURL = URL(fileURLWithPath: Settings.shared.filesPath)
+
+        let result = DatabaseManager.shared.backupDatabase(using: settingsPath, to: destinationURL)
+        print("Backup Result: \(result)")
     }
 }
