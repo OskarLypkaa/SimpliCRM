@@ -2,17 +2,19 @@ import SwiftUI
 
 struct WeekAdvancedView: View {
     var firstRowDate: Date
-    
+    @ObservedObject var settings = Settings.shared
     var body: some View {
         ScrollView([.vertical, .horizontal], showsIndicators: true) {
             HStack(alignment: .top) {
                 // Kolumna godzin
                 HourColumnAdvanced()
+                    .environment(\.locale, .init(identifier: settings.language.code))
 
                 // Siatka komórek z podziałem na 15 minut
                 DayGridAdvanced(firstRowDate: firstRowDate)
                     .padding(.trailing)
                     .padding(.top)
+                    .environment(\.locale, .init(identifier: settings.language.code))
             }
             .padding(.horizontal, 30)
             
@@ -21,6 +23,8 @@ struct WeekAdvancedView: View {
 }
 
 struct HourColumnAdvanced: View {
+    @ObservedObject var settings = Settings.shared
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ForEach(6..<23, id: \.self) { hour in
@@ -48,7 +52,7 @@ struct DayGridAdvanced: View {
 
     @State private var showDayInformations = false
     
-    
+    @ObservedObject var settings = Settings.shared
     
     @FetchRequest(
         entity: Actions.entity(),
@@ -157,9 +161,8 @@ struct DayGridAdvanced: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Zabezpiecza przed rozjechaniem
         
         .sheet(isPresented: $showDayInformations) {
-            HourInformations(
-                selectedDate: .constant(calculateDate())
-            )
+            HourInformations(selectedDate: .constant(calculateDate()))
+                .environment(\.locale, .init(identifier: settings.language.code))
         }
     }
 

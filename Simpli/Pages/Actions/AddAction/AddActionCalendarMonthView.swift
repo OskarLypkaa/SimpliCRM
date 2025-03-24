@@ -65,10 +65,16 @@ struct AddActionCalendarMonthView: View {
             }
             VStack {
                 HStack {
-                    Text(LocalizedStringKey("add_action_for_day"))
-                        .font(.title)
-                    Text(formattedDate(selectedDate))
-                        .font(.title)
+                    
+                    VStack(alignment: .center, spacing: 4) {
+                        Text(LocalizedStringKey("add_action_for_day"))
+                            .font(.title)
+
+                        Text(formattedDate(selectedDate))
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                    }
+                    .multilineTextAlignment(.center)
                     Spacer()
                     Button(action: {
                         clear()
@@ -284,6 +290,7 @@ struct AddActionCalendarMonthView: View {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium // Format daty, np. "Jan 22, 2025"
             formatter.timeStyle = isMonthView ? .none : .medium
+            formatter.locale = Locale(identifier: settings.language.code)
             return formatter.string(from: date)
         }
 }

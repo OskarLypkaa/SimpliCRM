@@ -42,10 +42,14 @@ struct DayInformations: View {
         VStack {
 
                 HStack {
-                    
-                    Text(LocalizedStringKey("Actions for: \(formattedDate(selectedDate))"))
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
+                    VStack(alignment: .center, spacing: 4) {
+                        Text(LocalizedStringKey("actions_for"))
+                            .font(.title2)
+
+                        Text(formattedDate(selectedDate))
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                    }
                     
                     Spacer()
                     Button(action: {
@@ -69,7 +73,7 @@ struct DayInformations: View {
                 
                 ScrollView {
                     if actions.isEmpty {
-                        Text(LocalizedStringKey("no_actions_for_day"))
+                        Text(LocalizedStringKey("no_actions_for_selected_day"))
                             .font(.title)
                             .multilineTextAlignment(.center)
                             .padding(.top, 100)
@@ -142,6 +146,7 @@ struct DayInformations: View {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             formatter.timeStyle = .none
+            formatter.locale = Locale(identifier: settings.language.code)
             return formatter.string(from: date)
         }
 }

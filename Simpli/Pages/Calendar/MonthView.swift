@@ -12,6 +12,8 @@ struct MonthView: View {
     @State private var transitionDirection: CGFloat = 0
     @State private var showDayInformations: Bool = false
 
+    @ObservedObject var settings = Settings.shared
+    
     var body: some View {
         VStack {
             Text("\(String(describing: selectedDate))").opacity(0)
@@ -149,6 +151,7 @@ struct MonthView: View {
         .frame(width: 1000, height: 500)
         .sheet(isPresented: $showDayInformations) {
             DayInformations(selectedDate: .constant(selectedDate ?? Date()))
+                .environment(\.locale, .init(identifier: settings.language.code))
         }
     }
 

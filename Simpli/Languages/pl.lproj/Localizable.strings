@@ -180,6 +180,11 @@
 
 "calendar_actions_count" = "Akcje: ";
 
+"actions_for" = "Akcje dla:";
+"no_actions_for_selected_time" = "Brak akcji dla wybranego czasu.";
+"no_actions_for_selected_day" = "Brak akcji dla wybranego dnia.";
+
+
 // --------------------------------- Reports -----------------------------
 "reports_title" = "Raporty";
 "reports_subtitle" = "Generuj raporty oraz eksportuj/importuj dane";

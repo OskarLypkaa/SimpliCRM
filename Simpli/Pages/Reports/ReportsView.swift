@@ -5,7 +5,7 @@ struct ReportView: View {
     
     @State private var showSuccessMessage: Bool = false
     @AppStorage("succesMessage") var succesMessage: String = ""
-    
+    @ObservedObject private var settings = Settings.shared
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)], animation: .default)
     private var clients: FetchedResults<Client>
@@ -199,6 +199,7 @@ struct ReportView: View {
         }
         .sheet(isPresented: $showStatisticView) {
             StatisticView() // Prezentowanie arkusza z widokiem statystyk
+                .environment(\.locale, .init(identifier: settings.language.code))
         }
         .sheet(isPresented: $showSuccessMessage) {
             AutoDismissSheetView(

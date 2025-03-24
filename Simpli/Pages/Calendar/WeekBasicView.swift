@@ -2,17 +2,19 @@ import SwiftUI
 
 struct WeekBasicView: View {
     var firstRowDate: Date
-    
+    @ObservedObject var settings = Settings.shared
     var body: some View {
         ScrollView([.vertical, .horizontal], showsIndicators: true) {
             HStack(alignment: .top) {
                 // Kolumna godzin
                 HourColumnBasic()
+                    .environment(\.locale, .init(identifier: settings.language.code))
 
                 // Siatka komórek z podziałem na 15 minut
                 DayGridBasic(firstRowDate: firstRowDate)
                     .padding(.trailing)
                     .padding(.top)
+                    .environment(\.locale, .init(identifier: settings.language.code))
             }
             .padding(.horizontal, 30)
             
@@ -43,7 +45,7 @@ struct DayGridBasic: View {
 
     @State private var showDayInformations = false
     
-    
+    @ObservedObject var settings = Settings.shared
     
     @FetchRequest(
         entity: Actions.entity(),
@@ -157,6 +159,7 @@ struct DayGridBasic: View {
                 selectedDate: .constant(calculateDate()),
                 isAdvancedView: false
             )
+            .environment(\.locale, .init(identifier: settings.language.code))
         }
     }
 

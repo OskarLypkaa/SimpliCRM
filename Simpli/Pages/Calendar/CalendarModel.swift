@@ -7,7 +7,11 @@ class CalendarModel: ObservableObject {
     @Published var displayedDate: Date = Date()
     @Published var actionsForDay: [Date: Int] = [:]
     @Published var actionsForHour: [Date: Int] = [:]
-    let calendar = Calendar.current
+    var calendar: Calendar {
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: settings.language.code)
+        return calendar
+    }
     @ObservedObject var settings = Settings.shared
     var shortWeekdaySymbols: [String] {
         let symbols = calendar.shortWeekdaySymbols
@@ -18,7 +22,7 @@ class CalendarModel: ObservableObject {
     func monthAndYear(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "LLLL yyyy"
-        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.locale = Locale(identifier: settings.language.code)
         return formatter.string(from: date)
     }
 
@@ -73,7 +77,11 @@ class CalendarModel: ObservableObject {
     }
     
     func weekOfYear(for date: Date) -> Int? {
-        let calendar = Calendar.current
+        var calendar: Calendar {
+            var calendar = Calendar.current
+            calendar.locale = Locale(identifier: settings.language.code)
+            return calendar
+        }
         let weekOfYear = calendar.component(.weekOfYear, from: date)
         return weekOfYear
     }
@@ -88,7 +96,7 @@ class CalendarModel: ObservableObject {
     func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMM" // np. "22 Jan"
-        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.locale = Locale(identifier: settings.language.code)
         return formatter.string(from: date)
     }
     

@@ -181,6 +181,11 @@
 
 "calendar_actions_count" = "Azioni: ";
 
+"actions_for" = "Azioni per:";
+"no_actions_for_selected_time" = "Nessuna azione per l'orario selezionato.";
+"no_actions_for_selected_day" = "Nessuna azione per il giorno selezionato.";
+
+
 // --------------------------------- Reports -----------------------------
 "reports_title" = "Rapporti";
 "reports_subtitle" = "Genera rapporti ed esporta/importa dati";

@@ -38,6 +38,7 @@ struct SettingsView: View {
                     }
                     .sheet(isPresented: $showDatabaseSettings) {
                         DatabaseSetting()
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .buttonStyle(PlainButtonStyle())
 
@@ -53,6 +54,7 @@ struct SettingsView: View {
                     }
                     .sheet(isPresented: $showBackupDatabaseSettings) {
                         BackupDatabaseSetting()
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.bottom, 10)
@@ -69,6 +71,7 @@ struct SettingsView: View {
                     }
                     .sheet(isPresented: $showFilesSettings) {
                         FilesSetting()
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .buttonStyle(PlainButtonStyle())
 
@@ -84,6 +87,7 @@ struct SettingsView: View {
                     }
                     .sheet(isPresented: $showBackupFilesSettings) {
                         BackupFilesSetting()
+                            .environment(\.locale, .init(identifier: settings.language.code))
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.bottom, 20)

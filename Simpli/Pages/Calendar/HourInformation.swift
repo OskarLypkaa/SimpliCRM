@@ -8,6 +8,7 @@ struct HourInformations: View {
     @State private var refreshList: Bool = false
     @State private var isHovered: Bool = false
     
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedDate: Date
     @ObservedObject var settings = Settings.shared
@@ -15,6 +16,7 @@ struct HourInformations: View {
     private var actions: FetchedResults<Actions> {
         actionsFetchRequest.wrappedValue
     }
+    
 
     init(selectedDate: Binding<Date>, isAdvancedView: Bool = true) {
         self._selectedDate = selectedDate
@@ -44,9 +46,15 @@ struct HourInformations: View {
         VStack {
 
             HStack {
-                Text(LocalizedStringKey("Actions for: \(formattedDate(selectedDate))"))
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
+                VStack(alignment: .center, spacing: 4) {
+                    Text(LocalizedStringKey("actions_for"))
+                        .font(.title2)
+
+                    Text(formattedDate(selectedDate))
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                }
+                .multilineTextAlignment(.center)
                 Spacer()
                 Button(action: {
                     showAddAction = true
@@ -68,7 +76,7 @@ struct HourInformations: View {
             .frame(width: 500)
             ScrollView {
                 if actions.isEmpty {
-                    Text(LocalizedStringKey("No actions for selected time"))
+                    Text(LocalizedStringKey("no_actions_for_selected_time"))
                         .font(.title)
                         .multilineTextAlignment(.center)
                         .padding(.top, 100)
@@ -138,6 +146,7 @@ struct HourInformations: View {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             formatter.timeStyle = .medium
+            formatter.locale = Locale(identifier: settings.language.code)
             return formatter.string(from: date)
         }
 }

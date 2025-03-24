@@ -11,6 +11,8 @@ struct WeekDayView: View {
     @State private var isHovered = false
     
     @StateObject private var model = CalendarModel()
+    @ObservedObject var settings = Settings.shared
+
     
     var body: some View {
         ZStack{
@@ -54,6 +56,7 @@ struct WeekDayView: View {
         }
         .sheet(isPresented: $showDayInformations) {
             HourInformations(selectedDate: .constant(selectedDay))
+                .environment(\.locale, .init(identifier: settings.language.code))
         }
     }
     private func iconName(for type: String) -> String {

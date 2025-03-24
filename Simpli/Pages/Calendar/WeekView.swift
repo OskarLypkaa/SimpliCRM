@@ -15,6 +15,8 @@ struct WeekView: View {
     @State private var isBacisViewDisplayed: Bool = false
     @State private var isHovered: Bool = false
     
+    @ObservedObject var settings = Settings.shared
+    
     var body: some View {
         VStack {
             Text("\(String(describing: selectedDate))").opacity(0)
@@ -119,11 +121,13 @@ struct WeekView: View {
                 if let weekStartDate = model.calendar.date(from: model.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: model.displayedDate)),
                    let startOfDay = model.calendar.date(bySettingHour: 6, minute: 0, second: 0, of: weekStartDate) {
                     WeekBasicView(firstRowDate: startOfDay)
+                        .environment(\.locale, .init(identifier: settings.language.code))
                 }
             } else {
                 if let weekStartDate = model.calendar.date(from: model.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: model.displayedDate)),
                    let startOfDay = model.calendar.date(bySettingHour: 6, minute: 0, second: 0, of: weekStartDate) {
                     WeekAdvancedView(firstRowDate: startOfDay)
+                        .environment(\.locale, .init(identifier: settings.language.code))
                 }
             }
         

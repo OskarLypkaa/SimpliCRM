@@ -13,6 +13,8 @@ struct StatisticView: View {
         animation: .default
     ) private var actions: FetchedResults<Actions>
     
+    @ObservedObject private var settings = Settings.shared
+    
     var body: some View {
         CloseableHeader()
         VStack(spacing: 10) {
