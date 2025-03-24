@@ -33,21 +33,21 @@ struct NavigationSidebar: View {
                 isCalendarExpanded: $isCalendarExpanded
             )
             .environment(\.locale, .init(identifier: settings.language.code))
-       
+
+            // Reports Tab
             NavElement(
                 title: LocalizedStringKey("reports_tab"),
                 imageName: "chart.pie.fill",
                 isSelected: $selectedTab,
                 isCalendarExpanded: $isCalendarExpanded
             )
-        
             .environment(\.locale, .init(identifier: settings.language.code))
             
             VStack(spacing: 0) {
                 HStack {
                     Image(systemName: "calendar")
                         .padding(.horizontal)
-                    Text("Calendar")
+                    Text(LocalizedStringKey("calendar_tab"))
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
@@ -60,7 +60,7 @@ struct NavigationSidebar: View {
                 .padding(.bottom, 5)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    withAnimation(.easeInOut) { // Animacja zmiany stanu
+                    withAnimation(.easeInOut) {
                         isCalendarExpanded.toggle()
                     }
                 }
@@ -85,11 +85,11 @@ struct NavigationSidebar: View {
                     
                 }
                 .padding(5)
-                .opacity(isCalendarExpanded ? 1 : 0) // Animacja przezroczystości
-                .animation(.easeInOut, value: isCalendarExpanded) // Animacja zmiany wartości opacity
-                .allowsHitTesting(isCalendarExpanded) // Zapobieganie interakcji, gdy ukryte
+                .opacity(isCalendarExpanded ? 1 : 0)
+                .animation(.easeInOut, value: isCalendarExpanded)
+                .allowsHitTesting(isCalendarExpanded)
             }
-            .background(isCalendarExpanded ?.gray.opacity(0.05) : Color.clear)
+            .background(isCalendarExpanded ? .gray.opacity(0.05) : Color.clear)
             .cornerRadius(5)
         }
         .navigationSplitViewColumnWidth(min: 210, ideal: 210, max: 270)

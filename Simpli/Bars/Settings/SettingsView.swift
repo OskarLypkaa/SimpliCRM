@@ -13,30 +13,28 @@ struct SettingsView: View {
 
     var body: some View {
         CloseableHeader()
-        Text("settings_title")
+        Text(LocalizedStringKey("settings_title"))
             .font(.largeTitle)
             .fontWeight(.bold)
             .multilineTextAlignment(.center)
 
-        Text("settings_subtitle")
+        Text(LocalizedStringKey("settings_subtitle"))
             .font(.title3)
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
 
         ScrollView {
             Form {
-                Section(header: Text("Data & Files").font(.title)) {
+                Section(header: Text(LocalizedStringKey("data_files_section")).font(.title)) {
                     Button(action: {
                         showDatabaseSettings = true
                     }) {
-                        Text("Database Settings")
+                        Text(LocalizedStringKey("database_settings"))
                             .frame(minWidth:0 ,maxWidth: .infinity)
                             .fontWeight(.semibold)
                             .padding(8)
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(5)
-                            
-                            
                     }
                     .sheet(isPresented: $showDatabaseSettings) {
                         DatabaseSetting()
@@ -46,46 +44,43 @@ struct SettingsView: View {
                     Button(action: {
                         showBackupDatabaseSettings = true
                     }) {
-                        Text("Automatic Database Backup Settings")
+                        Text(LocalizedStringKey("automatic_database_backup_settings"))
                             .frame(minWidth:0 ,maxWidth: .infinity)
                             .fontWeight(.semibold)
                             .padding(8)
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(5)
-                            
                     }
                     .sheet(isPresented: $showBackupDatabaseSettings) {
                         BackupDatabaseSetting()
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.bottom, 10)
-                    
+
                     Button(action: {
                         showFilesSettings = true
                     }) {
-                        Text("Client's Files Settings")
+                        Text(LocalizedStringKey("clients_files_settings"))
                             .frame(minWidth:0 ,maxWidth: .infinity)
                             .fontWeight(.semibold)
                             .padding(8)
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(5)
-                            
                     }
                     .sheet(isPresented: $showFilesSettings) {
                         FilesSetting()
                     }
                     .buttonStyle(PlainButtonStyle())
-                    
+
                     Button(action: {
                         showBackupFilesSettings = true
                     }) {
-                        Text("Automatic Files Backup Settings")
+                        Text(LocalizedStringKey("automatic_files_backup_settings"))
                             .frame(minWidth:0 ,maxWidth: .infinity)
                             .fontWeight(.semibold)
                             .padding(8)
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(5)
-                            
                     }
                     .sheet(isPresented: $showBackupFilesSettings) {
                         BackupFilesSetting()
@@ -93,7 +88,8 @@ struct SettingsView: View {
                     .buttonStyle(PlainButtonStyle())
                     .padding(.bottom, 20)
                 }
-                Section(header: Text("appearance_section").font(.title)) {
+
+                Section(header: Text(LocalizedStringKey("appearance_section")).font(.title)) {
                     VStack {
                         Picker("", selection: $settings.themeMode) {
                             ForEach(ThemeMode.allCases, id: \.self) { mode in
@@ -108,12 +104,11 @@ struct SettingsView: View {
                                 NSCursor.arrow.set()
                             }
                         }
-                        
                     }
                     .padding(.bottom, 20)
                 }
 
-                Section(header: Text("language_section").font(.title)) {
+                Section(header: Text(LocalizedStringKey("language_section")).font(.title)) {
                     Picker("", selection: $settings.language) {
                         ForEach(Language.allCases, id: \.self) { lang in
                             Text(lang.rawValue).tag(lang)
@@ -129,7 +124,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(header: Text("archived_actions_section").font(.title)) {
+                Section(header: Text(LocalizedStringKey("archived_actions_section")).font(.title)) {
                     Toggle(isOn: $settings.showArchived) {}
                     .toggleStyle(SwitchToggleStyle())
                     .onHover { hovering in
@@ -143,8 +138,6 @@ struct SettingsView: View {
             }
         }
         .padding()
-    
-    
         .frame(width: 550, height: 500, alignment: .leading)
         .sheet(isPresented: $showMessage) {
             AutoDismissSheetView(

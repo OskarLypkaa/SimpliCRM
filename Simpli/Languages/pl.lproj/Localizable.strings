@@ -4,12 +4,15 @@
 "tasks_today_message" = "Zadania, które masz na dziś";
 
 // --------------------------------- NavBar -----------------------------
-"home_tab" = "Przegląd";
+"home_tab" = "Strona główna";
 "clients_tab" = "Klienci";
 "actions_tab" = "Akcje";
-"calendar_tab" = "Kalendarz";
 "reports_tab" = "Raporty";
+"calendar_tab" = "Kalendarz";
+"calendar_month" = "Miesięczny";
+"calendar_week" = "Tygodniowy";
 
+// --------------------------------- Help -----------------------------
 "help_title" = "Pomoc i Dokumentacja";
 "overview_title" = "Przegląd";
 "overview_description" = "Simpli CRM to prosta aplikacja zaprojektowana, aby pomóc Ci zarządzać klientami i ich powiązanymi działaniami. Oferuje prosty interfejs do zarządzania przepływem pracy, w tym klientami, działaniami, raportami i widokiem kalendarza.";
@@ -60,22 +63,56 @@
 "help_nav_title" = "Pomoc";
 
 // --------------------------------- Settings -----------------------------
-"settings_title" = "Ustawienia aplikacji";
-"settings_subtitle" = "Dostosuj ogólne ustawienia aplikacji.";
-"database_path_section" = "Ścieżka do bazy danych";
+"backup_settings_title" = "Ustawienia kopii zapasowej bazy danych";
+"backup_path" = "Ścieżka kopii zapasowej:";
+"no_backup_folder_selected" = "Nie wybrano folderu kopii zapasowej";
+"select_backup_folder" = "Wybierz folder kopii zapasowej";
+"select_backup_folder_description" = "Wybierz folder, w którym chcesz przechowywać automatycznie tworzone kopie zapasowe.";
+"create_database_automatically" = "Twórz bazę danych automatycznie:";
+"automatic_backup_interval" = "Interwał automatycznej kopii zapasowej:";
+"3_minutes" = "3 minuty";
+"5_minutes" = "5 minut";
+"10_minutes" = "10 minut";
+"30_minutes" = "30 minut";
+"60_minutes" = "60 minut";
+
+"no_files_folder_selected" = "Nie wybrano folderu kopii zapasowej plików";
+"create_files_backup_automatically" = "Twórz kopię zapasową plików automatycznie:";
+"automatic_backup_files_interval" = "Interwał automatycznej kopii zapasowej plików:";
+
+"database_settings" = "Ustawienia bazy danych";
+"current_path" = "Bieżąca ścieżka:";
 "no_database_selected" = "Nie wybrano bazy danych";
-"browse_database_button" = "Przeglądaj bazę danych";
-"load_database_button" = "Załaduj bazę danych";
-"no_database_path" = "Nie wybrano ścieżki do bazy danych";
-"database_path_updated" = "Ścieżka do bazy danych została zaktualizowana";
+"browse_database" = "Przeglądaj bazę danych";
+"browse_database_description" = "Wybierz plik bazy danych z rozszerzeniem .sqlite ze swojego urządzenia.";
+"create_database_file" = "Utwórz plik bazy danych";
+"create_database_file_description" = "Wygeneruj nowy, pusty plik bazy danych w wybranym folderze.";
+"create_database_backup" = "Utwórz kopię zapasową bazy danych";
+"create_database_backup_description" = "Utwórz kopię zapasową aktualnie używanej bazy danych w wybranym folderze.";
+"operation_finished" = "Operacja zakończona!";
+
+"files_settings" = "Ustawienia plików";
+"no_path_selected" = "Nie wybrano ścieżki";
+"select_files_folder" = "Wybierz folder plików";
+"select_files_folder_description" = "Wybierz folder, w którym będą przechowywane wszystkie pliki klientów.";
+"generate_clients_folders" = "Generuj foldery klientów";
+"generate_clients_folders_description" = "Utwórz foldery dla każdego klienta w wybranej lokalizacji.";
+"archive_files_folder" = "Archiwizuj folder plików";
+"archive_files_folder_description" = "Archiwizuj wszystkie pliki w wybranym folderze.";
+
+"settings_title" = "Ustawienia";
+"settings_subtitle" = "Dostosuj działanie i wygląd aplikacji";
+"automatic_database_backup_settings" = "Automatyczne ustawienia kopii zapasowej bazy danych";
+"clients_files_settings" = "Ustawienia plików klientów";
+"automatic_files_backup_settings" = "Automatyczne ustawienia kopii zapasowej plików";
 "appearance_section" = "Wygląd";
 "language_section" = "Język";
-"archived_actions_section" = "Pokaż zarchiwizowane działania";
-"show_archived_toggle" = "Pokaż zarchiwizowane działania";
-"no_file_selected" = "Nie wybrano pliku";
-"file_selection_error" = "Błąd podczas wybierania pliku: %@";
+"archived_actions_section" = "Pokaż zarchiwizowane akcje";
+"data_files_section" = "Dane i pliki";
+
 "theme_mode_light" = "Jasny";
 "theme_mode_dark" = "Ciemny";
+"files_backup_settings" = "Ustawienia kopii zapasowej plików";
 
 // --------------------------------- Clients -----------------------------
 "table_header_name" = "Nazwa";
@@ -123,6 +160,20 @@
 "cancel_button" = "Anuluj";
 "confirm_button" = "Tak";
 
+"filter_clients" = "Filtruj klientów";
+"selected_filters" = "Wybrane filtry:";
+"name" = "Nazwa";
+"phone" = "Telefon";
+"email" = "E-mail";
+"firstInformation" = "Pierwsza informacja";
+"secondInformation" = "Druga informacja";
+"thirdInformation" = "Trzecia informacja";
+"gender" = "Płeć";
+"address" = "Adres";
+"gender_male" = "Mężczyzna";
+"gender_female" = "Kobieta";
+
+
 // --------------------------------- Callendar -----------------------------
 "tasks_for_selected_day" = "Zadania na wybrany dzień";
 "no_client_name" = "Brak nazwy klienta";
@@ -130,35 +181,59 @@
 "calendar_actions_count" = "Akcje: ";
 
 // --------------------------------- Reports -----------------------------
-"reports_title" = "Raporty i eksport danych";
-"reports_subtitle" = "Generuj raporty, wizualizuj dane i eksportuj/importuj informacje do różnych formatów.";
+"reports_title" = "Raporty";
+"reports_subtitle" = "Generuj raporty oraz eksportuj/importuj dane";
 "reports_generate_section" = "Generowanie raportów";
-"generate_sales_report_title" = "Generuj raport sprzedaży";
-"generate_sales_report_subtitle" = "Szczegółowy raport wszystkich transakcji sprzedaży.";
 "customer_analytics_title" = "Analiza klientów";
-"customer_analytics_subtitle" = "Informacje o zachowaniach i trendach klientów.";
+"customer_analytics_subtitle" = "Analizuj dane klientów";
 "monthly_revenue_report_title" = "Miesięczny raport przychodów";
-"monthly_revenue_report_subtitle" = "Śledź miesięczne przychody w działach.";
+"monthly_revenue_report_subtitle" = "Generuj raport dotyczący miesięcznych przychodów";
+"weekly_revenue_report_title" = "Tygodniowy raport przychodów";
+"weekly_revenue_report_subtitle" = "Generuj raport dotyczący tygodniowych przychodów";
 "task_completion_overview_title" = "Przegląd ukończenia zadań";
-"task_completion_overview_subtitle" = "Przegląd zadań i postępu projektów.";
+"task_completion_overview_subtitle" = "Zobacz, które zadania zostały ukończone";
 "statistic_overview_title" = "Przegląd statystyk";
-"statistic_overview_subtitle" = "Pokaż surowe dane statystyczne.";
+"statistic_overview_subtitle" = "Wyświetl statystyki przechowywanych danych";
 "data_export_section" = "Eksport danych";
-"export_to_excel_title" = "Eksport do Excela";
-"export_to_excel_subtitle" = "Zapisz dane w formacie Excela.";
-"export_to_pdf_title" = "Eksport do PDF";
-"export_to_pdf_subtitle" = "Zapisz dane w formacie PDF.";
-"export_to_csv_title" = "Eksport do CSV";
-"export_to_csv_subtitle" = "Zapisz dane w formacie CSV.";
-"export_to_json_title" = "Eksport do JSON";
-"export_to_json_subtitle" = "Zapisz dane w formacie JSON.";
+"export_to_excel_title" = "Eksportuj do Excela";
+"export_to_excel_subtitle" = "Eksportuj dane do pliku Excel";
+"export_to_pdf_title" = "Eksportuj do PDF";
+"export_to_pdf_subtitle" = "Eksportuj dane do pliku PDF";
+"export_to_csv_title" = "Eksportuj do CSV";
+"export_to_csv_subtitle" = "Eksportuj dane do pliku CSV";
+"export_to_json_title" = "Eksportuj do JSON";
+"export_to_json_subtitle" = "Eksportuj dane do pliku JSON";
 "data_import_section" = "Import danych";
 "import_from_excel_title" = "Importuj z Excela";
-"import_from_excel_subtitle" = "Wczytaj dane z pliku Excela.";
+"import_from_excel_subtitle" = "Importuj dane z pliku Excel";
 "import_from_csv_title" = "Importuj z CSV";
-"import_from_csv_subtitle" = "Wczytaj dane z pliku CSV.";
+"import_from_csv_subtitle" = "Importuj dane z pliku CSV";
 "import_from_json_title" = "Importuj z JSON";
-"import_from_json_subtitle" = "Wczytaj dane z pliku JSON.";
+"import_from_json_subtitle" = "Importuj dane z pliku JSON";
+"clients_exported_successfully" = "Eksport klientów zakończony pomyślnie";
+"clients_imported_successfully" = "Import klientów zakończony pomyślnie";
+
+"feature_under_development" = "Ta funkcja jest w trakcie opracowywania";
+
+"select_destination_folder" = "Wybierz folder docelowy";
+"select_csv_file" = "Wybierz plik CSV";
+"select_json_file" = "Wybierz plik JSON";
+
+"overview_title" = "Przegląd";
+"total_clients" = "Łączna liczba klientów";
+"total_actions" = "Łączna liczba akcji";
+"average_actions_per_client" = "Średnia liczba akcji na klienta";
+"actions_todo" = "Akcje - Do zrobienia";
+"actions_in_progress" = "Akcje - W trakcie";
+"actions_done" = "Akcje - Zakończone";
+"actions_blocked" = "Akcje - Zablokowane";
+"male_clients" = "Mężczyźni - Klienci";
+"female_clients" = "Kobiety - Klienci";
+"actions_meeting" = "Akcje - Spotkanie";
+"actions_call" = "Akcje - Telefon";
+"actions_email" = "Akcje - E-mail";
+"actions_follow_up" = "Akcje - Follow-Up";
+"actions_contract" = "Akcje - Umowa";
 
 // --------------------------------- Actions -----------------------------
 "Low" = "Niski";
@@ -225,7 +300,13 @@
 "cancel_button" = "Anuluj";
 "yes_button" = "Tak";
 
+"max_actions_per_page" = "Maksymalna liczba akcji na stronę";
+"add_action_for_day" = "Dodaj akcję na dzień";
+
 // --------------------------------- Commons -----------------------------
 "due_date_label" = "Termin wykonania:";
 "warning_text_max_characters" = "Tekst może mieć maksymalnie 600 znaków";
 "search_placeholder" = "Szukaj";
+"date_label" = "Data:";
+"time_label" = "Godzina:";
+"time_picker_label" = "Wybierz godzinę";

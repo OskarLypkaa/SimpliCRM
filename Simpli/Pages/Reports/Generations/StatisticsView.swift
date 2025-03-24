@@ -16,7 +16,7 @@ struct StatisticView: View {
     var body: some View {
         CloseableHeader()
         VStack(spacing: 10) {
-            Text("Overview")
+            Text(LocalizedStringKey("overview_title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
@@ -25,33 +25,33 @@ struct StatisticView: View {
             ScrollView(.vertical) {
                 VStack(spacing: 10) {
                     // Liczba klientów
-                    InfoCard(title: "Total Clients", value: "\(clients.count)")
+                    InfoCard(title: LocalizedStringKey("total_clients"), value: "\(clients.count)")
                     
                     // Liczba akcji
-                    InfoCard(title: "Total Actions", value: "\(actions.count)")
+                    InfoCard(title: LocalizedStringKey("total_actions"), value: "\(actions.count)")
                     
                     // Średnia liczba akcji na klienta
                     InfoCard(
-                        title: "Average Actions per Client",
+                        title: LocalizedStringKey("average_actions_per_client"),
                         value: clients.count > 0 ? String(format: "%.2f", Double(actions.count) / Double(clients.count)) : "N/A"
                     )
                     
                     // Liczba akcji według statusu
-                    InfoCard(title: "Actions - ToDo", value: "\(actions.filter { $0.status == "ToDo" }.count)")
-                    InfoCard(title: "Actions - In Progress", value: "\(actions.filter { $0.status == "In Progress" }.count)")
-                    InfoCard(title: "Actions - Done", value: "\(actions.filter { $0.status == "Done" }.count)")
-                    InfoCard(title: "Actions - Blocked", value: "\(actions.filter { $0.status == "Blocked" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_todo"), value: "\(actions.filter { $0.status == "ToDo" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_in_progress"), value: "\(actions.filter { $0.status == "In Progress" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_done"), value: "\(actions.filter { $0.status == "Done" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_blocked"), value: "\(actions.filter { $0.status == "Blocked" }.count)")
                     
                     // Liczba klientów według płci
-                    InfoCard(title: "Male Clients", value: "\(clients.filter { $0.gender == "Male" }.count)")
-                    InfoCard(title: "Female Clients", value: "\(clients.filter { $0.gender == "Female" }.count)")
+                    InfoCard(title: LocalizedStringKey("male_clients"), value: "\(clients.filter { $0.gender == "Male" }.count)")
+                    InfoCard(title: LocalizedStringKey("female_clients"), value: "\(clients.filter { $0.gender == "Female" }.count)")
                     
                     // Liczba akcji według typu
-                    InfoCard(title: "Actions - Meeting", value: "\(actions.filter { $0.type == "Meeting" }.count)")
-                    InfoCard(title: "Actions - Call", value: "\(actions.filter { $0.type == "Call" }.count)")
-                    InfoCard(title: "Actions - Email", value: "\(actions.filter { $0.type == "Email" }.count)")
-                    InfoCard(title: "Actions - Follow-Up", value: "\(actions.filter { $0.type == "Follow-Up" }.count)")
-                    InfoCard(title: "Actions - Contract", value: "\(actions.filter { $0.type == "Contract" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_meeting"), value: "\(actions.filter { $0.type == "Meeting" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_call"), value: "\(actions.filter { $0.type == "Call" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_email"), value: "\(actions.filter { $0.type == "Email" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_follow_up"), value: "\(actions.filter { $0.type == "Follow-Up" }.count)")
+                    InfoCard(title: LocalizedStringKey("actions_contract"), value: "\(actions.filter { $0.type == "Contract" }.count)")
                 }
                 .padding()
             }
@@ -60,7 +60,7 @@ struct StatisticView: View {
 }
 
 struct InfoCard: View {
-    var title: String
+    var title: LocalizedStringKey
     var value: String
     
     var body: some View {

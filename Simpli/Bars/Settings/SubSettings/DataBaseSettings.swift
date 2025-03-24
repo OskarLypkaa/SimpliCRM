@@ -4,17 +4,18 @@ struct DatabaseSetting: View {
     @ObservedObject private var settings = Settings.shared
 
     @State private var showMessage: Bool = false
-    @State private var sheetMessage: String = "Operation finished!"
+    @State private var sheetMessage: String = "operation_finished"
+    
     var body: some View {
         CloseableHeader()
-        Text("Database Settings")
+        Text(LocalizedStringKey("database_settings"))
             .font(.largeTitle)
             .fontWeight(.bold)
 
         HStack {
-            Text("Current Path:")
+            Text(LocalizedStringKey("current_path"))
                 .font(.headline)
-            Text(settings.sharedPath.isEmpty ? "No database selected" : "~ \(settings.sharedPath)")
+            Text(settings.sharedPath.isEmpty ? LocalizedStringKey("no_database_selected") : "~ \(settings.sharedPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -32,8 +33,8 @@ struct DatabaseSetting: View {
                     }
                 },
                 icon: "externaldrive.fill.badge.questionmark",
-                title: "Browse Database",
-                subtitle: "Select a database file with extension .sqlite from your device."
+                title: LocalizedStringKey("browse_database"),
+                subtitle: LocalizedStringKey("browse_database_description")
             )
 
             SettingsButton(
@@ -51,11 +52,10 @@ struct DatabaseSetting: View {
                             }
                         }
                     }
-                    
                 },
                 icon: "externaldrive.connected.to.line.below.fill",
-                title: "Create Database File",
-                subtitle: "Generate a new empty database file in the selected folder."
+                title: LocalizedStringKey("create_database_file"),
+                subtitle: LocalizedStringKey("create_database_file_description")
             )
 
             SettingsButton(
@@ -73,15 +73,11 @@ struct DatabaseSetting: View {
                             }
                         }
                     }
-               
                 },
                 icon: "tray.full.fill",
-                title: "Create Database Backup",
-                subtitle: "Create a backup of the currently used database in the selected folder."
+                title: LocalizedStringKey("create_database_backup"),
+                subtitle: LocalizedStringKey("create_database_backup_description")
             )
-            
-            
-            
 
             Spacer()
         }

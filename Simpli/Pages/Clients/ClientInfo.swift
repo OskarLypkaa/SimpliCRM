@@ -35,7 +35,7 @@ struct ClientInfo: View {
                 HStack {
                     Image(systemName: "person.fill")
                         .font(.title)
-                    Text(client.name ?? "Something went wrong :(")
+                    Text(client.name!)
                         .font(.title)
                         .foregroundColor(.primary)
                         .lineLimit(1)
@@ -105,7 +105,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "envelope.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.email ?? "Something went wrong :(")
+                        Text(client.email!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -117,7 +117,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "phone.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.phone ?? "Something went wrong :(")
+                        Text(client.phone!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -129,7 +129,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "map.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.address ?? "Something went wrong :(")
+                        Text(client.address!)
                             .font(.subheadline)
                             .lineLimit(1)
                             .foregroundColor(.gray)
@@ -141,14 +141,19 @@ struct ClientInfo: View {
                         if(client.gender == "Male") {
                             Image(systemName: "figure.stand")
                                 .frame(width: 24, height: 18)
+                            Text(LocalizedStringKey("gender_male"))
+                                .font(.subheadline)
+                                .lineLimit(1)
+                                .foregroundColor(.gray)
                         } else {
                             Image(systemName: "figure.stand.dress")
                                 .frame(width: 24, height: 18)
+                            Text(LocalizedStringKey("gender_female"))
+                                .font(.subheadline)
+                                .lineLimit(1)
+                                .foregroundColor(.gray)
                         }
-                        Text(client.gender ?? "Something went wrong :(")
-                            .font(.subheadline)
-                            .lineLimit(1)
-                            .foregroundColor(.gray)
+                        
                     }
                 }
                 Spacer()
@@ -159,7 +164,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.firstInformation ?? "Something went wrong :(")
+                        Text(client.firstInformation!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -171,7 +176,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.secondInformation ?? "Something went wrong :(")
+                        Text(client.secondInformation!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -183,7 +188,7 @@ struct ClientInfo: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.thirdInformation ?? "Something went wrong :(")
+                        Text(client.thirdInformation!)
                             .font(.subheadline)
                             .lineLimit(1)
                             .foregroundColor(.gray)

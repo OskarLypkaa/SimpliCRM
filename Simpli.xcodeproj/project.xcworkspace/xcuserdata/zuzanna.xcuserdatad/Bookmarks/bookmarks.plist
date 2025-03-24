@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>467</string>
+					<string>567</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>466</string>
+					<string>566</string>
 					<key>Timestamp</key>
-					<string>759584076.053252</string>
+					<string>761595036.821421</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,16 +34,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+				<string>            }
 </string>
 				<key>leading</key>
-				<string>        // Tworzenie archiwum ZIP
-        do {
+				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+                return "Failed to create ZIP archive."
 </string>
 				<key>trailing</key>
-				<string>                return "Failed to create ZIP archive."
-            }
-
+				<string>
+            let items = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let totalItems = Double(items.count)
 </string>
 			</dict>
 			<key>title</key>
@@ -59,13 +59,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>467</string>
+					<string>567</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>466</string>
+					<string>566</string>
 					<key>Timestamp</key>
-					<string>759584076.0532759</string>
+					<string>761595036.821046</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -81,16 +81,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+				<string>            }
 </string>
 				<key>leading</key>
-				<string>        // Tworzenie archiwum ZIP
-        do {
+				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
+                return "Failed to create ZIP archive."
 </string>
 				<key>trailing</key>
-				<string>                return "Failed to create ZIP archive."
-            }
-
+				<string>
+            let items = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let totalItems = Double(items.count)
 </string>
 			</dict>
 			<key>title</key>

@@ -97,7 +97,7 @@ struct ActionListFilter: View {
                     .padding()
                     
                     VStack(alignment: .leading) {
-                        Text(LocalizedStringKey("Max actions displayed per page"))
+                        Text(LocalizedStringKey("max_actions_per_page"))
                         Picker("", selection: $filterData.actionsLimit) {
                             Text("5").tag(5)
                             Text("10").tag(10)

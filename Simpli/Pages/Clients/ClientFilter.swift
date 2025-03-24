@@ -19,7 +19,7 @@ struct ClientFilter: View {
         CloseableHeader()
         VStack {
             HStack {
-                Text("Filter Clients")
+                Text(LocalizedStringKey("filter_clients"))
                     .font(.title3)
                     .fontWeight(.bold)
                     .padding(.horizontal)
@@ -32,7 +32,7 @@ struct ClientFilter: View {
             VStack {
                 ForEach(options, id: \.self) { item in
                     HStack {
-                        Text(item.capitalized)
+                        Text(LocalizedStringKey(item))
                             .font(.body)
                             .padding(.vertical,3)
                         
@@ -66,10 +66,13 @@ struct ClientFilter: View {
             
             Spacer()
             
-            Text("Selected: \(selectedItems.joined(separator: ", "))")
+            Text(LocalizedStringKey("selected_filters"))
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .padding(.top, 10)
+            Text(selectedItems.map { NSLocalizedString($0, comment: "") }.joined(separator: ", "))
+                .font(.footnote)
+                .foregroundColor(.gray)
         }
         .padding()
         .onAppear {

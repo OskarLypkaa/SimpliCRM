@@ -36,18 +36,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		352ACBA82D21E68E00565931 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		35A36DE62D189E3400BEA896 = {
 			isa = PBXGroup;
 			children = (
 				35A36DF12D189E3400BEA896 /* Simpli */,
-				352ACBA82D21E68E00565931 /* Frameworks */,
 				35A36DF02D189E3400BEA896 /* Products */,
 			);
 			sourceTree = "<group>";

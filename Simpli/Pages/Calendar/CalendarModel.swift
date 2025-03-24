@@ -8,7 +8,7 @@ class CalendarModel: ObservableObject {
     @Published var actionsForDay: [Date: Int] = [:]
     @Published var actionsForHour: [Date: Int] = [:]
     let calendar = Calendar.current
-
+    @ObservedObject var settings = Settings.shared
     var shortWeekdaySymbols: [String] {
         let symbols = calendar.shortWeekdaySymbols
         let adjustedSymbols = symbols.dropFirst() + symbols.prefix(1)

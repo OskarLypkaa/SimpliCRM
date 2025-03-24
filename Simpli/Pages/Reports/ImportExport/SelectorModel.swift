@@ -1,8 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-
-
 class Selector {
     static let shared = Selector()
     
@@ -13,8 +11,8 @@ class Selector {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
-        panel.prompt = "Select Destination Folder"
-
+        panel.prompt = NSLocalizedString("select_destination_folder", comment: "")
+        
         if panel.runModal() == .OK {
             return panel.url
         } else {
@@ -28,7 +26,7 @@ class Selector {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
         panel.allowedContentTypes = [UTType(filenameExtension: "csv")!]
-        panel.prompt = "Select CSV File"
+        panel.prompt = NSLocalizedString("select_csv_file", comment: "")
         
         if panel.runModal() == .OK {
             return panel.url
@@ -43,7 +41,7 @@ class Selector {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
         panel.allowedContentTypes = [UTType(filenameExtension: "json")!]
-        panel.prompt = "Select JSON File"
+        panel.prompt = NSLocalizedString("select_json_file", comment: "")
         
         if panel.runModal() == .OK {
             return panel.url

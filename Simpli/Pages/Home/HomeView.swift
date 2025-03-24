@@ -81,7 +81,7 @@ struct HomeView: View {
 
         // Grupowanie akcji według nazw klientów
         let grouped = Dictionary(grouping: actions) { (action: Actions) -> String in
-            action.client?.name ?? "No client name"
+            action.client?.name ?? ""
         }
 
         // Iterowanie po grupach i sortowanie akcji w każdej z nich

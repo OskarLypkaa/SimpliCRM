@@ -3,8 +3,8 @@ import SwiftUI
 struct SettingsButton: View {
     let action: () -> Void
     let icon: String
-    let title: String
-    let subtitle: String
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey
 
     var body: some View {
         Button(action: action) {

@@ -65,7 +65,9 @@ struct AddActionCalendarMonthView: View {
             }
             VStack {
                 HStack {
-                    Text("Add action for day\n\(formattedDate(selectedDate))")
+                    Text(LocalizedStringKey("add_action_for_day"))
+                        .font(.title)
+                    Text(formattedDate(selectedDate))
                         .font(.title)
                     Spacer()
                     Button(action: {

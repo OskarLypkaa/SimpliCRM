@@ -105,14 +105,14 @@ struct DatePickerWithCallendar: View {
                 .font(.headline)
 
             HStack {
-                Text("Date: ")
-                DatePicker("Date: ", selection: $actionDueDate, displayedComponents: .date)
+                Text(LocalizedStringKey("date_label"))
+                DatePicker(LocalizedStringKey("date_label"), selection: $actionDueDate, displayedComponents: .date)
                     .labelsHidden()
                     .padding(.leading, 10)
                     .environment(\.locale, .init(identifier: settings.language.code)) // Lokalizacja języka
-                Text("Time: ")
+                Text(LocalizedStringKey("time_label"))
                 DatePicker(
-                    "Time: ",
+                    LocalizedStringKey("time_label"),
                     selection: $actionDueDate,
                     displayedComponents: .hourAndMinute
                 )
@@ -134,9 +134,9 @@ struct TimePickerView: View {
                 .font(.headline)
 
             HStack {
-                Text("Time: ")
+                Text(LocalizedStringKey("time_label"))
                 DatePicker(
-                    "Time: ",
+                    LocalizedStringKey("time_label"),
                     selection: $actionDueDate,
                     displayedComponents: .hourAndMinute
                 )
@@ -147,7 +147,6 @@ struct TimePickerView: View {
         .padding()
     }
 }
-
 
 
 struct AutoDismissSheetView: View {

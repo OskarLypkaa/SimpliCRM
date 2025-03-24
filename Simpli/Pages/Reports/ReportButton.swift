@@ -32,7 +32,7 @@ struct ActionButton: View {
                 Spacer()
 
                 if isUnderDevelopment {
-                    Text("This feature is under development")
+                    Text(LocalizedStringKey("feature_under_development"))
                         .font(.footnote)
                         .foregroundColor(.orange)
                         .padding(8)

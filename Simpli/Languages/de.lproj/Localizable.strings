@@ -7,8 +7,11 @@
 "home_tab" = "Startseite";
 "clients_tab" = "Kunden";
 "actions_tab" = "Aktionen";
-"calendar_tab" = "Kalender";
 "reports_tab" = "Berichte";
+"calendar_tab" = "Kalender";
+"calendar_month" = "Monatsansicht";
+"calendar_week" = "Wochenansicht";
+
 
 // --------------------------------- Help -----------------------------
 "help_title" = "Hilfe & Dokumentation";
@@ -60,22 +63,56 @@
 "help_nav_title" = "Hilfe";
 
 // --------------------------------- Settings -----------------------------
-"settings_title" = "App-Einstellungen";
-"settings_subtitle" = "Passen Sie die allgemeinen Anwendungseinstellungen an.";
-"database_path_section" = "Datenbankpfad";
+"backup_settings_title" = "Einstellungen für Datenbanksicherungen";
+"backup_path" = "Backup-Pfad:";
+"no_backup_folder_selected" = "Kein Backup-Ordner ausgewählt";
+"select_backup_folder" = "Backup-Ordner auswählen";
+"select_backup_folder_description" = "Wählen Sie einen Ordner aus, in dem automatisch erstellte Sicherungen gespeichert werden.";
+"create_database_automatically" = "Datenbank automatisch erstellen:";
+"automatic_backup_interval" = "Automatische Sicherungsintervall:";
+"3_minutes" = "3 Minuten";
+"5_minutes" = "5 Minuten";
+"10_minutes" = "10 Minuten";
+"30_minutes" = "30 Minuten";
+"60_minutes" = "60 Minuten";
+
+"no_files_folder_selected" = "Kein Ordner für Dateisicherung ausgewählt";
+"create_files_backup_automatically" = "Dateisicherung automatisch erstellen:";
+"automatic_backup_files_interval" = "Intervall für automatische Dateisicherung:";
+
+"database_settings" = "Datenbankeinstellungen";
+"current_path" = "Aktueller Pfad:";
 "no_database_selected" = "Keine Datenbank ausgewählt";
-"browse_database_button" = "Datenbank durchsuchen";
-"load_database_button" = "Datenbank laden";
-"no_database_path" = "Kein Datenbankpfad ausgewählt";
-"database_path_updated" = "Datenbankpfad aktualisiert";
+"browse_database" = "Datenbank durchsuchen";
+"browse_database_description" = "Wählen Sie eine Datenbankdatei mit der Erweiterung .sqlite von Ihrem Gerät aus.";
+"create_database_file" = "Datenbankdatei erstellen";
+"create_database_file_description" = "Erstellen Sie eine neue leere Datenbankdatei im ausgewählten Ordner.";
+"create_database_backup" = "Datenbanksicherung erstellen";
+"create_database_backup_description" = "Erstellen Sie eine Sicherung der aktuell verwendeten Datenbank im ausgewählten Ordner.";
+"operation_finished" = "Vorgang abgeschlossen!";
+
+"files_settings" = "Dateieinstellungen";
+"no_path_selected" = "Kein Pfad ausgewählt";
+"select_files_folder" = "Dateiordner auswählen";
+"select_files_folder_description" = "Wählen Sie den Ordner aus, in dem alle Kundendateien gespeichert werden.";
+"generate_clients_folders" = "Kundenordner generieren";
+"generate_clients_folders_description" = "Erstellen Sie für jeden Kunden einen Ordner am ausgewählten Speicherort.";
+"archive_files_folder" = "Dateiordner archivieren";
+"archive_files_folder_description" = "Archivieren Sie alle Dateien in einen ausgewählten Ordner.";
+
+"settings_title" = "Einstellungen";
+"settings_subtitle" = "Passen Sie das Verhalten und das Erscheinungsbild der Anwendung an";
+"automatic_database_backup_settings" = "Automatische Sicherungseinstellungen für die Datenbank";
+"clients_files_settings" = "Einstellungen für Kundendateien";
+"automatic_files_backup_settings" = "Automatische Sicherungseinstellungen für Dateien";
 "appearance_section" = "Erscheinungsbild";
 "language_section" = "Sprache";
 "archived_actions_section" = "Archivierte Aktionen anzeigen";
-"show_archived_toggle" = "Archivierte Aktionen anzeigen";
-"no_file_selected" = "Keine Datei ausgewählt";
-"file_selection_error" = "Fehler beim Auswählen der Datei: %@";
+"data_files_section" = "Daten & Dateien";
+
 "theme_mode_light" = "Hell";
 "theme_mode_dark" = "Dunkel";
+"files_backup_settings" = "Dateisicherungseinstellungen";
 
 // --------------------------------- Clients -----------------------------
 "table_header_name" = "Name";
@@ -123,6 +160,31 @@
 "cancel_button" = "Abbrechen";
 "confirm_button" = "Ja";
 
+"filter_clients" = "Kunden filtern";
+"selected_filters" = "Ausgewählte Filter:";
+"name" = "Name";
+"phone" = "Telefon";
+"email" = "E-Mail";
+"firstInformation" = "Erste Information";
+"secondInformation" = "Zweite Information";
+"thirdInformation" = "Dritte Information";
+"gender" = "Geschlecht";
+"address" = "Adresse";
+
+"filter_clients" = "Kunden filtern";
+"selected_filters" = "Ausgewählte Filter:";
+"name" = "Name";
+"phone" = "Telefon";
+"email" = "E-Mail";
+"firstInformation" = "Erste Information";
+"secondInformation" = "Zweite Information";
+"thirdInformation" = "Dritte Information";
+"gender" = "Geschlecht";
+"address" = "Adresse";
+"gender_male" = "Männlich";
+"gender_female" = "Weiblich";
+
+
 // --------------------------------- Callendar -----------------------------
 "tasks_for_selected_day" = "Aufgaben für den ausgewählten Tag";
 "no_client_name" = "Kein Kundenname";
@@ -130,35 +192,60 @@
 "calendar_actions_count" = "Aktionen: ";
 
 // --------------------------------- Reports -----------------------------
-"reports_title" = "Berichte & Datenexport";
-"reports_subtitle" = "Berichte erstellen, Daten visualisieren und Informationen in verschiedene Formate exportieren/importieren.";
-"reports_generate_section" = "Berichte erstellen";
-"generate_sales_report_title" = "Umsatzbericht erstellen";
-"generate_sales_report_subtitle" = "Detaillierter Bericht über alle Umsatztransaktionen.";
-"customer_analytics_title" = "Kundenanalysen";
-"customer_analytics_subtitle" = "Einblicke in das Kundenverhalten und Trends.";
-"monthly_revenue_report_title" = "Monatlicher Einnahmenbericht";
-"monthly_revenue_report_subtitle" = "Verfolgen Sie die monatlichen Einnahmen in den Abteilungen.";
-"task_completion_overview_title" = "Übersicht über Aufgabenabschlüsse";
-"task_completion_overview_subtitle" = "Übersicht über Aufgaben und Projektfortschritt.";
+"reports_title" = "Berichte";
+"reports_subtitle" = "Generieren Sie Berichte und exportieren/importieren Sie Daten";
+"reports_generate_section" = "Berichte generieren";
+"customer_analytics_title" = "Kundenanalyse";
+"customer_analytics_subtitle" = "Analysieren Sie Kundendaten";
+"monthly_revenue_report_title" = "Monatlicher Umsatzbericht";
+"monthly_revenue_report_subtitle" = "Generieren Sie einen Bericht über den monatlichen Umsatz";
+"weekly_revenue_report_title" = "Wöchentlicher Umsatzbericht";
+"weekly_revenue_report_subtitle" = "Generieren Sie einen Bericht über den wöchentlichen Umsatz";
+"task_completion_overview_title" = "Übersicht über abgeschlossene Aufgaben";
+"task_completion_overview_subtitle" = "Sehen Sie, welche Aufgaben abgeschlossen wurden";
 "statistic_overview_title" = "Statistikübersicht";
-"statistic_overview_subtitle" = "Rohdaten der Statistik anzeigen.";
-"data_export_section" = "Daten exportieren";
-"export_to_excel_title" = "Nach Excel exportieren";
-"export_to_excel_subtitle" = "Daten im Excel-Format speichern.";
-"export_to_pdf_title" = "Nach PDF exportieren";
-"export_to_pdf_subtitle" = "Daten im PDF-Format speichern.";
-"export_to_csv_title" = "Nach CSV exportieren";
-"export_to_csv_subtitle" = "Daten im CSV-Format speichern.";
-"export_to_json_title" = "Nach JSON exportieren";
-"export_to_json_subtitle" = "Daten im JSON-Format speichern.";
-"data_import_section" = "Daten importieren";
+"statistic_overview_subtitle" = "Zeigen Sie Statistiken zu den gespeicherten Daten an";
+"data_export_section" = "Datenexport";
+"export_to_excel_title" = "In Excel exportieren";
+"export_to_excel_subtitle" = "Exportieren Sie Daten in eine Excel-Datei";
+"export_to_pdf_title" = "In PDF exportieren";
+"export_to_pdf_subtitle" = "Exportieren Sie Daten in eine PDF-Datei";
+"export_to_csv_title" = "In CSV exportieren";
+"export_to_csv_subtitle" = "Exportieren Sie Daten in eine CSV-Datei";
+"export_to_json_title" = "In JSON exportieren";
+"export_to_json_subtitle" = "Exportieren Sie Daten in eine JSON-Datei";
+"data_import_section" = "Datenimport";
 "import_from_excel_title" = "Aus Excel importieren";
-"import_from_excel_subtitle" = "Daten aus einer Excel-Datei laden.";
+"import_from_excel_subtitle" = "Importieren Sie Daten aus einer Excel-Datei";
 "import_from_csv_title" = "Aus CSV importieren";
-"import_from_csv_subtitle" = "Daten aus einer CSV-Datei laden.";
+"import_from_csv_subtitle" = "Importieren Sie Daten aus einer CSV-Datei";
 "import_from_json_title" = "Aus JSON importieren";
-"import_from_json_subtitle" = "Daten aus einer JSON-Datei laden.";
+"import_from_json_subtitle" = "Importieren Sie Daten aus einer JSON-Datei";
+"clients_exported_successfully" = "Kunden erfolgreich exportiert";
+"clients_imported_successfully" = "Kunden erfolgreich importiert";
+
+"feature_under_development" = "Diese Funktion ist in der Entwicklung";
+
+"select_destination_folder" = "Zielordner auswählen";
+"select_csv_file" = "CSV-Datei auswählen";
+"select_json_file" = "JSON-Datei auswählen";
+
+"overview_title" = "Übersicht";
+"total_clients" = "Gesamtkunden";
+"total_actions" = "Gesamte Aktionen";
+"average_actions_per_client" = "Durchschnittliche Aktionen pro Kunde";
+"actions_todo" = "Aktionen - ToDo";
+"actions_in_progress" = "Aktionen - In Bearbeitung";
+"actions_done" = "Aktionen - Erledigt";
+"actions_blocked" = "Aktionen - Blockiert";
+"male_clients" = "Männliche Kunden";
+"female_clients" = "Weibliche Kunden";
+"actions_meeting" = "Aktionen - Besprechung";
+"actions_call" = "Aktionen - Anruf";
+"actions_email" = "Aktionen - E-Mail";
+"actions_follow_up" = "Aktionen - Nachverfolgung";
+"actions_contract" = "Aktionen - Vertrag";
+
 
 // --------------------------------- Actions -----------------------------
 "Low" = "Niedrig";
@@ -225,7 +312,14 @@
 "cancel_button" = "Abbrechen";
 "yes_button" = "Ja";
 
+"max_actions_per_page" = "Maximale Aktionen pro Seite";
+"add_action_for_day" = "Aktion für den Tag hinzufügen";
+
+
 // --------------------------------- Commons -----------------------------
 "due_date_label" = "Fälligkeitsdatum:";
 "warning_text_max_characters" = "Der Text kann maximal 600 Zeichen enthalten";
 "search_placeholder" = "Suchen";
+"date_label" = "Datum:";
+"time_label" = "Uhrzeit:";
+"time_picker_label" = "Uhrzeit auswählen";

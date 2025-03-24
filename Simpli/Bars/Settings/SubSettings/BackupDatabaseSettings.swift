@@ -6,14 +6,16 @@ struct BackupDatabaseSetting: View {
     var body: some View {
         CloseableHeader()
         
-        Text("Database Backup Settings")
+        Text(LocalizedStringKey("backup_settings_title"))
             .font(.largeTitle)
             .fontWeight(.bold)
 
         HStack {
-            Text("Backup Path:")
+            Text(LocalizedStringKey("backup_path"))
                 .font(.headline)
-            Text(settings.automaticDatabaseBackupPath.isEmpty ? "No database folder selected" : "~ \(settings.automaticDatabaseBackupPath)")
+            Text(settings.automaticDatabaseBackupPath.isEmpty
+                 ? LocalizedStringKey("no_backup_folder_selected")
+                 : "~ \(settings.automaticDatabaseBackupPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -24,13 +26,12 @@ struct BackupDatabaseSetting: View {
                     DatabaseManager.shared.setAutomaticDatabaseBackupPath { newPath in
                         if let path = newPath {
                             print("New Path: \(path)")
-                        
                         }
                     }
                 },
                 icon: "folder.fill.badge.questionmark",
-                title: "Select Backup Folder",
-                subtitle: "Select a folder when you want to store automatically created backup."
+                title: LocalizedStringKey("select_backup_folder"),
+                subtitle: LocalizedStringKey("select_backup_folder_description")
             )
         
             HStack {
@@ -38,8 +39,8 @@ struct BackupDatabaseSetting: View {
                     .font(.title2)
                     .foregroundColor(.primary)
 
-                VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
-                    Text("Create Database Automatically:")
+                VStack(alignment: .leading) {
+                    Text(LocalizedStringKey("create_database_automatically"))
                         .font(.headline)
                     Toggle(isOn: $settings.automaticDatabaseBackup) {}
                         .toggleStyle(SwitchToggleStyle())
@@ -63,23 +64,23 @@ struct BackupDatabaseSetting: View {
                     .foregroundColor(.primary)
                     .frame(width: 25)
 
-                VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
-                    Text("Automatic Backup Of Database Interval:")
+                VStack(alignment: .leading) {
+                    Text(LocalizedStringKey("automatic_backup_interval"))
                         .font(.headline)
 
                     Picker("", selection: $settings.automaticDatabaseBackupInterval) {
-                        Text("3 minutes").tag(3)
-                        Text("5 minutes").tag(5)
-                        Text("10 minutes").tag(10)
-                        Text("30 minutes").tag(30)
-                        Text("60 minutes").tag(60)
+                        Text(LocalizedStringKey("3_minutes")).tag(3)
+                        Text(LocalizedStringKey("5_minutes")).tag(5)
+                        Text(LocalizedStringKey("10_minutes")).tag(10)
+                        Text(LocalizedStringKey("30_minutes")).tag(30)
+                        Text(LocalizedStringKey("60_minutes")).tag(60)
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .labelsHidden() // Ukrywa pustą etykietę Picker
-                    .fixedSize() // Zapobiega niepotrzebnemu rozciąganiu
+                    .labelsHidden()
+                    .fixedSize()
                     .padding(.bottom, 20)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading) // Zapewnia wyrównanie w HStack
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             Divider()

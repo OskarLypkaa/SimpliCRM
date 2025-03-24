@@ -40,7 +40,7 @@ struct ActionBlock: View {
                             return "checkmark.circle.fill"
                         }
                     }())
-                    Text(action.client?.name ?? "No client name")
+                    Text(action.client?.name ?? "")
                         .font(.headline)
                         .padding(4)
                     Spacer()
@@ -51,7 +51,7 @@ struct ActionBlock: View {
                 .padding(.horizontal)
                 Divider()
                     .padding(.horizontal)
-                Text(action.message ?? "Something went wrong :(")
+                Text(action.message!)
                     .foregroundColor(.primary)
                     .padding(.horizontal)
                     .padding(.bottom, 4)
@@ -118,7 +118,7 @@ struct ActionBlock: View {
         .onChange(of: refreshList) {
             // Odśwież widok, gdy `refreshList` się zmienia
         }
-        .frame(width: 200, height: 170)
+        .frame(maxWidth: .infinity, minHeight: 150, maxHeight: 150)
     }
 }
 

@@ -6,14 +6,16 @@ struct BackupFilesSetting: View {
     var body: some View {
         CloseableHeader()
         
-        Text("Files Backup Settings")
+        Text(LocalizedStringKey("files_backup_settings"))
             .font(.largeTitle)
             .fontWeight(.bold)
 
         HStack {
-            Text("Backup Path:")
+            Text(LocalizedStringKey("backup_path"))
                 .font(.headline)
-            Text(settings.automaticFilesBackupPath.isEmpty ? "No files folder selected" : "~ \(settings.automaticFilesBackupPath)")
+            Text(settings.automaticFilesBackupPath.isEmpty
+                 ? LocalizedStringKey("no_files_folder_selected")
+                 : "~ \(settings.automaticFilesBackupPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -28,8 +30,8 @@ struct BackupFilesSetting: View {
                     }
                 },
                 icon: "folder.fill.badge.questionmark",
-                title: "Select Backup Folder",
-                subtitle: "Select a folder when you want to store automatically created backup."
+                title: LocalizedStringKey("select_backup_folder"),
+                subtitle: LocalizedStringKey("select_backup_folder_description")
             )
         
             HStack {
@@ -37,8 +39,8 @@ struct BackupFilesSetting: View {
                     .font(.title2)
                     .foregroundColor(.primary)
 
-                VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
-                    Text("Create Database Automatically:")
+                VStack(alignment: .leading) {
+                    Text(LocalizedStringKey("create_files_backup_automatically"))
                         .font(.headline)
                     Toggle(isOn: $settings.automaticFilesBackup) {}
                         .toggleStyle(SwitchToggleStyle())
@@ -62,23 +64,23 @@ struct BackupFilesSetting: View {
                     .foregroundColor(.primary)
                     .frame(width: 25)
 
-                VStack(alignment: .leading) { // Wyrównanie zawartości do lewej
-                    Text("Automatic Backup Of Files Interval:")
+                VStack(alignment: .leading) {
+                    Text(LocalizedStringKey("automatic_backup_files_interval"))
                         .font(.headline)
 
                     Picker("", selection: $settings.automaticFilesBackupInterval) {
-                        Text("3 minutes").tag(3)
-                        Text("5 minutes").tag(5)
-                        Text("10 minutes").tag(10)
-                        Text("30 minutes").tag(30)
-                        Text("60 minutes").tag(60)
+                        Text(LocalizedStringKey("3_minutes")).tag(3)
+                        Text(LocalizedStringKey("5_minutes")).tag(5)
+                        Text(LocalizedStringKey("10_minutes")).tag(10)
+                        Text(LocalizedStringKey("30_minutes")).tag(30)
+                        Text(LocalizedStringKey("60_minutes")).tag(60)
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .labelsHidden() // Ukrywa pustą etykietę Picker
-                    .fixedSize() // Zapobiega niepotrzebnemu rozciąganiu
+                    .labelsHidden()
+                    .fixedSize()
                     .padding(.bottom, 20)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading) // Zapewnia wyrównanie w HStack
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             Divider()

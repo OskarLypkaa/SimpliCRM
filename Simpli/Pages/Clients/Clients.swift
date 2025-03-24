@@ -18,7 +18,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "person.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.name ?? "No Name")
+                        Text(client.name!)
                             .font(.headline)
                             .foregroundColor(.primary)
                             .lineLimit(1)
@@ -34,7 +34,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "envelope.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.email ?? "No Email")
+                        Text(client.email!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -50,7 +50,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "phone.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.phone ?? "No Phone")
+                        Text(client.phone!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -66,7 +66,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.firstInformation ?? "No Info")
+                        Text(client.firstInformation!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -82,7 +82,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.secondInformation ?? "No Info")
+                        Text(client.secondInformation!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -98,7 +98,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.thirdInformation ?? "No Info")
+                        Text(client.thirdInformation!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -114,7 +114,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "map.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.address ?? "No Adress")
+                        Text(client.address!)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -131,14 +131,19 @@ struct Clients: View {
                         if(client.gender == "Male") {
                             Image(systemName: "figure.stand")
                                 .frame(width: 24, height: 18)
+                            Text(LocalizedStringKey("gender_male"))
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .lineLimit(1)
                         } else {
                             Image(systemName: "figure.stand.dress")
                                 .frame(width: 24, height: 18)
+                            Text(LocalizedStringKey("gender_female"))
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .lineLimit(1)
                         }
-                        Text(client.gender ?? "No Phone")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .lineLimit(1)
+                        
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }

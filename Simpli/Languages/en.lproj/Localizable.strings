@@ -7,9 +7,10 @@
 "home_tab" = "Home";
 "clients_tab" = "Clients";
 "actions_tab" = "Actions";
-"calendar_week" = "Week View";
-"calendar_month" = "Month View";
 "reports_tab" = "Reports";
+"calendar_tab" = "Calendar";
+"calendar_month" = "Month View";
+"calendar_week" = "Week View";
 
 
 // --------------------------------- Help -----------------------------
@@ -62,22 +63,57 @@
 "help_nav_title" = "Help";
 
 // --------------------------------- Settings -----------------------------
-"settings_title" = "App Settings";
-"settings_subtitle" = "Adjust general application preferences.";
-"database_path_section" = "Database path";
-"no_database_selected" = "There is no database selected";
-"browse_database_button" = "Browse Database";
-"load_database_button" = "Load Database";
-"no_database_path" = "No database path selected";
-"database_path_updated" = "Database path updated";
+"backup_settings_title" = "Database Backup Settings";
+"backup_path" = "Backup Path:";
+"no_backup_folder_selected" = "No backup folder selected";
+"select_backup_folder" = "Select Backup Folder";
+"select_backup_folder_description" = "Select a folder where you want to store automatically created backup.";
+"create_database_automatically" = "Create Database Automatically:";
+"automatic_backup_interval" = "Automatic Backup Interval:";
+"3_minutes" = "3 minutes";
+"5_minutes" = "5 minutes";
+"10_minutes" = "10 minutes";
+"30_minutes" = "30 minutes";
+"60_minutes" = "60 minutes";
+
+"no_files_folder_selected" = "No files folder selected";
+"create_files_backup_automatically" = "Create Files Backup Automatically:";
+"automatic_backup_files_interval" = "Automatic Backup Interval:";
+
+"database_settings" = "Database Settings";
+"current_path" = "Current Path:";
+"no_database_selected" = "No database selected";
+"browse_database" = "Browse Database";
+"browse_database_description" = "Select a database file with extension .sqlite from your device.";
+"create_database_file" = "Create Database File";
+"create_database_file_description" = "Generate a new empty database file in the selected folder.";
+"create_database_backup" = "Create Database Backup";
+"create_database_backup_description" = "Create a backup of the currently used database in the selected folder.";
+"operation_finished" = "Operation finished!";
+
+"files_settings" = "Files Settings";
+"no_path_selected" = "No path selected";
+"select_files_folder" = "Select Files Folder";
+"select_files_folder_description" = "Select the folder where all client files will be stored.";
+"generate_clients_folders" = "Generate Client Folders";
+"generate_clients_folders_description" = "Generate a folder for each client in the selected location.";
+"archive_files_folder" = "Archive Files Folder";
+"archive_files_folder_description" = "Archive all files to a selected folder.";
+
+"settings_title" = "Settings";
+"settings_subtitle" = "Customize the behavior and appearance of the application";
+"automatic_database_backup_settings" = "Automatic Database Backup Settings";
+"clients_files_settings" = "Client's Files Settings";
+"automatic_files_backup_settings" = "Automatic Files Backup Settings";
 "appearance_section" = "Appearance";
 "language_section" = "Language";
-"archived_actions_section" = "Show archived actions";
-"show_archived_toggle" = "Show archived actions";
-"no_file_selected" = "No file selected";
-"file_selection_error" = "Error selecting file: %@";
+"archived_actions_section" = "Show Archived Actions";
+"data_files_section" = "Data & Files";
+
 "theme_mode_light" = "Light";
 "theme_mode_dark" = "Dark";
+"files_backup_settings" = "Files Backup Settings";
+
 
 // --------------------------------- Clients -----------------------------
 "table_header_name" = "Name";
@@ -125,6 +161,20 @@
 "cancel_button" = "Cancel";
 "confirm_button" = "Yes";
 
+"filter_clients" = "Filter Clients";
+"selected_filters" = "Selected Filters:";
+"name" = "Name";
+"phone" = "Phone";
+"email" = "Email";
+"firstInformation" = "First Information";
+"secondInformation" = "Second Information";
+"thirdInformation" = "Third Information";
+"gender" = "Gender";
+"address" = "Address";
+"gender_male" = "Male";
+"gender_female" = "Female";
+
+
 // --------------------------------- Callendar -----------------------------
 "tasks_for_selected_day" = "Tasks you have for the selected day";
 "no_client_name" = "No client name";
@@ -132,35 +182,59 @@
 "calendar_actions_count" = "Actions: ";
 
 // --------------------------------- Reports -----------------------------
-"reports_title" = "Reports & Data Export";
-"reports_subtitle" = "Generate reports, visualize data, and export/import information to various formats.";
+"reports_title" = "Reports";
+"reports_subtitle" = "Generate reports and export/import data";
 "reports_generate_section" = "Generate Reports";
-"generate_sales_report_title" = "Generate Sales Report";
-"generate_sales_report_subtitle" = "Detailed report of all sales transactions.";
 "customer_analytics_title" = "Customer Analytics";
-"customer_analytics_subtitle" = "Insights into customer behavior and trends.";
+"customer_analytics_subtitle" = "Analyze customer data";
 "monthly_revenue_report_title" = "Monthly Revenue Report";
-"monthly_revenue_report_subtitle" = "Track monthly revenue across departments.";
+"monthly_revenue_report_subtitle" = "Generate a report on monthly revenue";
+"weekly_revenue_report_title" = "Weekly Revenue Report";
+"weekly_revenue_report_subtitle" = "Generate a report on weekly revenue";
 "task_completion_overview_title" = "Task Completion Overview";
-"task_completion_overview_subtitle" = "Overview of tasks and project progress.";
+"task_completion_overview_subtitle" = "See which tasks have been completed";
 "statistic_overview_title" = "Statistic Overview";
-"statistic_overview_subtitle" = "Show the raw statistic data.";
-"data_export_section" = "Export Data";
+"statistic_overview_subtitle" = "View statistics of stored data";
+"data_export_section" = "Data Export";
 "export_to_excel_title" = "Export to Excel";
-"export_to_excel_subtitle" = "Save data in Excel format.";
+"export_to_excel_subtitle" = "Export data to an Excel file";
 "export_to_pdf_title" = "Export to PDF";
-"export_to_pdf_subtitle" = "Save data in PDF format.";
+"export_to_pdf_subtitle" = "Export data to a PDF file";
 "export_to_csv_title" = "Export to CSV";
-"export_to_csv_subtitle" = "Save data in CSV format.";
+"export_to_csv_subtitle" = "Export data to a CSV file";
 "export_to_json_title" = "Export to JSON";
-"export_to_json_subtitle" = "Save data in JSON format.";
-"data_import_section" = "Import Data";
+"export_to_json_subtitle" = "Export data to a JSON file";
+"data_import_section" = "Data Import";
 "import_from_excel_title" = "Import from Excel";
-"import_from_excel_subtitle" = "Load data from an Excel file.";
+"import_from_excel_subtitle" = "Import data from an Excel file";
 "import_from_csv_title" = "Import from CSV";
-"import_from_csv_subtitle" = "Load data from a CSV file.";
+"import_from_csv_subtitle" = "Import data from a CSV file";
 "import_from_json_title" = "Import from JSON";
-"import_from_json_subtitle" = "Load data from a JSON file.";
+"import_from_json_subtitle" = "Import data from a JSON file";
+"clients_exported_successfully" = "Clients exported successfully";
+"clients_imported_successfully" = "Clients imported successfully";
+
+"feature_under_development" = "This feature is under development";
+
+"select_destination_folder" = "Select Destination Folder";
+"select_csv_file" = "Select CSV File";
+"select_json_file" = "Select JSON File";
+
+"overview_title" = "Overview";
+"total_clients" = "Total Clients";
+"total_actions" = "Total Actions";
+"average_actions_per_client" = "Average Actions per Client";
+"actions_todo" = "Actions - ToDo";
+"actions_in_progress" = "Actions - In Progress";
+"actions_done" = "Actions - Done";
+"actions_blocked" = "Actions - Blocked";
+"male_clients" = "Male Clients";
+"female_clients" = "Female Clients";
+"actions_meeting" = "Actions - Meeting";
+"actions_call" = "Actions - Call";
+"actions_email" = "Actions - Email";
+"actions_follow_up" = "Actions - Follow-Up";
+"actions_contract" = "Actions - Contract";
 
 // --------------------------------- Actions -----------------------------
 "Low" = "Low";
@@ -227,7 +301,13 @@
 "cancel_button" = "Cancel";
 "yes_button" = "Yes";
 
+"max_actions_per_page" = "Max actions displayed per page";
+"add_action_for_day" = "Add action for the day";
+
 // --------------------------------- Commons -----------------------------
 "due_date_label" = "Due Date:";
 "warning_text_max_characters" = "Text can have maximum of 600 characters";
 "search_placeholder" = "Search";
+"date_label" = "Date:";
+"time_label" = "Time:";
+"time_picker_label" = "Select Time";

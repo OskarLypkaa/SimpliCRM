@@ -80,6 +80,7 @@ struct ActionsListView: View {
                                         draggedAction = action
                                         return NSItemProvider(object: action.id?.uuidString as NSString? ?? "")
                                     }
+                                    
                             }
                             Spacer()
                         }
@@ -93,7 +94,6 @@ struct ActionsListView: View {
                     }
                 }
                 .animation(.easeInOut, value: actions.count)
-                .frame(maxWidth: settings.showArchived ? 1020 : 820)
                 .padding(10)
             }
             .onAppear {

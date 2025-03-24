@@ -138,10 +138,10 @@ class Settings: ObservableObject {
             language = .english
             showArchived = false
             automaticDatabaseBackup = false
-            automaticDatabaseBackupInterval = 20
+            automaticDatabaseBackupInterval = 30
             automaticDatabaseBackupPath = ""
             automaticFilesBackup = false
-            automaticFilesBackupInterval = 24
+            automaticFilesBackupInterval = 30
             automaticFilesBackupPath = ""
             return
         }

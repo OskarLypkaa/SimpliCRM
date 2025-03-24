@@ -4,17 +4,18 @@ struct FilesSetting: View {
     @ObservedObject private var settings = Settings.shared
     
     @State private var showMessage: Bool = false
-    @State private var sheetMessage: String = "Operation finished!"
+    @State private var sheetMessage: String = "operation_finished"
+
     var body: some View {
         CloseableHeader()
-        Text("Files Settings")
+        Text(LocalizedStringKey("files_settings"))
             .font(.largeTitle)
             .fontWeight(.bold)
 
         HStack {
-            Text("Current Path:")
+            Text(LocalizedStringKey("current_path"))
                 .font(.headline)
-            Text(settings.filesPath.isEmpty ? "No path selected" : "~ \(settings.filesPath)")
+            Text(settings.filesPath.isEmpty ? LocalizedStringKey("no_path_selected") : "~ \(settings.filesPath)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -22,7 +23,7 @@ struct FilesSetting: View {
             SettingsButton(
                 action: {
                     let message = FilesManager.shared.setFilesFolder(settings: settings)
-                    if(!message.isEmpty) {
+                    if (!message.isEmpty) {
                         showMessage = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                             withAnimation {
@@ -32,8 +33,8 @@ struct FilesSetting: View {
                     }
                 },
                 icon: "folder.fill.badge.questionmark",
-                title: "Select Files Folder",
-                subtitle: "Select the folder where all of the client files will be stored."
+                title: LocalizedStringKey("select_files_folder"),
+                subtitle: LocalizedStringKey("select_files_folder_description")
             )
 
             SettingsButton(
@@ -44,7 +45,7 @@ struct FilesSetting: View {
                     } catch {
                         print("Error generating folders!")
                     }
-                    if(!message.isEmpty) {
+                    if (!message.isEmpty) {
                         showMessage = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                             withAnimation {
@@ -54,8 +55,8 @@ struct FilesSetting: View {
                     }
                 },
                 icon: "folder.fill.badge.plus",
-                title: "Generate Clients Folders",
-                subtitle: "Generate folders for each client in the selected location."
+                title: LocalizedStringKey("generate_clients_folders"),
+                subtitle: LocalizedStringKey("generate_clients_folders_description")
             )
 
             SettingsButton(
@@ -65,7 +66,7 @@ struct FilesSetting: View {
                             let message = FilesManager.shared.backupFilesPath(using: settings.filesPath, to: folderURL) { progress in
                                 print("Progress: \(progress * 100)%")
                             }
-                            if(!message.isEmpty) {
+                            if (!message.isEmpty) {
                                 showMessage = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                                     withAnimation {
@@ -73,16 +74,13 @@ struct FilesSetting: View {
                                     }
                                 }
                             }
-                            
                         }
-
                     }
                 },
                 icon: "tray.full.fill",
-                title: "Archive Files Folder",
-                subtitle: "Archive all files to a selected folder."
+                title: LocalizedStringKey("archive_files_folder"),
+                subtitle: LocalizedStringKey("archive_files_folder_description")
             )
-            
 
             Spacer()
         }
@@ -96,5 +94,4 @@ struct FilesSetting: View {
             .environment(\.locale, .init(identifier: settings.language.code))
         }
     }
-    
 }
