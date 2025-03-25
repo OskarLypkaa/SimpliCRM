@@ -22,9 +22,11 @@ struct EditClient: View {
         ZStack {
             VStack {
                 HStack {
-                    Text(LocalizedStringKey("add_client_title"))
+                    Text(LocalizedStringKey("change_client_info_title"))
                         .font(.title)
+
                     Spacer()
+
                     Button(action: {
                         resetToOriginalValues()
                     }) {
@@ -32,17 +34,19 @@ struct EditClient: View {
                             .padding(.horizontal)
                     }
                     .buttonStyle(PlainButtonStyle())
+
                     Button(action: {
                         updateClient()
                     }) {
-                        Text(LocalizedStringKey("add_client_add_button"))
+                        Text(LocalizedStringKey("edit_client_button"))
                             .padding(.horizontal)
                     }
                     .disabled(textValidation())
                     .buttonStyle(PlainButtonStyle())
+
                     .sheet(isPresented: $showMessage) {
                         AutoDismissSheetView(
-                            message: LocalizedStringKey("add_client_success_message"),
+                            message: LocalizedStringKey("client_updated_message"),
                             displayDuration: 1.5,
                             isPresented: $showMessage
                         )

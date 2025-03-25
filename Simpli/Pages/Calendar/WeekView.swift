@@ -19,8 +19,9 @@ struct WeekView: View {
     
     var body: some View {
         VStack {
+            
             Text("\(String(describing: selectedDate))").opacity(0)
-            HStack {
+            ZStack {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         isBacisViewDisplayed.toggle()
@@ -43,48 +44,50 @@ struct WeekView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .scaleEffect(isHovered ? 1.01 : 1)
+                .padding(.leading, 850)
                 
-                Spacer()
-                ChevronButton(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        transitionDirection = -1
-                        model.previousMonth()
-                        transitionDirection = 0
-                    }
-                }, imageName: "chevron.left.2")
-                
-                ChevronButton(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        transitionDirection = -1
-                        model.previousWeek()
-                        transitionDirection = 0
-                    }
-                }, imageName: "chevron.left")
-                
-                Text(model.monthAndYear(for: model.displayedDate))
-                    .font(.largeTitle)
-                    .padding()
-                    .frame(width: 250)
-                
-                ChevronButton(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        transitionDirection = 1
-                        model.nextWeek()
-                        transitionDirection = 0
-                    }
-                }, imageName: "chevron.right")
-                
-                ChevronButton(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        transitionDirection = 1
-                        model.nextMonth()
-                        transitionDirection = 0
-                    }
-                }, imageName: "chevron.right.2")
-                Spacer()
+                HStack {
+                    Spacer()
+                    ChevronButton(action: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            transitionDirection = -1
+                            model.previousMonth()
+                            transitionDirection = 0
+                        }
+                    }, imageName: "chevron.left.2")
+                    
+                    ChevronButton(action: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            transitionDirection = -1
+                            model.previousWeek()
+                            transitionDirection = 0
+                        }
+                    }, imageName: "chevron.left")
+                    
+                    Text(model.monthAndYear(for: model.displayedDate))
+                        .font(.largeTitle)
+                        .padding()
+                        .frame(width: 250)
+                    
+                    ChevronButton(action: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            transitionDirection = 1
+                            model.nextWeek()
+                            transitionDirection = 0
+                        }
+                    }, imageName: "chevron.right")
+                    
+                    ChevronButton(action: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            transitionDirection = 1
+                            model.nextMonth()
+                            transitionDirection = 0
+                        }
+                    }, imageName: "chevron.right.2")
+                    Spacer()
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            
             
             
             HStack(alignment: .top) {

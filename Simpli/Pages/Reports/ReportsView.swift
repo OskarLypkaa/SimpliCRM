@@ -44,18 +44,8 @@ struct ReportView: View {
                             }
                         )
                         ActionButton(
-                            title: LocalizedStringKey("monthly_revenue_report_title"),
-                            subtitle: LocalizedStringKey("monthly_revenue_report_subtitle"),
-                            image: "calendar",
-                            isUnderDevelopment: true,
-                            action: {
-                                print("Generate Monthly Revenue Report")
-                                // Wywołanie funkcji generowania raportu miesięcznego przychodu
-                            }
-                        )
-                        ActionButton(
-                            title: LocalizedStringKey("weekly_revenue_report_title"),
-                            subtitle: LocalizedStringKey("weekly_revenue_report_subtitle"),
+                            title: LocalizedStringKey("report_title"),
+                            subtitle: LocalizedStringKey("report_subtitle"),
                             image: "calendar",
                             isUnderDevelopment: true,
                             action: {

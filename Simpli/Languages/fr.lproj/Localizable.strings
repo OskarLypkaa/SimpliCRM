@@ -146,6 +146,10 @@
 "add_client_third_info_label" = "Troisième information supplémentaire:";
 "add_client_third_info_placeholder" = "Entrer l'information";
 
+"change_client_info_title" = "Modifier les informations du client";
+"edit_client_button" = "Enregistrer les modifications";
+"client_updated_message" = "Informations du client mises à jour !";
+
 "no_actions_available" = "Aucune action disponible pour ce client.";
 "save_note_button" = "Enregistrer la note";
 "note_saved_message" = "Note enregistrée !";
@@ -190,10 +194,9 @@
 "reports_generate_section" = "Générer des rapports";
 "customer_analytics_title" = "Analyse des clients";
 "customer_analytics_subtitle" = "Analysez les données clients";
-"monthly_revenue_report_title" = "Rapport des revenus mensuels";
-"monthly_revenue_report_subtitle" = "Générez un rapport sur les revenus mensuels";
-"weekly_revenue_report_title" = "Rapport des revenus hebdomadaires";
-"weekly_revenue_report_subtitle" = "Générez un rapport sur les revenus hebdomadaires";
+"report_title" = "Rapport général";
+"report_subtitle" = "Générez un rapport général des clients et des actions effectuées au format PDF";
+
 "task_completion_overview_title" = "Aperçu de l'achèvement des tâches";
 "task_completion_overview_subtitle" = "Voir quelles tâches ont été accomplies";
 "statistic_overview_title" = "Aperçu des statistiques";

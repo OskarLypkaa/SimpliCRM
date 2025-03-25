@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35082A802D4640040027FCF9 /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 35082A7F2D4640040027FCF9 /* CoreXLSX */; };
 		35F246E02D36769F00787F6C /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 35F246DF2D36769F00787F6C /* ZIPFoundation */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +27,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35082A802D4640040027FCF9 /* CoreXLSX in Frameworks */,
 				35F246E02D36769F00787F6C /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +71,6 @@
 			name = Simpli;
 			packageProductDependencies = (
 				35F246DF2D36769F00787F6C /* ZIPFoundation */,
-				35082A7F2D4640040027FCF9 /* CoreXLSX */,
 			);
 			productName = Simpli;
 			productReference = 35A36DEF2D189E3400BEA896 /* Simpli.app */;
@@ -112,7 +109,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				35082A7E2D4640040027FCF9 /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 35A36DF02D189E3400BEA896 /* Products */;
@@ -343,14 +339,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		35082A7E2D4640040027FCF9 /* XCRemoteSwiftPackageReference "CoreXLSX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CoreOffice/CoreXLSX.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.14.2;
-			};
-		};
 		35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
@@ -362,11 +350,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35082A7F2D4640040027FCF9 /* CoreXLSX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35082A7E2D4640040027FCF9 /* XCRemoteSwiftPackageReference "CoreXLSX" */;
-			productName = CoreXLSX;
-		};
 		35F246DF2D36769F00787F6C /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */;

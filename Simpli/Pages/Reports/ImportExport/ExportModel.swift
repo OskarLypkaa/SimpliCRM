@@ -9,7 +9,7 @@ func exportClientsToCSV(clients: FetchedResults<Client>, fileName: String, fileP
     let filePath = filePath.appendingPathComponent("\(fileName).csv")
 
     // Tworzenie nagłówków i danych
-    let headers = ["ID", "Name", "Email", "Phone", "Address", "Gender", "First Information", "Second Information", "Third Information"]
+    let headers = ["Name", "Email", "Phone", "Address", "Gender", "First Information", "Second Information", "Third Information"]
     var csvData = [headers]
 
     for client in clients {
@@ -27,7 +27,7 @@ func exportClientsToCSV(clients: FetchedResults<Client>, fileName: String, fileP
     }
 
     // Konwersja danych na format CSV
-    let csvContent = csvData.map { $0.joined(separator: ",") }.joined(separator: "\n")
+    let csvContent = csvData.map { $0.joined(separator: ";") }.joined(separator: "\n")
 
     do {
         // Zapis danych do pliku

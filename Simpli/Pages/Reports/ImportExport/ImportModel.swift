@@ -17,7 +17,10 @@ func importClientsFromCSV(filePath: URL, context: NSManagedObjectContext) {
         let dataRows = rows.dropFirst() // Pomijamy pierwszą linię z nagłówkami
 
         for row in dataRows {
-            let columns = row.components(separatedBy: ",")
+            let columns = row.components(separatedBy: ";")
+            if row.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                continue
+            }
             
             // Uzupełnienie brakujących wartości pustymi stringami, aby uniknąć błędów
             let paddedColumns = columns + Array(repeating: "", count: max(0, 9 - columns.count))

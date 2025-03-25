@@ -18,7 +18,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "person.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.name!)
+                        Text(client.name ?? "")
                             .font(.headline)
                             .foregroundColor(.primary)
                             .lineLimit(1)
@@ -34,7 +34,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "envelope.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.email!)
+                        Text(client.email ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -50,7 +50,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "phone.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.phone!)
+                        Text(client.phone ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -66,7 +66,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.firstInformation!)
+                        Text(client.firstInformation ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -82,7 +82,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.secondInformation!)
+                        Text(client.secondInformation ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
@@ -98,7 +98,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "info.circle.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.thirdInformation!)
+                        Text(client.thirdInformation ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)

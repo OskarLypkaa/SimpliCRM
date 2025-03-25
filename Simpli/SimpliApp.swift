@@ -15,14 +15,14 @@ struct SimpliApp: App {
                     BackupManager.shared.startAutomaticDatabaseBackup()
                     BackupManager.shared.startAutomaticFilesBackup()
                 }
-                .onChange(of: settings.automaticDatabaseBackup) { newValue in
+s                .onChange(of: settings.automaticDatabaseBackup) { newValue, oldValue in
                     if newValue {
                         BackupManager.shared.startAutomaticDatabaseBackup()
                     } else {
                         BackupManager.shared.stopAutomaticDatabaseBackup()
                     }
                 }
-                .onChange(of: settings.automaticFilesBackup) { newValue in
+                .onChange(of: settings.automaticFilesBackup) { newValue, oldValue in
                     if newValue {
                         BackupManager.shared.startAutomaticFilesBackup()
                     } else {
