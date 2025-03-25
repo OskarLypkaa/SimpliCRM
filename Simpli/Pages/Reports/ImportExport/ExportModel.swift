@@ -1,8 +1,6 @@
 import Foundation
 import SwiftUI
 
-import CoreXLSX
-
 
 func exportClientsToCSV(clients: FetchedResults<Client>, fileName: String, filePath: URL) {
     // Ścieżka do pulpitu użytkownika
