@@ -51,7 +51,7 @@ struct ActionBlock: View {
                 .padding(.horizontal)
                 Divider()
                     .padding(.horizontal)
-                Text(action.message!)
+                Text(action.message ?? "")
                     .foregroundColor(.primary)
                     .padding(.horizontal)
                     .padding(.bottom, 4)

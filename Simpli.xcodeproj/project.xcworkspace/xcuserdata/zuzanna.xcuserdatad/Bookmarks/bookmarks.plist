@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>567</string>
+					<string>577</string>
 					<key>StartingColumnNumber</key>
-					<string>13</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>566</string>
+					<string>576</string>
 					<key>Timestamp</key>
-					<string>764522317.457119</string>
+					<string>764691074.7766531</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,12 +34,12 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>
+				<string>            }
 </string>
 				<key>leading</key>
 				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
                 return "Failed to create ZIP archive."
-            }</string>
+</string>
 				<key>trailing</key>
 				<string>
             let items = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
@@ -59,13 +59,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>567</string>
+					<string>577</string>
 					<key>StartingColumnNumber</key>
-					<string>13</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>566</string>
+					<string>576</string>
 					<key>Timestamp</key>
-					<string>764522317.45709</string>
+					<string>764691074.7763259</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -81,12 +81,12 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>
+				<string>            }
 </string>
 				<key>leading</key>
 				<string>            guard let archive = Archive(url: archiveURL, accessMode: .create) else {
                 return "Failed to create ZIP archive."
-            }</string>
+</string>
 				<key>trailing</key>
 				<string>
             let items = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)

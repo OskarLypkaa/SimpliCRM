@@ -76,6 +76,8 @@
 "30_minutes" = "30 minutes";
 "60_minutes" = "60 minutes";
 
+"color_section" = "Color selection";
+
 "no_files_folder_selected" = "No files folder selected";
 "create_files_backup_automatically" = "Create Files Backup Automatically:";
 "automatic_backup_files_interval" = "Automatic Backup Interval:";
@@ -318,3 +320,7 @@
 "date_label" = "Date:";
 "time_label" = "Time:";
 "time_picker_label" = "Select Time";
+
+"starting_backup" = "Performing Backup...";
+"create_workspace" = "Create Workspace";
+"select_workspace_path" = "Please select workspace path to start.";

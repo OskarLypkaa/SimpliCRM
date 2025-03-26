@@ -23,7 +23,7 @@ struct ActionInClientListView: View {
             VStack {
                 HStack {
                     VStack{
-                        Text(action.message!)
+                        Text(action.message ?? "")
                             .foregroundColor(.primary)
                             .padding(.horizontal)
                             .frame(maxWidth: .infinity, alignment: .leading)

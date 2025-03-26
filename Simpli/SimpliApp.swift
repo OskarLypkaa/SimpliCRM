@@ -1,6 +1,7 @@
 import SwiftUI
 
 @main
+
 struct SimpliApp: App {
     @ObservedObject var settings = Settings.shared
 
@@ -16,19 +17,20 @@ struct SimpliApp: App {
                     BackupManager.shared.startAutomaticFilesBackup()
                 }
                 .onChange(of: settings.automaticDatabaseBackup) { newValue, oldValue in
-                    if newValue {
+                    if oldValue {
                         BackupManager.shared.startAutomaticDatabaseBackup()
                     } else {
                         BackupManager.shared.stopAutomaticDatabaseBackup()
                     }
                 }
                 .onChange(of: settings.automaticFilesBackup) { newValue, oldValue in
-                    if newValue {
+                    if oldValue {
                         BackupManager.shared.startAutomaticFilesBackup()
                     } else {
                         BackupManager.shared.stopAutomaticFilesBackup()
                     }
                 }
+            
         }
     }
 }

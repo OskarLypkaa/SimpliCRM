@@ -61,4 +61,45 @@ class PersistenceController {
             print("Error while changing file path: \(error.localizedDescription)")
         }
     }
+    
+    func changeFileBackupPath(to newPath: String) {
+        do {
+            let fileManager = FileManager.default
+
+            // Sprawdź, czy nowa ścieżka istnieje, jeśli nie, utwórz ją
+            if !fileManager.fileExists(atPath: newPath) {
+                try fileManager.createDirectory(atPath: newPath, withIntermediateDirectories: true, attributes: nil)
+            }
+
+            // Zmień ścieżkę w ustawieniach aplikacji
+            Settings.shared.automaticFilesBackupPath = newPath
+
+            // Odśwież interfejs użytkownika lub wykonaj inne działania po zmianie
+            Settings.shared.triggerViewRefresh()
+        } catch {
+            // Obsłuż błędy podczas zmiany ścieżki do plików
+            print("Error while changing file backup path: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    func changeDatabaseBackupPath(to newPath: String) {
+        do {
+            let fileManager = FileManager.default
+
+            // Sprawdź, czy nowa ścieżka istnieje, jeśli nie, utwórz ją
+            if !fileManager.fileExists(atPath: newPath) {
+                try fileManager.createDirectory(atPath: newPath, withIntermediateDirectories: true, attributes: nil)
+            }
+
+            // Zmień ścieżkę w ustawieniach aplikacji
+            Settings.shared.automaticDatabaseBackupPath = newPath
+
+            // Odśwież interfejs użytkownika lub wykonaj inne działania po zmianie
+            Settings.shared.triggerViewRefresh()
+        } catch {
+            // Obsłuż błędy podczas zmiany ścieżki do plików
+            print("Error while changing database backup path: \(error.localizedDescription)")
+        }
+    }
 }

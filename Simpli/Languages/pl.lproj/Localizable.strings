@@ -76,6 +76,8 @@
 "30_minutes" = "30 minut";
 "60_minutes" = "60 minut";
 
+"color_section" = "Wybór koloru";
+
 "no_files_folder_selected" = "Nie wybrano folderu kopii zapasowej plików";
 "create_files_backup_automatically" = "Twórz kopię zapasową plików automatycznie:";
 "automatic_backup_files_interval" = "Interwał automatycznej kopii zapasowej plików:";
@@ -319,3 +321,7 @@
 "date_label" = "Data:";
 "time_label" = "Godzina:";
 "time_picker_label" = "Wybierz godzinę";
+
+"starting_backup" = "Trwa tworzenie kopii zapasowej...";
+"create_workspace" = "Utwórz przestrzeń roboczą";
+"select_workspace_path" = "Wybierz ścieżkę przestrzeni roboczej, aby rozpocząć.";

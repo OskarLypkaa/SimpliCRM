@@ -79,6 +79,12 @@ class Settings: ObservableObject {
             saveSettings()
         }
     }
+    
+    @Published var automaticBackupMessage: Bool = false { // Nowa zmienna
+        didSet {
+            saveSettings()
+        }
+    }
 
     private init() {
         loadSettings()
@@ -113,9 +119,10 @@ class Settings: ObservableObject {
             automaticDatabaseBackupPath: automaticDatabaseBackupPath,
             automaticFilesBackup: automaticFilesBackup,
             automaticFilesBackupInterval: automaticFilesBackupInterval,
-            automaticFilesBackupPath: automaticFilesBackupPath
+            automaticFilesBackupPath: automaticFilesBackupPath,
+            automaticBackupMessage: automaticBackupMessage
         )
-
+        self.triggerViewRefresh()
         do {
             let data = try encoder.encode(settings)
             let url = settingsFileURL()
@@ -143,6 +150,7 @@ class Settings: ObservableObject {
             automaticFilesBackup = false
             automaticFilesBackupInterval = 30
             automaticFilesBackupPath = ""
+            automaticBackupMessage = false
             return
         }
 
@@ -157,6 +165,7 @@ class Settings: ObservableObject {
         automaticFilesBackup = loadedSettings.automaticFilesBackup
         automaticFilesBackupInterval = loadedSettings.automaticFilesBackupInterval
         automaticFilesBackupPath = loadedSettings.automaticFilesBackupPath
+        automaticBackupMessage = loadedSettings.automaticBackupMessage
         print("Settings loaded successfully from \(url.path)")
     }
 }
@@ -173,6 +182,7 @@ struct SettingsData: Codable {
     let automaticFilesBackup: Bool
     let automaticFilesBackupInterval: Int
     let automaticFilesBackupPath: String
+    let automaticBackupMessage: Bool
 }
 
 
@@ -647,6 +657,7 @@ class BackupManager: ObservableObject {
         backupTimerDatabase?.invalidate()
 
         backupTimerDatabase = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
+            Settings.shared.automaticBackupMessage.toggle()
             self.performDatabaseBackup()
         }
 
@@ -678,6 +689,7 @@ class BackupManager: ObservableObject {
         backupTimerFiles?.invalidate()
 
         backupTimerFiles = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { _ in
+            Settings.shared.automaticBackupMessage.toggle()
             self.performFilesBackup()
         }
 
@@ -760,3 +772,57 @@ class BackupManager: ObservableObject {
         return dateFormatter.string(from: Date())
     }
 }
+
+
+func initializeNewEnvironment(settings: Settings, completion: @escaping () -> Void = {}) {
+    // Ask user to select the base folder where all subfolders will be created
+    FilesManager.shared.selectFolder { selectedFolder in
+        guard let baseFolder = selectedFolder else {
+            print("Folder selection cancelled.")
+            return
+        }
+
+        // Create subfolders: Database, Files, Backups
+        let databaseFolder = baseFolder.appendingPathComponent("Database")
+        let filesFolder = baseFolder.appendingPathComponent("Files")
+        let backupsFolder = baseFolder.appendingPathComponent("Backups")
+        let dbBackupFolder = backupsFolder.appendingPathComponent("Database_Backups")
+        let filesBackupFolder = backupsFolder.appendingPathComponent("Files_Backups")
+
+        do {
+            // Create all folders if they don't exist
+            let fileManager = FileManager.default
+            try fileManager.createDirectory(at: databaseFolder, withIntermediateDirectories: true)
+            try fileManager.createDirectory(at: filesFolder, withIntermediateDirectories: true)
+            try fileManager.createDirectory(at: dbBackupFolder, withIntermediateDirectories: true)
+            try fileManager.createDirectory(at: filesBackupFolder, withIntermediateDirectories: true)
+
+            // Generate empty database in the "Database" folder
+            let dbPath = DatabaseManager.shared.generateEmptyDatabase(at: databaseFolder)
+            let fullDbPath = databaseFolder.appendingPathComponent("database.sqlite")
+
+            // Set paths in settings
+            settings.sharedPath = fullDbPath.path
+            settings.filesPath = filesFolder.path
+            settings.automaticDatabaseBackupPath = dbBackupFolder.path
+            settings.automaticFilesBackupPath = filesBackupFolder.path
+
+            // Immediately load the database into Core Data
+            PersistenceController.shared.changeDatabasePath(to: settings.sharedPath)
+            PersistenceController.shared.changeFilePath(to: settings.filesPath)
+            PersistenceController.shared.changeDatabaseBackupPath(to: settings.automaticDatabaseBackupPath)
+            PersistenceController.shared.changeFileBackupPath(to: settings.automaticFilesBackupPath)
+            
+            
+
+            print("Environment initialized successfully.")
+
+            // Continue execution if needed
+            completion()
+
+        } catch {
+            print("Failed to create folders or initialize database: \(error.localizedDescription)")
+        }
+    }
+}
+

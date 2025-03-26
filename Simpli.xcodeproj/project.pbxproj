@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35F246E02D36769F00787F6C /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 35F246DF2D36769F00787F6C /* ZIPFoundation */; };
+		3510EAAE2D92EFAA00501CB9 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 3510EAAD2D92EFAA00501CB9 /* ZIPFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35F246E02D36769F00787F6C /* ZIPFoundation in Frameworks */,
+				3510EAAE2D92EFAA00501CB9 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = Simpli;
 			packageProductDependencies = (
-				35F246DF2D36769F00787F6C /* ZIPFoundation */,
+				3510EAAD2D92EFAA00501CB9 /* ZIPFoundation */,
 			);
 			productName = Simpli;
 			productReference = 35A36DEF2D189E3400BEA896 /* Simpli.app */;
@@ -108,7 +108,7 @@
 			mainGroup = 35A36DE62D189E3400BEA896;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				3510EAAC2D92EFAA00501CB9 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 35A36DF02D189E3400BEA896 /* Products */;
@@ -339,7 +339,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+		3510EAAC2D92EFAA00501CB9 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
@@ -350,9 +350,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35F246DF2D36769F00787F6C /* ZIPFoundation */ = {
+		3510EAAD2D92EFAA00501CB9 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35F246DE2D36769F00787F6C /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			package = 3510EAAC2D92EFAA00501CB9 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */

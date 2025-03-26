@@ -324,3 +324,20 @@ struct HoverableRectangle: View {
         return false
     }
 }
+
+
+struct ToastView: View {
+    var message: LocalizedStringKey
+    var isVisible: Bool
+
+    var body: some View {
+        Text(message)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .font(.headline)
+            .foregroundColor(.secondary)
+            .opacity(isVisible ? 1 : 0)
+            .animation(.easeInOut(duration: 0.3), value: isVisible)
+            .frame(maxWidth: .infinity)
+    }
+}

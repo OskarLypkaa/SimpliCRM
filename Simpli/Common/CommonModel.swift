@@ -74,6 +74,7 @@ func localizedString(from key: LocalizedStringKey) -> String {
 
 let tabToViewMap: [String: AnyView] = [
     "home_tab": AnyView(HomeView()),
+    "NoDB_home_tab": AnyView(NoDBHomeView()),
     "clients_tab": AnyView(ClientView()),
     "actions_tab": AnyView(ActionsListView()),
     "reports_tab": AnyView(ReportView()),

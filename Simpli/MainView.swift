@@ -7,13 +7,19 @@ struct MainView: View {
     @ObservedObject var settings = Settings.shared
     @State private var refreshToken = UUID()
 
+    @State private var showToast = false
+    
+    
     var body: some View {
+        
         NavigationSplitView {
             // Sidebar z zakładkami
             NavigationSidebar(selectedTab: $selectedTab)
         } detail: {
-            // Wyświetlanie widoku na podstawie wybranej zakładki
-            if let view = tabToViewMap[selectedTab] {
+            // Sprawdzenie czy są ustawione ścieżki
+            if Settings.shared.sharedPath.isEmpty || Settings.shared.filesPath.isEmpty {
+                tabToViewMap["NoDB_home_tab"]
+            } else if let view = tabToViewMap[selectedTab] {
                 view
                     .id(refreshToken) // Odświeżenie tylko detalu
             } else {
@@ -22,6 +28,18 @@ struct MainView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                ZStack(alignment: .top) {
+                    ToastView(message: LocalizedStringKey("starting_backup"), isVisible: showToast)
+                }
+                .onChange(of: settings.automaticBackupMessage) {
+                    showToast = true
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        showToast = false
+                    }
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     showSettings = true

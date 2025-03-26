@@ -114,7 +114,7 @@ struct Clients: View {
                     HStack {
                         Image(systemName: "map.fill")
                             .frame(width: 24, height: 18)
-                        Text(client.address!)
+                        Text(client.address ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                             .lineLimit(1)
