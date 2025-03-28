@@ -32,6 +32,7 @@ struct SimpliApp: App {
                 }
             
         }
+        .windowToolbarStyle(.unifiedCompact(showsTitle: false))
     }
 }
 

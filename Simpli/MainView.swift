@@ -28,7 +28,24 @@ struct MainView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            
+            ToolbarItem(placement: .navigation) {
+                Button(action: {
+                    showSettings = true
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.headline)
+                }
+            }
+            ToolbarItem(placement: .navigation) {
+                Button(action: {
+                    showHelp = true
+                }) {
+                    Image(systemName: "questionmark")
+                        .font(.headline)
+                }
+            }
+            ToolbarItem(placement: .navigation) {
                 ZStack(alignment: .top) {
                     ToastView(message: LocalizedStringKey("starting_backup"), isVisible: showToast)
                 }
@@ -38,22 +55,6 @@ struct MainView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         showToast = false
                     }
-                }
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: {
-                    showSettings = true
-                }) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.headline)
-                }
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: {
-                    showHelp = true
-                }) {
-                    Image(systemName: "questionmark")
-                        .font(.headline)
                 }
             }
         }
@@ -68,6 +69,16 @@ struct MainView: View {
             HelpView()
                 .environment(\.locale, .init(identifier: settings.language.code))
         }
+        .onAppear {
+            // 👇 Pętla przez wszystkie okna na wypadek gdyby nie było tylko jedno
+            for window in NSApplication.shared.windows {
+                window.title = "" // ← najważniejsze
+                window.titleVisibility = .hidden
+                // 👇 Opcjonalnie: żeby pasek wyglądał nowocześnie
+                window.toolbarStyle = .unified
+            }
+        }
+
     }
 }
 
