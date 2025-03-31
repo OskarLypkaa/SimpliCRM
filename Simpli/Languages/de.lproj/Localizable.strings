@@ -1,5 +1,5 @@
 // --------------------------------- Home -----------------------------
-"welcome_message" = "Willkommen bei Simpli";
+"welcome_message" = "Willkommen bei SquaMetrics";
 "manage_clients_message" = "Verwalten Sie Ihre Kunden effizient und behalten Sie alle wichtigen Details an einem Ort im Auge.";
 "tasks_today_message" = "Aufgaben, die Sie für heute haben";
 
@@ -16,7 +16,7 @@
 // --------------------------------- Help -----------------------------
 "help_title" = "Hilfe & Dokumentation";
 "overview_title" = "Überblick";
-"overview_description" = "Simpli CRM ist eine unkomplizierte Anwendung, die Ihnen hilft, Kunden und deren zugehörige Aktionen zu verwalten. Sie bietet eine einfache Benutzeroberfläche zur Verwaltung Ihres Geschäftsablaufs, einschließlich Kunden, Aktionen, Berichte und einer Kalenderansicht.";
+"overview_description" = "SquaMetrics CRM ist eine unkomplizierte Anwendung, die Ihnen hilft, Kunden und deren zugehörige Aktionen zu verwalten. Sie bietet eine einfache Benutzeroberfläche zur Verwaltung Ihres Geschäftsablaufs, einschließlich Kunden, Aktionen, Berichte und einer Kalenderansicht.";
 
 "key_features_title" = "Hauptfunktionen";
 "feature_clients_management" = "**Kundenverwaltung**: Hinzufügen, Anzeigen und Verwalten von Kundeninformationen wie Adresse, E-Mail, Telefon und weiteren Details.";
@@ -25,7 +25,7 @@
 "feature_calendar" = "**Kalender**: Anzeigen aller Aktionen in einem Kalenderformat, um Fälligkeitstermine und Prioritäten im Blick zu behalten.";
 
 "clients_title" = "Kunden";
-"clients_description" = "Kunden sind das Herzstück von Simpli CRM. Jeder Kunde kann detaillierte Informationen speichern und ihm können Aktionen zugewiesen werden. Hier sind die mit Kunden verbundenen Felder:";
+"clients_description" = "Kunden sind das Herzstück von SquaMetrics CRM. Jeder Kunde kann detaillierte Informationen speichern und ihm können Aktionen zugewiesen werden. Hier sind die mit Kunden verbundenen Felder:";
 "client_field_address" = "**Adresse**: Die Adresse des Kunden.";
 "client_field_email" = "**E-Mail**: Die E-Mail-Adresse des Kunden.";
 "client_field_phone" = "**Telefon**: Die Telefonnummer des Kunden.";

@@ -1,5 +1,5 @@
 // --------------------------------- Home -----------------------------
-"welcome_message" = "Welcome to Simpli";
+"welcome_message" = "Welcome to SquaMetrics";
 "manage_clients_message" = "Manage your clients efficiently and keep track of all important details in one place.";
 "tasks_today_message" = "Tasks you have for today";
 
@@ -16,7 +16,7 @@
 // --------------------------------- Help -----------------------------
 "help_title" = "Help & Documentation";
 "overview_title" = "Overview";
-"overview_description" = "Simpli CRM is a straightforward application designed to help you manage clients and their associated actions. It provides a simple interface for managing your business workflow, including clients, actions, reports, and a calendar view.";
+"overview_description" = "SquaMetrics CRM is a straightforward application designed to help you manage clients and their associated actions. It provides a simple interface for managing your business workflow, including clients, actions, reports, and a calendar view.";
 
 "key_features_title" = "Key Features";
 "feature_clients_management" = "**Clients Management**: Add, view, and manage client information including their address, email, phone, and additional details.";
@@ -25,7 +25,7 @@
 "feature_calendar" = "**Calendar**: View all actions in a calendar format to keep track of due dates and priorities.";
 
 "clients_title" = "Clients";
-"clients_description" = "Clients are the core of Simpli CRM. Each client can have detailed information stored and actions assigned to them. Here are the fields associated with clients:";
+"clients_description" = "Clients are the core of SquaMetrics CRM. Each client can have detailed information stored and actions assigned to them. Here are the fields associated with clients:";
 "client_field_address" = "**Address**: The client’s address.";
 "client_field_email" = "**Email**: The client’s email address.";
 "client_field_phone" = "**Phone**: The client’s phone number.";

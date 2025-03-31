@@ -1,5 +1,5 @@
 // --------------------------------- Home -----------------------------
-"welcome_message" = "Benvenuti a Simpli";
+"welcome_message" = "Benvenuti a SquaMetrics";
 "manage_clients_message" = "Gestisci i tuoi clienti in modo efficiente e tieni traccia di tutti i dettagli importanti in un unico posto.";
 "tasks_today_message" = "Compiti che hai per oggi";
 
@@ -18,7 +18,7 @@
 // --------------------------------- Help -----------------------------
 "help_title" = "Aiuto e Documentazione";
 "overview_title" = "Panoramica";
-"overview_description" = "Simpli CRM è un'applicazione semplice progettata per aiutarti a gestire i clienti e le azioni associate. Offre un'interfaccia intuitiva per gestire il tuo flusso di lavoro aziendale, inclusi clienti, azioni, report e una vista calendario.";
+"overview_description" = "SquaMetrics CRM è un'applicazione semplice progettata per aiutarti a gestire i clienti e le azioni associate. Offre un'interfaccia intuitiva per gestire il tuo flusso di lavoro aziendale, inclusi clienti, azioni, report e una vista calendario.";
 
 "key_features_title" = "Funzionalità principali";
 "feature_clients_management" = "**Gestione Clienti**: Aggiungi, visualizza e gestisci le informazioni dei clienti, inclusi indirizzo, e-mail, telefono e dettagli aggiuntivi.";
@@ -27,7 +27,7 @@
 "feature_calendar" = "**Calendario**: Visualizza tutte le azioni in un formato calendario per tenere traccia delle date di scadenza e delle priorità.";
 
 "clients_title" = "Clienti";
-"clients_description" = "I clienti sono il fulcro di Simpli CRM. Ogni cliente può avere informazioni dettagliate memorizzate e azioni assegnate. Ecco i campi associati ai clienti:";
+"clients_description" = "I clienti sono il fulcro di SquaMetrics CRM. Ogni cliente può avere informazioni dettagliate memorizzate e azioni assegnate. Ecco i campi associati ai clienti:";
 "client_field_address" = "**Indirizzo**: L'indirizzo del cliente.";
 "client_field_email" = "**E-mail**: L'indirizzo e-mail del cliente.";
 "client_field_phone" = "**Telefono**: Il numero di telefono del cliente.";
