@@ -27,6 +27,9 @@ struct ClientsHeaders: View {
             if displayedFilters.contains("thirdInformation") {
                 headerView(title: "table_header_third_information", sortingKey: "thirdInformation")
             }
+            if displayedFilters.contains("fourthInformation") {
+                headerView(title: "table_header_fourth_information", sortingKey: "fourthInformation")
+            }
             if displayedFilters.contains("gender") {
                 headerView(title: "table_header_gender", sortingKey: "gender")
             }

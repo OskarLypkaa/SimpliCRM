@@ -147,6 +147,9 @@
 "add_client_second_info_placeholder" = "Information eingeben";
 "add_client_third_info_label" = "Dritte Zusatzinformation:";
 "add_client_third_info_placeholder" = "Information eingeben";
+"table_header_fourth_information" = "Vierte Information";
+"add_client_fourth_info_label" = "Vierte Zusatzinformation:";
+"add_client_fourth_info_placeholder" = "Information eingeben";
 
 "change_client_info_title" = "Kundendaten ändern";
 "add_client_clear_button" = "Löschen";
@@ -174,17 +177,7 @@
 "firstInformation" = "Erste Information";
 "secondInformation" = "Zweite Information";
 "thirdInformation" = "Dritte Information";
-"gender" = "Geschlecht";
-"address" = "Adresse";
-
-"filter_clients" = "Kunden filtern";
-"selected_filters" = "Ausgewählte Filter:";
-"name" = "Name";
-"phone" = "Telefon";
-"email" = "E-Mail";
-"firstInformation" = "Erste Information";
-"secondInformation" = "Zweite Information";
-"thirdInformation" = "Dritte Information";
+"fourthInformation" = "Vierte Information";
 "gender" = "Geschlecht";
 "address" = "Adresse";
 "gender_male" = "Männlich";

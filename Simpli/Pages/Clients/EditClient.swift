@@ -9,11 +9,12 @@ struct EditClient: View {
     @State private var clientFirstInformation = ""
     @State private var clientSecondInformation = ""
     @State private var clientThirdInformation = ""
-    
+    @State private var clientFourthInformation = ""
+
     @ObservedObject var settings = Settings.shared
     @State private var showMessage: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     @Binding var refreshList: Bool
     var client: Client
 
@@ -57,7 +58,7 @@ struct EditClient: View {
                 .font(.title3)
                 .fontWeight(.bold)
                 .frame(width: 500, alignment: .leading)
-                
+
                 ZStack {
                     List {
                         HStack {
@@ -67,7 +68,7 @@ struct EditClient: View {
                             TextField(LocalizedStringKey("add_client_name_placeholder"), text: $clientName)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text(LocalizedStringKey("add_client_email_label"))
                                 .font(.headline)
@@ -75,7 +76,7 @@ struct EditClient: View {
                             TextField(LocalizedStringKey("add_client_email_placeholder"), text: $clientEmail)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text(LocalizedStringKey("add_client_phone_label"))
                                 .font(.headline)
@@ -83,7 +84,7 @@ struct EditClient: View {
                             TextField(LocalizedStringKey("add_client_phone_placeholder"), text: $clientPhone)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text(LocalizedStringKey("add_client_address_label"))
                                 .font(.headline)
@@ -91,7 +92,7 @@ struct EditClient: View {
                             TextField(LocalizedStringKey("add_client_address_placeholder"), text: $clientAddress)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text(LocalizedStringKey("add_client_gender_label"))
                                 .font(.headline)
@@ -103,7 +104,7 @@ struct EditClient: View {
                             .pickerStyle(SegmentedPickerStyle())
                             .padding()
                         }
-                        
+
                         HStack {
                             Text(LocalizedStringKey("add_client_first_info_label"))
                                 .font(.headline)
@@ -125,6 +126,13 @@ struct EditClient: View {
                             TextField(LocalizedStringKey("add_client_third_info_placeholder"), text: $clientThirdInformation)
                                 .padding()
                         }
+                        HStack {
+                            Text(LocalizedStringKey("add_client_fourth_info_label"))
+                                .font(.headline)
+                                .frame(width: 130, alignment: .leading)
+                            TextField(LocalizedStringKey("add_client_fourth_info_placeholder"), text: $clientFourthInformation)
+                                .padding()
+                        }
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
@@ -136,7 +144,7 @@ struct EditClient: View {
             }
         }
     }
-    
+
     private func loadClientData() {
         clientName = client.name ?? ""
         clientEmail = client.email ?? ""
@@ -146,16 +154,17 @@ struct EditClient: View {
         clientFirstInformation = client.firstInformation ?? ""
         clientSecondInformation = client.secondInformation ?? ""
         clientThirdInformation = client.thirdInformation ?? ""
+        clientFourthInformation = client.fourthInformation ?? ""
     }
-    
+
     private func resetToOriginalValues() {
         loadClientData()
     }
-    
+
     func textValidation() -> Bool {
         return clientName.isEmpty
     }
-    
+
     private func updateClient() {
         withAnimation {
             client.name = clientName
@@ -166,7 +175,8 @@ struct EditClient: View {
             client.firstInformation = clientFirstInformation
             client.secondInformation = clientSecondInformation
             client.thirdInformation = clientThirdInformation
-            
+            client.fourthInformation = clientFourthInformation
+
             do {
                 try viewContext.save()
                 refreshList.toggle()

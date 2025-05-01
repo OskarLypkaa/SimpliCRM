@@ -149,6 +149,9 @@
 "add_client_second_info_placeholder" = "Inserisci l'informazione";
 "add_client_third_info_label" = "Terza informazione aggiuntiva:";
 "add_client_third_info_placeholder" = "Inserisci l'informazione";
+"table_header_fourth_information" = "Quarta informazione";
+"add_client_fourth_info_label" = "Quarta informazione aggiuntiva:";
+"add_client_fourth_info_placeholder" = "Inserisci informazione";
 
 "change_client_info_title" = "Modifica informazioni cliente";
 "edit_client_button" = "Salva modifiche";
@@ -176,6 +179,7 @@
 "firstInformation" = "Prima informazione";
 "secondInformation" = "Seconda informazione";
 "thirdInformation" = "Terza informazione";
+"fourthInformation" = "Quarta informazione";
 "gender" = "Genere";
 "address" = "Indirizzo";
 "gender_male" = "Maschio";

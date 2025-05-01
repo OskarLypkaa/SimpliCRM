@@ -27,6 +27,7 @@ struct RandomDataGeneratorView: View {
             client.firstInformation = randomFirstInformation()
             client.secondInformation = randomSecondInformation()
             client.thirdInformation = randomThirdInformation()
+            client.fourthInformation = randomFourthInformation()
             
             // Generowanie od 0 do 5 akcji dla klienta
             let actionsCount = Int.random(in: 0...5)
@@ -91,6 +92,11 @@ struct RandomDataGeneratorView: View {
     }
 
     private func randomThirdInformation() -> String {
+        let info = ["Uses email marketing", "Interested in webinars", "Prefers phone contact", "No newsletter", "High engagement"]
+        return info.randomElement()!
+    }
+    
+    private func randomFourthInformation() -> String {
         let info = ["Uses email marketing", "Interested in webinars", "Prefers phone contact", "No newsletter", "High engagement"]
         return info.randomElement()!
     }

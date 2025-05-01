@@ -7,21 +7,21 @@ func exportClientsToCSV(clients: FetchedResults<Client>, fileName: String, fileP
     let filePath = filePath.appendingPathComponent("\(fileName).csv")
 
     // Tworzenie nagłówków i danych
-    let headers = ["Name", "Email", "Phone", "Address", "Gender", "First Information", "Second Information", "Third Information"]
+    let headers = ["Name", "Email", "Phone", "Address", "Gender", "First Information", "Second Information", "Third Information", "Fourth Information"]
     var csvData = [headers]
 
     for client in clients {
-        let row = [
-            client.name ?? "",
-            client.email ?? "",
-            client.phone ?? "",
-            client.address ?? "",
-            client.gender ?? "",
-            client.firstInformation ?? "",
-            client.secondInformation ?? "",
-            client.thirdInformation ?? ""
-        ]
-        csvData.append(row)
+        let name = client.name ?? ""
+        let email = client.email ?? ""
+        let phone = client.phone ?? ""
+        let address = client.address ?? ""
+        let gender = client.gender ?? ""
+        let info1 = client.firstInformation ?? ""
+        let info2 = client.secondInformation ?? ""
+        let info3 = client.thirdInformation ?? ""
+        let info4 = client.fourthInformation ?? ""
+
+        csvData.append([name, email, phone, address, gender, info1, info2, info3, info4])
     }
 
     // Konwersja danych na format CSV
@@ -44,19 +44,31 @@ func exportClientsToJSON(clients: FetchedResults<Client>, fileName: String, file
     var jsonData: [String: Any] = [:]
 
     // Dodanie klientów do JSON
-    let clientsData = clients.map { client in
+    let clientsData: [()] = clients.map { client in
+        let name = client.name ?? ""
+        let email = client.email ?? ""
+        let phone = client.phone ?? ""
+        let address = client.address ?? ""
+        let gender = client.gender ?? ""
+        let info1 = client.firstInformation ?? ""
+        let info2 = client.secondInformation ?? ""
+        let info3 = client.thirdInformation ?? ""
+        let info4 = client.fourthInformation ?? ""
+
         [
-            "Name": client.name ?? "",
-            "Email": client.email ?? "",
-            "Phone": client.phone ?? "",
-            "Address": client.address ?? "",
-            "Gender": client.gender ?? "",
-            "FirstInformation": client.firstInformation ?? "",
-            "SecondInformation": client.secondInformation ?? "",
-            "ThirdInformation": client.thirdInformation ?? ""
+            "Name": name,
+            "Email": email,
+            "Phone": phone,
+            "Address": address,
+            "Gender": gender,
+            "FirstInformation": info1,
+            "SecondInformation": info2,
+            "ThirdInformation": info3,
+            "FourthInformation": info4
         ]
     }
     jsonData["Clients"] = clientsData
+
 
 
     do {

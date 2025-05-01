@@ -194,6 +194,17 @@ struct ClientInfo: View {
                             .foregroundColor(.gray)
                     }
                 }
+                
+                if(client.fourthInformation != "") {
+                    HStack {
+                        Image(systemName: "info.circle.fill")
+                            .frame(width: 24, height: 18)
+                        Text(client.fourthInformation!)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                            .foregroundColor(.gray)
+                    }
+                }
                 Spacer()
             }.padding(.horizontal)
 

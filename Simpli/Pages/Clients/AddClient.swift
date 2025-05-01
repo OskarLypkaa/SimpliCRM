@@ -9,13 +9,14 @@ struct AddClient: View {
     @State private var clientFirstInformation: String = ""
     @State private var clientSecondInformation: String = ""
     @State private var clientThirdInformation: String = ""
-    
+    @State private var clientFourthInformation: String = ""
+
     @ObservedObject var settings = Settings.shared
     @State private var showMessage: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     @Binding var refreshList: Bool
-    
+
     var body: some View {
         CloseableHeader()
         ZStack {
@@ -53,7 +54,7 @@ struct AddClient: View {
                 .font(.title3)
                 .fontWeight(.bold)
                 .frame(width: 500, alignment: .leading)
-                
+
                 ZStack {
                     List {
                         HStack {
@@ -63,7 +64,7 @@ struct AddClient: View {
                             TextField("add_client_name_placeholder", text: $clientName)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_email_label")
                                 .font(.headline)
@@ -71,7 +72,7 @@ struct AddClient: View {
                             TextField("add_client_email_placeholder", text: $clientEmail)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_phone_label")
                                 .font(.headline)
@@ -79,7 +80,7 @@ struct AddClient: View {
                             TextField("add_client_phone_placeholder", text: $clientPhone)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_address_label")
                                 .font(.headline)
@@ -87,7 +88,7 @@ struct AddClient: View {
                             TextField("add_client_address_placeholder", text: $clientAddress)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_gender_label")
                                 .font(.headline)
@@ -99,7 +100,7 @@ struct AddClient: View {
                             .pickerStyle(SegmentedPickerStyle())
                             .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_first_info_label")
                                 .font(.headline)
@@ -107,7 +108,7 @@ struct AddClient: View {
                             TextField("add_client_first_info_placeholder", text: $clientFirstInformation)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_second_info_label")
                                 .font(.headline)
@@ -115,12 +116,20 @@ struct AddClient: View {
                             TextField("add_client_second_info_placeholder", text: $clientSecondInformation)
                                 .padding()
                         }
-                        
+
                         HStack {
                             Text("add_client_third_info_label")
                                 .font(.headline)
                                 .frame(width: 130, alignment: .leading)
                             TextField("add_client_third_info_placeholder", text: $clientThirdInformation)
+                                .padding()
+                        }
+
+                        HStack {
+                            Text("add_client_fourth_info_label")
+                                .font(.headline)
+                                .frame(width: 130, alignment: .leading)
+                            TextField("add_client_fourth_info_placeholder", text: $clientFourthInformation)
                                 .padding()
                         }
                     }
@@ -131,7 +140,7 @@ struct AddClient: View {
             .frame(width: 500, height: 570, alignment: .leading)
         }
     }
-    
+
     func textValidation() -> Bool {
         var isValid: Bool = true
         if (!clientName.isEmpty) {
@@ -139,7 +148,7 @@ struct AddClient: View {
         }
         return isValid
     }
-    
+
     private func addItem() {
         withAnimation {
             let newItem = Client(context: viewContext)
@@ -152,7 +161,8 @@ struct AddClient: View {
             newItem.firstInformation = clientFirstInformation
             newItem.secondInformation = clientSecondInformation
             newItem.thirdInformation = clientThirdInformation
-            
+            newItem.fourthInformation = clientFourthInformation
+
             do {
                 try viewContext.save()
                 refreshList.toggle()
@@ -178,5 +188,6 @@ struct AddClient: View {
         clientFirstInformation = ""
         clientSecondInformation = ""
         clientThirdInformation = ""
+        clientFourthInformation = ""
     }
 }

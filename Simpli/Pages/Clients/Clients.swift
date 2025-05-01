@@ -106,6 +106,22 @@ struct Clients: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
+                if displayedFilters.contains("fourthInformation") {
+                    Divider()
+                        .frame(height: 18)
+                        .background(Color.gray)
+
+                    HStack {
+                        Image(systemName: "info.circle.fill")
+                            .frame(width: 24, height: 18)
+                        Text(client.fourthInformation ?? "")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
                 if displayedFilters.contains("address") {
                     Divider()
                         .frame(height: 18)

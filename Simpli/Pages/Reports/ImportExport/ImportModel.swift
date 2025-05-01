@@ -36,6 +36,7 @@ func importClientsFromCSV(filePath: URL, context: NSManagedObjectContext) {
             client.firstInformation = paddedColumns[5].trimmingCharacters(in: .whitespaces)
             client.secondInformation = paddedColumns[6].trimmingCharacters(in: .whitespaces)
             client.thirdInformation = paddedColumns[7].trimmingCharacters(in: .whitespaces)
+            client.fourthInformation = paddedColumns[8].trimmingCharacters(in: .whitespaces)
         }
 
         // Zapis danych do bazy
@@ -68,6 +69,7 @@ func importClientsFromJSON(filePath: URL, context: NSManagedObjectContext) {
             client.firstInformation = clientData["FirstInformation"] as? String ?? ""
             client.secondInformation = clientData["SecondInformation"] as? String ?? ""
             client.thirdInformation = clientData["ThirdInformation"] as? String ?? ""
+            client.fourthInformation = clientData["FourthInformation"] as? String ?? ""
         }
 
         // Zapis danych do bazy

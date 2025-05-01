@@ -11,6 +11,7 @@ struct ClientFilter: View {
         "firstInformation",
         "secondInformation",
         "thirdInformation",
+        "fourthInformation",
         "gender",
         "address"
     ]
